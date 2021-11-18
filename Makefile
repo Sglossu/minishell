@@ -6,7 +6,9 @@ CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
 RM			=	rm -f
 
-SRCS		=	main.c		$(DIR_BUILD)ft_pwd.c
+SRCS		=	main.c \
+				$(DIR_BUILD)ft_pwd.c		$(DIR_BUILD)ft_cd.c			$(DIR_BUILD)ft_echo.c \
+				$(DIR_BUILD)ft_env.c		$(DIR_BUILD)ft_unset.c
 
 OBJS		=	$(SRCS:.c=.o)
 
