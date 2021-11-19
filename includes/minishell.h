@@ -12,10 +12,17 @@
 # include <sys/errno.h>
 # include "../libft/libft.h"
 
-
+//buidins
 void	ft_pwd(void);
 void	ft_cd(void);
 int		ft_env(t_list *lst);
 int 	ft_unset(t_list **env, t_list *arg);
+int		ft_export(t_list **env, t_list *arg);
+
+//utils
+char	**ft_sort_params(int argc, t_list *lst);
+char	**from_lst_to_buf(int argc, t_list *lst, char c);
+
+
 
 #endif
