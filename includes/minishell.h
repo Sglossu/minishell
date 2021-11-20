@@ -18,6 +18,7 @@ void	ft_cd(void);
 int		ft_env(t_list *lst);
 int 	ft_unset(t_list **env, t_list *arg);
 int		ft_export(t_list **env, t_list *arg);
+int		ft_echo(t_list *arg);
 
 //utils
 char	**ft_sort_params(int argc, t_list *lst);

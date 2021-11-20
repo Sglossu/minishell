@@ -9,7 +9,7 @@
 //ft_lstadd_back(&env, ft_lstnew(ft_strdup("PWD=var2=var2=")));
 //ft_lstadd_back(&env, ft_lstnew(ft_strdup("var22=bbb")));
 //
-//t_list *arg = ft_lstnew(ft_strdup("unset"));
+//t_list *arg = ft_lstnew(ft_strdup("export"));
 //ft_lstadd_back(&arg, ft_lstnew(ft_strdup("var2")));
 //ft_lstadd_back(&arg, ft_lstnew(ft_strdup("var22=bbb")));
 //
@@ -64,7 +64,7 @@ int ft_export(t_list **env, t_list *arg)
 		ft_lstadd_back(&exp, ft_lstnew(tmp->val));
 		tmp = tmp->next;
 	}
-
+	arg = arg->next;
 	tmp = arg;
 
 	while (arg)
