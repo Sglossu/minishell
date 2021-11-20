@@ -12,6 +12,11 @@
 # include <sys/errno.h>
 # include "../libft/libft.h"
 
+typedef struct s_all {
+	t_list	*env;
+	t_list	*arg;
+}				t_all;
+
 //buidins
 void	ft_pwd(void);
 void	ft_cd(void);
@@ -23,6 +28,10 @@ int		ft_echo(t_list *arg);
 //utils
 char	**ft_sort_params(int argc, t_list *lst);
 char	**from_lst_to_buf(int argc, t_list *lst, char c);
+
+//srcs_init
+void	init(t_all **all, char **envi);
+
 
 
 
