@@ -12,6 +12,25 @@ static char *split_for_dup(char *str, char c)
 	return (ft_strdup(str));
 }
 
+void free_buf(char **buf)
+{
+	int i = 0;
+	int j = 0;
+
+	while (buf[i])
+	{
+		while(buf[j])
+		{
+			free(buf[j]);
+			buf[j] = NULL;
+			j++;
+		}
+		free(buf[i]);
+		buf[i] = NULL;
+		i++;
+	}
+}
+
 char **from_lst_to_buf(int argc, t_list *lst, char c)
 {
 	char 	**argv;
@@ -30,7 +49,7 @@ char **from_lst_to_buf(int argc, t_list *lst, char c)
 			argv[i] = ft_strdup(lst->val);
 		if (!argv[i])
 		{
-//			free всё что уже есть
+			free_buf(argv);
 			return (NULL);
 		}
 		i++;

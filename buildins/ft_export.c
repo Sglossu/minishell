@@ -2,6 +2,20 @@
 // Created by Shasta Glossu on 11/19/21.
 //
 
+//t_list	*env = 0;
+//ft_lstadd_back(&env, ft_lstnew(ft_strdup("PATH=aaa")));
+//ft_lstadd_back(&env, ft_lstnew(ft_strdup("sss=dddd")));
+//ft_lstadd_back(&env, ft_lstnew(ft_strdup("pupu=12345678")));
+//ft_lstadd_back(&env, ft_lstnew(ft_strdup("PWD=var2=var2=")));
+//ft_lstadd_back(&env, ft_lstnew(ft_strdup("var22=bbb")));
+//
+//t_list *arg = ft_lstnew(ft_strdup("unset"));
+//ft_lstadd_back(&arg, ft_lstnew(ft_strdup("var2")));
+//ft_lstadd_back(&arg, ft_lstnew(ft_strdup("var22=bbb")));
+//
+//ft_export(&env, NULL);
+
+
 #include "../includes/minishell.h"
 
 static int	count_params(t_list *env)
@@ -39,7 +53,6 @@ static void print_params(char **buf, int count)
 
 int ft_export(t_list **env, t_list *arg)
 {
-	(void)arg;
 	char 	**buf;
 	int 	count;
 	t_list	*exp = 0;
@@ -48,21 +61,26 @@ int ft_export(t_list **env, t_list *arg)
 	tmp = *env;
 	while(tmp)
 	{
-		ft_lstadd_back(&exp, tmp);
-		printf("%s\n", exp->val);
+		ft_lstadd_back(&exp, ft_lstnew(tmp->val));
 		tmp = tmp->next;
-		write(1, "1\n", 2);
 	}
-	write(1, "2\n", 2);
-//	while (arg)
-//	{
-//
-//	}
 
-	count = count_params(exp);
-    buf = ft_sort_params(count, exp);
-    if (!buf)
-    	return (1); // error
-    print_params(buf, count);
+	tmp = arg;
+
+	while (arg)
+	{
+		if(!ft_lstfind(exp, arg->val)) {
+			ft_lstadd_back(&exp, ft_lstnew(arg->val));
+		}
+		arg = arg->next;
+	}
+	if (!tmp)
+	{
+		count = count_params(exp);
+		buf = ft_sort_params(count, exp);
+		if (!buf)
+			return (1); // error
+		print_params(buf, count);
+	}
     return (1);
 }
