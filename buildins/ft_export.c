@@ -64,7 +64,8 @@ int ft_export(t_list **env, t_list *arg)
 		ft_lstadd_back(&exp, ft_lstnew(tmp->val));
 		tmp = tmp->next;
 	}
-	arg = arg->next;
+	if (arg)
+		arg = arg->next;
 	tmp = arg;
 
 	while (arg)

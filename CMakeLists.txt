@@ -7,7 +7,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/libft/)
 
 FILE(GLOB SRC
         "main.c"
-        "builtins/*.c"
+        "buildins/*.c"
         "utils/*.c"
         "srcs/*.c")
 
