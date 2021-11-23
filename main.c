@@ -12,11 +12,15 @@ int main(int argc, char **argv, char **envi)
 		return (1); //error
 	init(&all, envi);
 
-	t_list	*arg;
-	arg = ft_lstnew(ft_strdup("ls"));
-	ft_lstadd_back(&arg, ft_lstnew(ft_strdup("la")));
-//	ft_lstadd_back(&arg, ft_lstnew(ft_strdup("styshfj")));
 
+	all->arg = ft_lstnew(ft_strdup("exit"));
+	ft_lstadd_back(&all->arg, ft_lstnew(ft_strdup("9")));
+//	ft_lstadd_back(&arg, ft_lstnew(ft_strdup("styshfj")));
+	while (1)
+	{
+		main_work(&all); // основная функция работы
+		exit(0);
+	}
 
 	return 0;
 }

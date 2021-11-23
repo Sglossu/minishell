@@ -18,6 +18,7 @@
 typedef struct s_all {
 	t_list	*env;
 	t_list	*arg;
+	pid_t	pid;
 }				t_all;
 
 //buidins
@@ -36,6 +37,9 @@ char	*find_after_equals(char *str);
 
 //srcs_init
 void	init(t_all **all, char **envi);
+
+//main
+int		main_work(t_all **all);
 
 
 
