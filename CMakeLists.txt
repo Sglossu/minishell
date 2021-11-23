@@ -12,6 +12,6 @@ FILE(GLOB SRC
         "srcs/*.c")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall")
-add_executable(minishell ${SRC})
+add_executable(minishell ${SRC} buildins/ft_exit.c)
 target_link_libraries (minishell ${CMAKE_CURRENT_SOURCE_DIR}/libft/libft.a)
 target_link_libraries (minishell readline)
