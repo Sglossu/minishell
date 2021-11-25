@@ -33,16 +33,16 @@ int parse_path(t_all **all)
 	return (0);
 }
 
-void path_print(t_all **all)
-{
-	int i = 0;
-
-	while ((*all)->path[i])
-	{
-		printf("%s\n", (*all)->path[i]);
-		i++;
-	}
-}
+//void path_print(t_all **all)
+//{
+//	int i = 0;
+//
+//	while ((*all)->path[i])
+//	{
+//		printf("%s\n", (*all)->path[i]);
+//		i++;
+//	}
+//}
 
 void	path_plus_command(t_all **all)
 {

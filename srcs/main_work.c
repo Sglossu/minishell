@@ -27,7 +27,27 @@ int if_buildins(t_list **env, t_list *arg)
 
 void	child(t_all **all)
 {
-	if ((*all)->arg->next)
+	char	**arg;
+	char	**env;
+	int 	i = 0;
+
+	(*all)->arg = (*all)->arg->next;
+	arg = from_lst_to_buf(ft_lstsize((*all)->arg), (*all)->arg, '\0');
+	env = from_lst_to_buf(ft_lstsize((*all)->env), (*all)->env, '\0');
+	execve((*all)->path_command, arg, env);
+	while (arg[i])
+	{
+		free(arg[i]);
+		arg[i] = NULL;
+		i++;
+	}
+	i = 0;
+	while (env[i])
+	{
+		free(env[i]);
+		env[i] = NULL;
+		i++;
+	}
 	exit(0);
 }
 

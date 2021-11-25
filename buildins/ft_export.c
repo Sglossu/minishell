@@ -18,19 +18,6 @@
 
 #include "../includes/minishell.h"
 
-static int	count_params(t_list *env)
-{
-	int	count;
-
-	count = 0;
-	while (env)
-	{
-		count += 1;
-		env = env->next;
-	}
-	return (count);
-}
-
 static void print_params(char **buf, int count)
 {
 	int 	i;
@@ -67,7 +54,6 @@ int ft_export(t_list **env, t_list *arg)
 	if (arg)
 		arg = arg->next;
 	tmp = arg;
-
 	while (arg)
 	{
 		if(!ft_lstfind(exp, arg->val)) {
@@ -77,7 +63,7 @@ int ft_export(t_list **env, t_list *arg)
 	}
 	if (!tmp)
 	{
-		count = count_params(exp);
+		count = ft_lstsize(exp);
 		buf = ft_sort_params(count, exp);
 		if (!buf)
 			return (1); // error
