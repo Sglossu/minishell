@@ -27,7 +27,7 @@ int if_buildins(t_list **env, t_list *arg)
 
 void	child(t_all **all)
 {
-	(void)all;
+	if ((*all)->arg->next)
 	exit(0);
 }
 
@@ -37,10 +37,13 @@ int	main_work(t_all **all)
 		return (0); // то есть есть такой билдин
 	else
 	{
-		(*all)->pid = fork();
-		if ((*all)->pid == 0)
+		if (!if_command_exist(all))
 		{
-			child(all);
+			(*all)->pid = fork();
+			if ((*all)->pid == 0)
+			{
+				child(all);
+			}
 		}
 	}
 	return (1);

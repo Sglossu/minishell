@@ -105,13 +105,9 @@ char	**ft_split(char *str, char c)
 {
 	int		i;
 	char	**buf;
-	int		j;
-	int		count;
 
 	if (str == NULL)
 		return (NULL);
-	count = 0;
-	j = 0;
 	i = all_split_string(str, c);
 	buf = (char **)malloc(sizeof(char *) * (i + 1));
 	if (buf == NULL)

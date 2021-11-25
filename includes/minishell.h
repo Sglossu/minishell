@@ -18,7 +18,9 @@
 typedef struct s_all {
 	t_list	*env;
 	t_list	*arg;
+	char 	**path;
 	pid_t	pid;
+	char 	*path_command;
 }				t_all;
 
 //buidins
@@ -40,6 +42,7 @@ void	init(t_all **all, char **envi);
 
 //main
 int		main_work(t_all **all);
+int		if_command_exist(t_all **all);
 
 
 

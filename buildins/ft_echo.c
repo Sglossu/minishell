@@ -13,13 +13,11 @@
 
 int ft_echo(t_list *arg) // переделать
 {
-	int i;
 	int line_break;
 
-	i = 1;
 	line_break = 1;
 	arg = arg->next;
-	if (arg->next && !ft_strcmp(arg->val, "-n"))
+	if (arg && !ft_strcmp(arg->val, "-n"))
 	{
 		arg = arg->next;
 		line_break = 0;
