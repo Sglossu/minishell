@@ -31,7 +31,6 @@ void	child(t_all **all)
 	char	**env;
 	int 	i = 0;
 
-	(*all)->arg = (*all)->arg->next;
 	arg = from_lst_to_buf(ft_lstsize((*all)->arg), (*all)->arg, '\0');
 	env = from_lst_to_buf(ft_lstsize((*all)->env), (*all)->env, '\0');
 	execve((*all)->path_command, arg, env);
@@ -53,6 +52,8 @@ void	child(t_all **all)
 
 int	main_work(t_all **all)
 {
+	int status;
+
 	if (!if_buildins(&(*all)->env, (*all)->arg))
 		return (0); // то есть есть такой билдин
 	else
@@ -64,6 +65,8 @@ int	main_work(t_all **all)
 			{
 				child(all);
 			}
+			else
+				waitpid((*all)->pid, &status, 0);
 		}
 	}
 	return (1);

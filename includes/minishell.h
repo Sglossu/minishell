@@ -15,6 +15,7 @@
 # include "../libft/libft.h"
 # include "stdbool.h"
 
+
 typedef struct s_all {
 	t_list	*env;
 	t_list	*arg;

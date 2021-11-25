@@ -12,10 +12,10 @@ int parse_path(t_all **all)
 
 	tmp = ft_lstfind((*all)->env, "PATH");
 	if (!tmp)
-		return (1); // обработать ошибку если нет PATH
+		return (1); // todo обработать ошибку если нет PATH
 	(*all)->path = ft_split(find_after_equals(tmp->val), ':');
 	if (!(*all)->path)
-		return (1); // обработать ошибку
+		return (1); // todo обработать ошибку
 	while ((*all)->path[i])
 	{
 		if ((*all)->path[i][0] == '~')
@@ -24,7 +24,7 @@ int parse_path(t_all **all)
 			free((*all)->path[i]);
 			tmp = ft_lstfind((*all)->env, "HOME");
 			if (!tmp)
-				return (1); // обработать ошибку если нет HOME
+				return (1); // todo обработать ошибку если нет HOME
 			(*all)->path[i] = ft_strjoin(find_after_equals(tmp->val), str);
 			free(str);
 		}
@@ -81,7 +81,7 @@ int find_command(t_all **all)
 int if_command_exist(t_all **all)
 {
 	if (parse_path(all))
-		return (1); // обработать ошибку
+		return (1); // todo обработать ошибку
 	path_plus_command(all);
 	find_command(all);
 //	path_print(all);

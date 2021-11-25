@@ -81,7 +81,7 @@ int work_with_arg(char *str)
 	{
 		// overflow
 		printf("exit: %s: numeric argument required\n", str);
-		return (255);
+		exit (255);
 	}
 	status_exit = ft_atoi_long(str);
 	if (status_exit > 0) {
@@ -96,19 +96,17 @@ int	ft_exit(t_list *arg)
 {
 	arg = arg->next;
 	printf("exit %s\n", arg->val);
-	if (!arg) {
-		exit(0);
-	}
+	if (!arg)
+		return (0);
 	if (ft_strisdigit(arg->val))
 	{
 		printf("exit: %s: numeric argument required\n", arg->val);
-		return (255);
+		exit (255);
 	}
 	if (arg->next)
 	{
 		printf("exit: too many arguments\n");
 		return (255);
 	}
-	return (work_with_arg(arg->val));
-
+	exit (work_with_arg(arg->val));
 }

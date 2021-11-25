@@ -11,7 +11,7 @@
 
 #include "../includes/minishell.h"
 
-int ft_echo(t_list *arg) // переделать
+int ft_echo(t_list *arg)
 {
 	int line_break;
 
