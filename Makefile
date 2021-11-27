@@ -5,6 +5,7 @@ DIR_BUILD	=	./buildins/
 DIR_UTILS	=	./utils/
 DIR_SRCS	=	./srcs/
 DIR_PIPE	=	./pipe/
+DIR_PARSE	=	./parse/
 CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
 RM			=	rm -f
@@ -19,7 +20,9 @@ SRCS		=	main.c \
 				\
 				$(DIR_SRCS)init.c				$(DIR_SRCS)main_work.c			$(DIR_SRCS)command_exist.c \
 				\
-				$(DIR_PIPE)pipe_main.c
+				$(DIR_PIPE)pipe_main.c\
+				\
+				$(DIR_PARSE)parser.c
 
 OBJS		=	$(SRCS:.c=.o)
 
@@ -38,7 +41,7 @@ $(OBJS)		:	$(HEAD)
 
 $(NAME)		:	$(OBJS)
 		$(MAKE) -C libft
-		$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(SRCS) -o $(NAME)
+		$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(SRCS) $(BLIB) -lreadline -o $(NAME)
 
 clean		:
 		$(MAKE) clean -C libft
