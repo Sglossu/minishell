@@ -77,3 +77,4 @@ dkms.conf
 
 minishell
 minishell.exe.stackdump
+test.c
