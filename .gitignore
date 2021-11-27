@@ -76,3 +76,4 @@ dkms.conf
 /httpRequests/
 
 minishell
+minishell.exe.stackdump

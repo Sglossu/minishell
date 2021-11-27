@@ -22,5 +22,7 @@ int	parse(t_all **all, char *input)
 		(*all)->arg = ft_lstnew("pwd");
 	else if (!ft_strcmp(input, "ls"))
 		(*all)->arg = ft_lstnew("ls");
+	else
+		(*all)->arg = NULL;
 	return 0;
 }

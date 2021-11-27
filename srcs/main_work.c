@@ -53,6 +53,8 @@ void	child(t_all **all)
 
 int	main_work(t_all **all)
 {
+	if (!(*all)->arg)
+		return (0);
 	if (!if_buildins(&(*all)->env, (*all)->arg))
 		return (0); // то есть есть такой билдин
 	else
