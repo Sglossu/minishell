@@ -20,7 +20,8 @@ SRCS		=	main.c \
 				\
 				$(DIR_SRCS)init.c				$(DIR_SRCS)main_work.c			$(DIR_SRCS)command_exist.c \
 				\
-				$(DIR_PIPE)pipe_main.c
+				$(DIR_PIPE)pipe_main.c\
+				\
 				$(DIR_SRCS)init.c				$(DIR_SRCS)main_work.c			$(DIR_SRCS)command_exist.c\
 				\
 				$(DIR_PARSE)parser.c
