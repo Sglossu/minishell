@@ -31,7 +31,7 @@ int our_pipe(t_all **all)
 	(*all)->arg = ft_lstnew(ft_strdup("cat"));
 	if_command_exist(all); // путь для команды 2 записывается в переменную
 
-	if (pid1 < 0)
+	if (pid2 < 0)
 		return (3); // todo обработать ошибку
 	if (pid2 == 0)
 	{

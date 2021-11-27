@@ -15,6 +15,10 @@
 # include "../libft/libft.h"
 # include "stdbool.h"
 
+typedef struct s_pipe {
+	int 	number_of_pipes;
+
+};
 
 typedef struct s_all {
 	t_list	*env;

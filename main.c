@@ -12,7 +12,7 @@ int main(int argc, char **argv, char **envi)
 		return (1); //error
 	init(&all, envi);
 
-	all->number_of_pipes = 2; // количество частей, разделенных пайпами
+	all->number_of_pipes = 0; // количество частей, разделенных пайпами
 
 	all->arg = ft_lstnew(ft_strdup("ls"));
 //	ft_lstadd_back(&all->arg, ft_lstnew(ft_strdup("wc")));
@@ -20,9 +20,9 @@ int main(int argc, char **argv, char **envi)
 
 	while (1)
 	{
-		if (all->number_of_pipes == 1)
+		if (all->number_of_pipes == 0)
 			main_work(&all); // основная функция работы
-		else if (all->number_of_pipes == 2)
+		else if (all->number_of_pipes == 1)
 			our_pipe(&all);
 		exit(0);
 	}
