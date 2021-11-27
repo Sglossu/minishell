@@ -4,6 +4,7 @@ DIR_HEAD	=	./includes/
 DIR_BUILD	=	./buildins/
 DIR_UTILS	=	./utils/
 DIR_SRCS	=	./srcs/
+DIR_PIPE	=	./pipe/
 CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
 RM			=	rm -f
@@ -16,7 +17,9 @@ SRCS		=	main.c \
 				\
 				$(DIR_UTILS)ft_sort_params.c	$(DIR_UTILS)about_memory.c		$(DIR_UTILS)find.c\
 				\
-				$(DIR_SRCS)init.c				$(DIR_SRCS)main_work.c			$(DIR_SRCS)command_exist.c
+				$(DIR_SRCS)init.c				$(DIR_SRCS)main_work.c			$(DIR_SRCS)command_exist.c \
+				\
+				$(DIR_PIPE)pipe_main.c
 
 OBJS		=	$(SRCS:.c=.o)
 

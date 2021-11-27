@@ -9,7 +9,8 @@ FILE(GLOB SRC
         "main.c"
         "buildins/*.c"
         "utils/*.c"
-        "srcs/*.c")
+        "srcs/*.c"
+        "pipe/*.c")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall")
 add_executable(minishell ${SRC})

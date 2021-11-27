@@ -22,6 +22,7 @@ typedef struct s_all {
 	char 	**path;
 	pid_t	pid;
 	char 	*path_command;
+	int 	number_of_pipes;
 }				t_all;
 
 //buidins
@@ -41,9 +42,13 @@ char	*find_after_equals(char *str);
 //srcs_init
 void	init(t_all **all, char **envi);
 
+//pipe
+int		our_pipe(t_all **all);
+
 //main
 int		main_work(t_all **all);
 int		if_command_exist(t_all **all);
+void	child(t_all **all);
 
 
 

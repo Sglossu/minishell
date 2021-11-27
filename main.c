@@ -12,13 +12,18 @@ int main(int argc, char **argv, char **envi)
 		return (1); //error
 	init(&all, envi);
 
+	all->number_of_pipes = 2; // количество частей, разделенных пайпами
 
 	all->arg = ft_lstnew(ft_strdup("ls"));
-//	ft_lstadd_back(&all->arg, ft_lstnew(ft_strdup("-la")));
+//	ft_lstadd_back(&all->arg, ft_lstnew(ft_strdup("wc")));
 //	ft_lstadd_back(&arg, ft_lstnew(ft_strdup("styshfj")));
+
 	while (1)
 	{
-		main_work(&all); // основная функция работы
+		if (all->number_of_pipes == 1)
+			main_work(&all); // основная функция работы
+		else if (all->number_of_pipes == 2)
+			our_pipe(&all);
 		exit(0);
 	}
 
