@@ -13,6 +13,8 @@
 # include <sys/errno.h>
 # include <errno.h>
 # include "../libft/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "stdbool.h"
 
 
@@ -49,6 +51,9 @@ int		our_pipe(t_all **all);
 int		main_work(t_all **all);
 int		if_command_exist(t_all **all);
 void	child(t_all **all);
+
+//parse
+int		parse(t_all **all, char *input);
 
 
 
