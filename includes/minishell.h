@@ -11,6 +11,7 @@
 # include <string.h>
 # include <sys/stat.h>
 # include <sys/errno.h>
+# include "sys/wait.h"
 # include <errno.h>
 # include "../libft/libft.h"
 # include <readline/readline.h>
