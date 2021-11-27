@@ -23,23 +23,7 @@ int	main(int argc, char **argv, char **envi)
 	all = malloc(sizeof(t_all));
 	if (!all)
 		return (1); //error
-	init(&all, envi);
-
-<<<<<<< HEAD
-	all->number_of_pipes = 0; // количество частей, разделенных пайпами
-
-	all->arg = ft_lstnew(ft_strdup("ls"));
-//	ft_lstadd_back(&all->arg, ft_lstnew(ft_strdup("wc")));
-//	ft_lstadd_back(&arg, ft_lstnew(ft_strdup("styshfj")));
-
-	while (1)
-	{
-		if (all->number_of_pipes == 0)
-			main_work(&all); // основная функция работы
-		else if (all->number_of_pipes == 1)
-			our_pipe(&all);
-		exit(0);
-=======
+	init(all, envi);
 	while (1)
 	{
 		input = readline("Minishell☺% ");
@@ -47,10 +31,9 @@ int	main(int argc, char **argv, char **envi)
 			exit(1);
 		rl_bind_key('\t', rl_complete);
         add_history(input);
-		parse(&all, input);
-		main_work(&all); // основная функция работы
+		parse(all, input);
+		main_work(all); // основная функция работы
         free(input);
->>>>>>> master
 	}
 
 	return 0;

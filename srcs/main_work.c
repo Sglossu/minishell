@@ -25,15 +25,15 @@ int if_buildins(t_list **env, t_list *arg)
 	return (0); // запустился билдин
 }
 
-void	child(t_all **all)
+void	child(t_all *all)
 {
 	char	**arg;
 	char	**env;
 	int 	i = 0;
 
-	arg = from_lst_to_buf(ft_lstsize((*all)->arg), (*all)->arg, '\0');
-	env = from_lst_to_buf(ft_lstsize((*all)->env), (*all)->env, '\0');
-	execve((*all)->path_command, arg, env);
+	arg = from_lst_to_buf(ft_lstsize(all->cmd[all->i]->arg), all->cmd[all->i]->arg, '\0');
+	env = from_lst_to_buf(ft_lstsize(all->env), all->env, '\0');
+	execve(all->cmd[all->i]->path_command, arg, env);
 	while (arg[i])
 	{
 		free(arg[i]);
@@ -50,25 +50,26 @@ void	child(t_all **all)
 	exit(0);
 }
 
-int	main_work(t_all **all)
+int	main_work(t_all *all)
 {
 	int status;
+	int i = all->i; // просто для удобства
 
-	if (!(*all)->arg)
+	if (!all->cmd[i]->arg)
 		return (0);
-	if (!if_buildins(&(*all)->env, (*all)->arg))
+	if (!if_buildins(&all->env, all->cmd[i]->arg))
 		return (0); // то есть есть такой билдин
 	else
 	{
 		if (!if_command_exist(all))
 		{
-			(*all)->pid = fork();
-			if ((*all)->pid == 0)
+			all->cmd[i]->pid = fork();
+			if (all->cmd[i]->pid == 0)
 			{
 				child(all);
 			}
 			else
-				waitpid((*all)->pid, &status, 0);
+				waitpid(all->cmd[i]->pid, &status, 0);
 		}
 	}
 	return (1);

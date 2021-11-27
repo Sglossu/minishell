@@ -13,18 +13,26 @@
 #include "../includes/minishell.h"
 
 
-static int ft_makelist(t_all **all, char *ready_str)
+static int ft_makelist(t_all *all, char *ready_str)
 {
 	if (!ft_strcmp(ready_str, "cd"))
-		(*all)->arg = ft_lstnew("cd");
+		all->cmd[all->i]->arg = ft_lstnew("cd");
 	else if (!ft_strcmp(ready_str, "echo"))
-		(*all)->arg = ft_lstnew("echo");
+		all->cmd[all->i]->arg = ft_lstnew("echo");
 	else if (!ft_strcmp(ready_str, "pwd"))
-		(*all)->arg = ft_lstnew("pwd");
+		all->cmd[all->i]->arg = ft_lstnew("pwd");
 	else if (!ft_strcmp(ready_str, "ls"))
-		(*all)->arg = ft_lstnew("ls");
+		all->cmd[all->i]->arg = ft_lstnew("ls");
+	else if (!ft_strcmp(ready_str, "export"))
+		all->cmd[all->i]->arg = ft_lstnew("export");
+	else if (!ft_strcmp(ready_str, "unset"))
+		all->cmd[all->i]->arg = ft_lstnew("unset");
+	else if (!ft_strcmp(ready_str, "env"))
+		all->cmd[all->i]->arg = ft_lstnew("env");
+	else if (!ft_strcmp(ready_str, "exit"))
+		all->cmd[all->i]->arg = ft_lstnew("exit");
 	else
-		(*all)->arg = NULL;
+		all->cmd[all->i]->arg = NULL;
 	return 0;
 }
 
@@ -54,7 +62,7 @@ static char *ft_quote(char *str, int *i)
 	return (before);
 }
 
-int	parse(t_all **all, char *input)
+int	parse(t_all *all, char *input)
 {
 	int		i;
 
