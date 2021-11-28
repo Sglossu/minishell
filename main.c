@@ -23,8 +23,7 @@ int	main(int argc, char **argv, char **envi)
 	all = malloc(sizeof(t_all));
 	if (!all)
 		return (1); //error
-	init(&all, envi);
-
+	init(all, envi);
 	while (1)
 	{
 		input = readline("Minishell☺% ");
@@ -32,8 +31,8 @@ int	main(int argc, char **argv, char **envi)
 			exit(1);
 		rl_bind_key('\t', rl_complete);
         add_history(input);
-		parse(&all, input);
-		main_work(&all); // основная функция работы
+		parse(all, input);
+		main_work(all); // основная функция работы
         free(input);
 	}
 

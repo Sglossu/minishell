@@ -95,9 +95,12 @@ int work_with_arg(char *str)
 int	ft_exit(t_list *arg)
 {
 	arg = arg->next;
-	printf("exit %s\n", arg->val);
 	if (!arg)
-		return (0);
+		printf("exit\n");
+	else
+		printf("exit %s\n", arg->val);
+	if (!arg)
+		exit (0);
 	if (ft_strisdigit(arg->val))
 	{
 		printf("exit: %s: numeric argument required\n", arg->val);

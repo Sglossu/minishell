@@ -19,8 +19,19 @@ t_list	*init_lst_env(char **envi)
 	return (envp_l);
 }
 
-void	init(t_all **all, char **envi)
+void	init(t_all *all, char **envi)
 {
-	(*all)->arg = NULL;
-	(*all)->env = init_lst_env(envi);
+	int 	number_command = 2; // потом убрать, когда научимся считать количество комманд
+	int 	i = 0;
+
+	all->env = init_lst_env(envi);
+	all->cmd = malloc(sizeof(t_cmd *) * (number_command + 1));
+
+	while(i < number_command)
+	{
+		all->cmd[i] = malloc(sizeof(t_cmd));
+		i++;
+	}
+	all->cmd[i] = NULL;
+	all->i = 0;
 }

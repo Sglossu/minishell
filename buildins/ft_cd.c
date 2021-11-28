@@ -27,7 +27,6 @@ int	change_pwd_oldpwd(t_list **env, char **oldpwd)
 {
 	char	*pwd;
 	t_list	*tmp;
-	(void)oldpwd;
 
 	pwd = getcwd(NULL, 1024);
 	tmp = ft_lstfind(*env, "PWD");

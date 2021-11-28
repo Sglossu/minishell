@@ -18,14 +18,17 @@
 # include <readline/history.h>
 # include "stdbool.h"
 
+typedef struct s_cmd {
+	t_list		*arg;
+	char 		*path_command; // под это нет маллока, так как замолочится потом
+	pid_t		pid;
+}				t_cmd;
 
 typedef struct s_all {
-	t_list	*env;
-	t_list	*arg;
-	char 	**path;
-	pid_t	pid;
-	char 	*path_command;
-	int 	number_of_pipes;
+	t_list		*env;
+	char 		**path; // под это нет маллока, так как замолочится потом
+	t_cmd		**cmd;
+	int 		i; // номер вызываемой команды
 }				t_all;
 
 //buidins
@@ -43,18 +46,18 @@ char	**from_lst_to_buf(int argc, t_list *lst, char c);
 char	*find_after_equals(char *str);
 
 //srcs_init
-void	init(t_all **all, char **envi);
+void	init(t_all *all, char **envi);
 
 //pipe
-int		our_pipe(t_all **all);
+int		our_pipe(t_all *all);
 
 //main
-int		main_work(t_all **all);
-int		if_command_exist(t_all **all);
-void	child(t_all **all);
+int		main_work(t_all *all);
+int		if_command_exist(t_all *all);
+void	child(t_all *all);
 
 //parse
-int		parse(t_all **all, char *input);
+int		parse(t_all *all, char *input);
 
 
 
