@@ -41,7 +41,7 @@ $(OBJS)		:	$(HEAD)
 
 $(NAME)		:	$(OBJS)
 		$(MAKE) -C libft
-		$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(SRCS) $(BLIB) -lreadline -o $(NAME)
+		$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(OBJS) $(BLIB) -lreadline -o $(NAME)
 
 clean		:
 		$(MAKE) clean -C libft
