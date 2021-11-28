@@ -51,15 +51,37 @@ static char *ft_quote(char *str, int *i)
 		if (str[*i] == '\'')        // Конец (узнали, где ковычка закрывается)
 			break;
 
+	// printf("%d <-j   %d <- i\n", j, *i);
 	before = ft_substr(str, 0, j);
+	// printf("|%s| < -- I \n", before);
 	main = ft_substr(str, j + 1, *i - j - 1);
+	// printf("|%s| < -- II \n", main);
 	after = ft_strdup(str + *i + 1);
+	// printf("|%s| < -- III \n", after);
 
 	before = ft_strjoin(before, main);
 	before = ft_strjoin(before, after);
 
-	printf("%s\n", before);
+	// printf("%s\n", before);
 	return (before);
+}
+
+ static	char	*del_space(char *str)
+{
+	char	*res;
+	int		i;
+	int		range;
+
+	i = 0;
+	range = 0;
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	while (str[range])
+		range++;	
+	
+	res = ft_substr(str, i, range - i);
+	free(str);
+	return(res);
 }
 
 int	parse(t_all *all, char *input)
@@ -68,14 +90,15 @@ int	parse(t_all *all, char *input)
 
 	i = 0;
 	(void) all;
-	while (input[i++])
+	while (input[i])
 	{
-		if (input[i] == ' ' || input[i] == '\t') // отсекли все отступы в начале строки
-			i++;
+		input = del_space(input);	 // отсекли все отступы в начале строки
 		if (input[i] == '\'')
 			input = ft_quote(input, &i);
 			// printf("%s\n", input + i);
+		i++;
 	}
+	// printf("|%s| <-- input\n", input);
 	ft_makelist(all, input);
 	return 0;
 }
