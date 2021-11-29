@@ -9,10 +9,10 @@ void	child_for_pipe(t_all *all, int num_com, int fd[2][2])
 	int i = 0;
 
 	if (num_com == 0)
-		dup2(fd[num_com - 1][1], STDOUT_FILENO); // первая команда
+		dup2(fd[num_com][1], STDOUT_FILENO); // первая команда
 	else if (num_com == all->number_command - 1)
-		dup2(fd[num_com][0], STDIN_FILENO); // последняя
-	else // пока это i = 1
+		dup2(fd[num_com - 1][0], STDIN_FILENO); // последняя
+	else // пока это num_com = 1 // номер команды
 	{
 		dup2(fd[num_com - 1][0], STDIN_FILENO);
 		dup2(fd[num_com][1], STDOUT_FILENO);
@@ -23,7 +23,7 @@ void	child_for_pipe(t_all *all, int num_com, int fd[2][2])
 		close(fd[i][1]);
 		i++;
 	}
-	child(all, i);
+	child(all, num_com);
 }
 
 int pipe_for_another(t_all *all, int com, int *status) // com - количество пайпов
@@ -46,6 +46,7 @@ int pipe_for_another(t_all *all, int com, int *status) // com - количест
 		{
 			child_for_pipe(all, i, fd); // i - номер дочернего процесса, т. е. номер команды
 		}
+		i++;
 	}
 	i = 0;
 	while (i < com)
@@ -118,8 +119,11 @@ int our_pipe(t_all *all)
 		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("cat"));
 		if_command_exist(all); // путь для 2 команды записывается в переменную
 		all->i++;
-		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("wc"));
+		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("echo"));
 		if_command_exist(all); // путь для 3 команды записывается в переменную
+		all->i++;
+		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("wc"));
+		if_command_exist(all); // путь для 4 команды записывается в переменную
 		all->i = 0;
 		return(pipe_for_another(all, all->number_command - 1, &status));
 	}
