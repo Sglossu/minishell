@@ -28,6 +28,7 @@ typedef struct s_all {
 	t_list		*env;
 	char 		**path; // под это нет маллока, так как замолочится потом
 	t_cmd		**cmd;
+	int 		number_command; // количество команд
 	int 		i; // номер вызываемой команды
 }				t_all;
 
@@ -54,7 +55,7 @@ int		our_pipe(t_all *all);
 //main
 int		main_work(t_all *all);
 int		if_command_exist(t_all *all);
-void	child(t_all *all);
+void	child(t_all *all, int all_i);
 
 //parse
 int		parse(t_all *all, char *input);
