@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/11/29 18:50:43 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/11/29 19:34:15 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@
 // 	return (before);
 // }
 
-void	ft_lstprint(t_list *HEAD)
+void	ft_lstprint(t_list *HEAD)           // принтит все значения списка
 {
 	t_list	*tmp;
 	int		i;
@@ -75,73 +75,107 @@ void	ft_lstprint(t_list *HEAD)
 	i = 0;
 	while (tmp)
 	{
-		printf("%s <-- arg %d\n", tmp->val, i);
+		printf("|%s| <-- arg %d\n", tmp->val, i);
 		i++;
-		tmp=tmp->next;
+		tmp = tmp->next;
 	}
 	
 }
 
-static	char	*del_space(char *str)
-{
-	char	*res;
-	int		i;
-	int		range;
+// static	char	*del_space(char *str)   // отсекает пробелы в начале строки
+// {
+// 	char	*res;
+// 	int		i;
+// 	int		range;
 
-	i = 0;
-	range = 0;
-	while (str[i] == ' ' || str[i] == '\t')
-		i++;
-	while (str[range])
-		range++;	
+// 	i = 0;
+// 	range = 0;
+// 	while (str[i] == ' ' || str[i] == '\t')
+// 		i++;
+// 	while (str[range])
+// 		range++;	
 	
-	res = ft_substr(str, i, range - i);
-	free(str);
-	return(res);
-}
+// 	res = ft_substr(str, i, range - i);
+// 	free(str);
+// 	return(res);
+// }
 
-static void		add_command_to_list(t_all *all, char *input)
+// static void		add_command_to_list(t_all *all, char *input) // добавялет команду в лист (тест)
+// {
+// 	int	i = 0;
+// 	t_list	*HEAD;
+// 	char	*str;
+
+// 	HEAD = all->cmd[all->i]->arg;
+// 	while (input[i] && (ft_isalpha(input[i]) || input[i] == '-'))
+// 		i++;
+// 	str = ft_substr(input, 0, i);
+// 	ft_lstadd_back(&HEAD, ft_lstnew(str));
+	
+// }
+
+// static char		*del_prev_command(char *input)   // удаляет пердыдущю команду из строки (тест)
+// {
+// 	int		i = 0;
+// 	char	*n_str;
+
+// 	while (input[i] && (ft_isalpha(input[i]) || input[i] == '-'))
+// 		i++;
+// 	n_str = ft_substr(input, i, ft_strlen(input) - i);
+// 	free(input);
+// 	return(n_str);
+// }
+
+static t_list	*make_list_with_all_word(char *input)
 {
-	int	i = 0;
-	t_list	*HEAD;
+	int		i;
+	int		j;
+	t_list	*tmp;
 	char	*str;
 
-	HEAD = all->cmd[all->i]->arg;
-	while (input[i] && (ft_isalpha(input[i]) || input[i] == '-'))
+	i = 0;
+	tmp = ft_lstnew(input);
+	while(input[i])
+	{
+		if (input[i] && input[i] != ' ')
+		{
+			j = i;
+			while (input[j] && input[j] != ' ')
+				j++;
+			str = ft_substr(input, i, j-i);
+			i = j;
+			printf("|%s| arg\n", str);
+			ft_lstadd_back(&tmp, ft_lstnew(str));
+		}
 		i++;
-	str = ft_substr(input, 0, i);
-	ft_lstadd_back(&HEAD, ft_lstnew(str));
-	
-}
+	}
 
-static char		*del_prev_command(char *input)
-{
-	int		i = 0;
-	char	*n_str;
-
-	while (input[i] && (ft_isalpha(input[i]) || input[i] == '-'))
-		i++;
-	n_str = ft_substr(input, i, ft_strlen(input) - i);
-	free(input);
-	return(n_str);
+	return(tmp);
 }
 
 int	parse(t_all *all, char *input)
 {
-	int		i;
-	// char	*tmp;
+	t_list		*HEAD;
 
-	(void) all;
-	i = 0;
+	(void) 		all;
+	
+	HEAD = make_list_with_all_word(input);
 	
 
-	while (input[i])
-	{
-		input = del_space(input);
-		add_command_to_list(all, input);
-		input = del_prev_command(input);
-		i++;
-	}
-	ft_lstprint(all->cmd[all->i]->arg);
+
+
+
+
+
+
+	// while (input[i])                              тестовый вариант (кажется, что это чушь)
+	// {
+	// 	input = del_space(input);
+	// 	add_command_to_list(all, input);
+	// 	input = del_prev_command(input);
+	// 	i++;
+	// }
+
+	ft_lstprint(HEAD);
 	return 0;
 }
