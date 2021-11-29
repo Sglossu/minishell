@@ -18,10 +18,14 @@
 # include <readline/history.h>
 # include "stdbool.h"
 
+# define BUILDIN 1
+# define BINARY 0
+
 typedef struct s_cmd {
 	t_list		*arg;
 	char 		*path_command; // под это нет маллока, так как замолочится потом
 	pid_t		pid;
+	int			type;
 }				t_cmd;
 
 typedef struct s_all {

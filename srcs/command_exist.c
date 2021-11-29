@@ -83,7 +83,6 @@ int if_command_exist(t_all *all)
 	if (parse_path(all))
 		return (1); // todo обработать ошибку
 	path_plus_command(all);
-	find_command(all);
 //	path_print(all);
-	return (0);
+	return (find_command(all));
 }
