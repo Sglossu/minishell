@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/11/29 19:34:15 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/11/29 19:44:01 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,27 @@ static t_list	*make_list_with_all_word(char *input)
 	return(tmp);
 }
 
+static	int	num_of_commands(t_list *HEAD)
+{
+	int		res;
+	t_list	*tmp;
+
+	tmp = HEAD;
+
+	res = 0;
+	tmp = tmp->next; // т.к первый лист это полная строка
+	while (tmp)
+	{
+		if ((!ft_strcmp(tmp->val, "cd")) || (!ft_strcmp(tmp->val, "pwd")) || (!ft_strcmp(tmp->val, "echo"))
+			|| (!ft_strcmp(tmp->val, "ls")) || (!ft_strcmp(tmp->val, "export")) || (!ft_strcmp(tmp->val, "unset"))
+				|| (!ft_strcmp(tmp->val, "env")) || (!ft_strcmp(tmp->val, "exit")))
+				res++;
+		tmp = tmp->next;
+	}
+	
+	return res;
+}
+
 int	parse(t_all *all, char *input)
 {
 	t_list		*HEAD;
@@ -160,13 +181,7 @@ int	parse(t_all *all, char *input)
 	(void) 		all;
 	
 	HEAD = make_list_with_all_word(input);
-	
-
-
-
-
-
-
+	all->number_command = num_of_commands(HEAD);
 
 	// while (input[i])                              тестовый вариант (кажется, что это чушь)
 	// {
@@ -177,5 +192,6 @@ int	parse(t_all *all, char *input)
 	// }
 
 	ft_lstprint(HEAD);
+	printf("%d < --- comands\n", all->number_command);
 	return 0;
 }
