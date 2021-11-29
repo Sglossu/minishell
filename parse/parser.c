@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/11/29 19:44:01 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/11/29 19:50:31 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,50 +82,6 @@ void	ft_lstprint(t_list *HEAD)           // принтит все значени
 	
 }
 
-// static	char	*del_space(char *str)   // отсекает пробелы в начале строки
-// {
-// 	char	*res;
-// 	int		i;
-// 	int		range;
-
-// 	i = 0;
-// 	range = 0;
-// 	while (str[i] == ' ' || str[i] == '\t')
-// 		i++;
-// 	while (str[range])
-// 		range++;	
-	
-// 	res = ft_substr(str, i, range - i);
-// 	free(str);
-// 	return(res);
-// }
-
-// static void		add_command_to_list(t_all *all, char *input) // добавялет команду в лист (тест)
-// {
-// 	int	i = 0;
-// 	t_list	*HEAD;
-// 	char	*str;
-
-// 	HEAD = all->cmd[all->i]->arg;
-// 	while (input[i] && (ft_isalpha(input[i]) || input[i] == '-'))
-// 		i++;
-// 	str = ft_substr(input, 0, i);
-// 	ft_lstadd_back(&HEAD, ft_lstnew(str));
-	
-// }
-
-// static char		*del_prev_command(char *input)   // удаляет пердыдущю команду из строки (тест)
-// {
-// 	int		i = 0;
-// 	char	*n_str;
-
-// 	while (input[i] && (ft_isalpha(input[i]) || input[i] == '-'))
-// 		i++;
-// 	n_str = ft_substr(input, i, ft_strlen(input) - i);
-// 	free(input);
-// 	return(n_str);
-// }
-
 static t_list	*make_list_with_all_word(char *input)
 {
 	int		i;
@@ -140,7 +96,7 @@ static t_list	*make_list_with_all_word(char *input)
 		if (input[i] && input[i] != ' ')
 		{
 			j = i;
-			while (input[j] && input[j] != ' ')
+			while (input[j] && input[j] != ' ' && input[j] != '|')
 				j++;
 			str = ft_substr(input, i, j-i);
 			i = j;
@@ -180,16 +136,8 @@ int	parse(t_all *all, char *input)
 
 	(void) 		all;
 	
-	HEAD = make_list_with_all_word(input);
+	HEAD = make_list_with_all_word(input); 
 	all->number_command = num_of_commands(HEAD);
-
-	// while (input[i])                              тестовый вариант (кажется, что это чушь)
-	// {
-	// 	input = del_space(input);
-	// 	add_command_to_list(all, input);
-	// 	input = del_prev_command(input);
-	// 	i++;
-	// }
 
 	ft_lstprint(HEAD);
 	printf("%d < --- comands\n", all->number_command);
