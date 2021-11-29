@@ -22,7 +22,7 @@ SRCS		=	main.c \
 				\
 				$(DIR_PIPE)pipe_main.c\
 				\
-				$(DIR_PARSE)parser.c
+				$(DIR_PARSE)parser.c			$(DIR_PARSE)parser_utils.c
 
 OBJS		=	$(SRCS:.c=.o)
 

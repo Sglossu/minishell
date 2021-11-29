@@ -109,26 +109,24 @@ static t_list	*make_list_with_all_word(char *input)
 	return(tmp);
 }
 
-static	int	num_of_commands(t_list *HEAD)
+static	int	num_of_commands(t_list *HEAD, t_all *all)
 {
 	int		res;
 	t_list	*tmp;
-	char	*input;
-	int		i;
-	int		pipes_count;
+	// char	*input;
+	// int		i;
+	// int		pipes_count;
 
+	// input = tmp->val; // полная строка ВВОДА
+	// i = 0;
+	// pipes_count = 0;
 	tmp = HEAD;
-	input = tmp->val; // полная строка ВВОДА
-	i = 0;
 	res = 0;
-	pipes_count = 0;
 	tmp = tmp->next; // т.к первый лист это полная строка
 	while (tmp)
 	{
-		if ((!ft_strcmp(tmp->val, "cd")) || (!ft_strcmp(tmp->val, "pwd")) || (!ft_strcmp(tmp->val, "echo"))
-			|| (!ft_strcmp(tmp->val, "ls")) || (!ft_strcmp(tmp->val, "export")) || (!ft_strcmp(tmp->val, "unset"))
-				|| (!ft_strcmp(tmp->val, "env")) || (!ft_strcmp(tmp->val, "exit")) || (!ft_strcmp(tmp->val, "cat")))
-				res++;
+		if (is_buildin(tmp->val) || is_binary(tmp->val, all))
+			res++;
 		tmp = tmp->next;
 	}
 
@@ -148,7 +146,7 @@ int	parse(t_all *all, char *input)
 	(void) 		all;
 	
 	HEAD = make_list_with_all_word(input); 
-	all->number_command = num_of_commands(HEAD);
+	all->number_command = num_of_commands(HEAD, all);
 
 	ft_lstprint(HEAD);
 	printf("%d < --- commands\n", all->number_command);
