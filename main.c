@@ -31,11 +31,15 @@ int	main(int argc, char **argv, char **envi)
 			exit(1);
 		rl_bind_key('\t', rl_complete);
         add_history(input);
+		printf("\n<<<<<parse start>>>>>\n");
 		parse(all, input);
-		// if (all->number_command == 1)
-		// 	main_work(all); // основная функция работы
-		// else if (all->number_command > 1)
-		// 	our_pipe(all);
+		printf("\n<<<<<parse complete>>>>>\n");
+		printf("\n<<<<<main start>>>>>\n");
+		if (all->number_command == 1)
+			main_work(all); // основная функция работы
+		else if (all->number_command > 1)
+			our_pipe(all);
+		printf("\n<<<<<main complete>>>>>\n");
         free(input);
 	}
 

@@ -93,14 +93,14 @@ static t_list	*make_list_with_all_word(char *input)
 	tmp = ft_lstnew(input);
 	while(input[i])
 	{
-		if (input[i] && input[i] != ' ')
+		if (input[i] != ' ')
 		{
 			j = i;
 			while (input[j] && input[j] != ' ' && input[j] != '|')
 				j++;
-			str = ft_substr(input, i, j-i);
+			str = ft_substr(input, i, j - i);
+			printf("|%s|\n", str);
 			i = j;
-			// printf("|%s| arg\n", str);
 			ft_lstadd_back(&tmp, ft_lstnew(str));
 		}
 		i++;
@@ -113,42 +113,60 @@ static	int	num_of_commands(t_list *HEAD, t_all *all)
 {
 	int		res;
 	t_list	*tmp;
-	// char	*input;
-	// int		i;
-	// int		pipes_count;
 
-	// input = tmp->val; // полная строка ВВОДА
-	// i = 0;
-	// pipes_count = 0;
-	tmp = HEAD;
 	res = 0;
+	parse_path(all);
+	tmp = HEAD;
 	tmp = tmp->next; // т.к первый лист это полная строка
 	while (tmp)
 	{
-		if (is_buildin(tmp->val) || is_binary(tmp->val, all))
+		if (is_buildin(tmp->val))   // я пока не могу посчитать бинарные команды, хочу сделать билдины
 			res++;
 		tmp = tmp->next;
 	}
-
-	// while (input[i++])                  // Может быть проблема, т.к команды без пайпов - мусорные слова, которые командами не являются
-	// 	if (input[i] == '|')
-	// 		pipes_count++;
-	
-	// if (res - 1 != pipes_count)			// потом придум0аю как это проверить
-
 	return res;
+}
+
+int	init_cmd_struct(t_all *all, t_list *HEAD)
+{
+	t_list	*tmp;
+	int		i;
+
+	tmp = HEAD;
+	tmp = tmp->next;
+
+	i = 0;
+	all->cmd = malloc(sizeof(t_cmd *) * (all->number_command + 1));
+	while(i < all->number_command)
+	{
+		all->cmd[i] = malloc(sizeof(t_cmd));
+		i++;
+	}
+	all->cmd[i] = NULL;
+
+	i = 0;
+	while (i!= all->number_command)
+	{
+		all->cmd[i]->arg = tmp;
+		// res[i]->type = bin or buildin ??????????
+		i++;
+	}
+	return (0); 
 }
 
 int	parse(t_all *all, char *input)
 {
 	t_list		*HEAD;
-
-	(void) 		all;
 	
 	HEAD = make_list_with_all_word(input); 
-	all->number_command = num_of_commands(HEAD, all);
+	all->number_command = num_of_commands(HEAD, all);                      // пока только билдины
+	
+	init_cmd_struct(all, HEAD);
+
+	
+	
 
 	ft_lstprint(HEAD);
-	printf("%d < --- commands\n", all->number_command);
+	printf("%d <- commands\n", all->number_command);
 	return 0;
 }

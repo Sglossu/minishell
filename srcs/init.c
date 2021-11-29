@@ -21,16 +21,6 @@ t_list	*init_lst_env(char **envi)
 
 void	init(t_all *all, char **envi)
 {
-	int 	i = 0;
-
 	all->env = init_lst_env(envi);
-	all->cmd = malloc(sizeof(t_cmd *) * (all->number_command + 1));
-
-	while(i < all->number_command)
-	{
-		all->cmd[i] = malloc(sizeof(t_cmd));
-		i++;
-	}
-	all->cmd[i] = NULL;
 	all->i = 0;
 }
