@@ -13,30 +13,6 @@
 #include "../includes/minishell.h"
 
 
-// static int ft_makelist(t_all *all, char *ready_str)
-// {
-// 	if (!ft_strcmp(ready_str, "cd"))
-// 		all->cmd[all->i]->arg = ft_lstnew("cd");
-// 	else if (!ft_strcmp(ready_str, "echo"))
-// 		all->cmd[all->i]->arg = ft_lstnew("echo");
-// 	else if (!ft_strcmp(ready_str, "pwd"))
-// 		all->cmd[all->i]->arg = ft_lstnew("pwd");
-// 	else if (!ft_strcmp(ready_str, "ls"))
-// 		all->cmd[all->i]->arg = ft_lstnew("ls");
-// 	else if (!ft_strcmp(ready_str, "export"))
-// 		all->cmd[all->i]->arg = ft_lstnew("export");
-// 	else if (!ft_strcmp(ready_str, "unset"))
-// 		all->cmd[all->i]->arg = ft_lstnew("unset");
-// 	else if (!ft_strcmp(ready_str, "env"))
-// 		all->cmd[all->i]->arg = ft_lstnew("env");
-// 	else if (!ft_strcmp(ready_str, "exit"))
-// 		all->cmd[all->i]->arg = ft_lstnew("exit");
-// 	else
-// 		all->cmd[all->i]->arg = NULL;
-// 	return 0;
-// }
-
-
 //  (мои друзья)    ''  ""  \   $  |  > < >> <<  (мои друзья)
 
 // static char *ft_quote(char *str, int *i)
@@ -69,17 +45,16 @@
 void	ft_lstprint(t_list *HEAD)           // принтит все значения списка
 {
 	t_list	*tmp;
-	int		i;
+	int		count;
 
 	tmp = HEAD;
-	i = 0;
+	count = 1;
 	while (tmp)
 	{
-		printf("|%s| <-- arg %d\n", tmp->val, i);
-		i++;
+		printf("|%s| - arg %d\n", tmp->val, count);
+		count++;
 		tmp = tmp->next;
 	}
-	
 }
 
 static t_list	*make_list_with_all_word(char *input)
@@ -90,7 +65,7 @@ static t_list	*make_list_with_all_word(char *input)
 	char	*str;
 
 	i = 0;
-	tmp = ft_lstnew(input);
+	tmp = NULL;
 	while(input[i])
 	{
 		if (input[i] != ' ')
@@ -99,9 +74,11 @@ static t_list	*make_list_with_all_word(char *input)
 			while (input[j] && input[j] != ' ' && input[j] != '|')
 				j++;
 			str = ft_substr(input, i, j - i);
-			printf("|%s|\n", str);
 			i = j;
-			ft_lstadd_back(&tmp, ft_lstnew(str));
+			if (ft_strlen(str) > 0)
+				ft_lstadd_back(&tmp, ft_lstnew(str));
+			else
+				free(str);
 		}
 		i++;
 	}
@@ -117,10 +94,9 @@ static	int	num_of_commands(t_list *HEAD, t_all *all)
 	res = 0;
 	parse_path(all);
 	tmp = HEAD;
-	tmp = tmp->next; // т.к первый лист это полная строка
 	while (tmp)
 	{
-		if (is_buildin(tmp->val))   // я пока не могу посчитать бинарные команды, хочу сделать билдины
+		if (is_buildin(tmp->val) || is_binary(tmp->val, all))   // я пока не могу посчитать бинарные команды, хочу сделать билдины
 			res++;
 		tmp = tmp->next;
 	}
@@ -133,7 +109,6 @@ int	init_cmd_struct(t_all *all, t_list *HEAD)
 	int		i;
 
 	tmp = HEAD;
-	tmp = tmp->next;
 
 	i = 0;
 	all->cmd = malloc(sizeof(t_cmd *) * (all->number_command + 1));
@@ -145,10 +120,10 @@ int	init_cmd_struct(t_all *all, t_list *HEAD)
 	all->cmd[i] = NULL;
 
 	i = 0;
-	while (i!= all->number_command)
+	while (i != all->number_command)
 	{
 		all->cmd[i]->arg = tmp;
-		// res[i]->type = bin or buildin ??????????
+		all->cmd[i]->type = BUILDIN; // bin or buildin ??????????
 		i++;
 	}
 	return (0); 
@@ -157,15 +132,16 @@ int	init_cmd_struct(t_all *all, t_list *HEAD)
 int	parse(t_all *all, char *input)
 {
 	t_list		*HEAD;
+
+	parse_path(all);
+	HEAD = make_list_with_all_word(input);
 	
-	HEAD = make_list_with_all_word(input); 
 	all->number_command = num_of_commands(HEAD, all);                      // пока только билдины
-	
 	init_cmd_struct(all, HEAD);
 
 	
 	
-
+	
 	ft_lstprint(HEAD);
 	printf("%d <- commands\n", all->number_command);
 	return 0;

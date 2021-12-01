@@ -68,6 +68,9 @@ int		is_buildin(char *val);
 int		parse_path(t_all *all);
 
 
+//free
+int		ft_free(t_all *all);
+
 
 
 #endif

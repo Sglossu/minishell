@@ -50,6 +50,31 @@ void	child(t_all *all, int all_i)
 	exit(0);
 }
 
+// int	main_work(t_all *all)
+// {
+// 	int status;
+// 	int i = all->i; // просто для удобства
+
+// 	if (!all->cmd[i]->arg)
+// 		return (0);
+// 	if (!if_buildins(&all->env, all->cmd[i]->arg))
+// 		return (0); // то есть есть такой билдин
+// 	else
+// 	{
+// 		if (!if_command_exist(all))
+// 		{
+// 			all->cmd[i]->pid = fork();
+// 			if (all->cmd[i]->pid == 0)
+// 			{
+// 				child(all, 0);
+// 			}
+// 			else
+// 				waitpid(all->cmd[i]->pid, &status, 0);
+// 		}
+// 	}
+// 	return (1);
+// }
+
 int	main_work(t_all *all)
 {
 	int status;
@@ -57,20 +82,20 @@ int	main_work(t_all *all)
 
 	if (!all->cmd[i]->arg)
 		return (0);
-	if (!if_buildins(&all->env, all->cmd[i]->arg))
-		return (0); // то есть есть такой билдин
-	else
+	if (all->cmd[i]->type == BUILDIN)
 	{
-		if (!if_command_exist(all))
+		if_buildins(&all->env, all->cmd[i]->arg);
+		return (0);
+	}
+	else if (all->cmd[i]->type == BINARY)
+	{
+		all->cmd[i]->pid = fork();
+		if (all->cmd[i]->pid == 0)
 		{
-			all->cmd[i]->pid = fork();
-			if (all->cmd[i]->pid == 0)
-			{
-				child(all, 0);
-			}
-			else
-				waitpid(all->cmd[i]->pid, &status, 0);
+			child(all, 0);
 		}
+		else
+			waitpid(all->cmd[i]->pid, &status, 0);
 	}
 	return (1);
 }
