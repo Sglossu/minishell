@@ -78,7 +78,10 @@ static t_list	*make_list_with_all_word(char *input)
 			if (ft_strlen(str) > 0)
 				ft_lstadd_back(&tmp, ft_lstnew(str));
 			else
+			{
+				// printf("CHECK\n");      // Мне, конечно, интересно почему туда проскакивает пуская строка, но это пока не так важно
 				free(str);
+			}
 		}
 		i++;
 	}
@@ -123,7 +126,7 @@ int	init_cmd_struct(t_all *all, t_list *HEAD)
 	while (i != all->number_command)
 	{
 		all->cmd[i]->arg = tmp;
-		all->cmd[i]->type = BUILDIN; // bin or buildin ??????????
+		all->cmd[i]->type = BINARY; // bin or buildin ??????????
 		i++;
 	}
 	return (0); 
@@ -136,7 +139,7 @@ int	parse(t_all *all, char *input)
 	parse_path(all);
 	HEAD = make_list_with_all_word(input);
 	
-	all->number_command = num_of_commands(HEAD, all);                      // пока только билдины
+	all->number_command = num_of_commands(HEAD, all);
 	init_cmd_struct(all, HEAD);
 
 	

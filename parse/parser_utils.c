@@ -1,34 +1,34 @@
 #include "../includes/minishell.h"
 
 
-int parse_path(t_all *all)
-{
-	t_list	*tmp;
-	int		i = 0;
-	char 	*str;
+// int parse_path(t_all *all)
+// {
+// 	t_list	*tmp;
+// 	int		i = 0;
+// 	char 	*str;
 
-	tmp = ft_lstfind(all->env, "PATH");
-	if (!tmp)
-		return (1); // todo обработать ошибку если нет PATH
-	all->path = ft_split(find_after_equals(tmp->val), ':');
-	if (!all->path)
-		return (1); // todo обработать ошибку
-	while (all->path[i])
-	{
-		if (all->path[i][0] == '~')
-		{
-			str = ft_strdup(all->path[i] + 1);
-			free(all->path[i]);
-			tmp = ft_lstfind(all->env, "HOME");
-			if (!tmp)
-				return (1); // todo обработать ошибку если нет HOME
-			all->path[i] = ft_strjoin(find_after_equals(tmp->val), str);
-			free(str);
-		}
-		i++;
-	}
-	return (0);
-}
+// 	tmp = ft_lstfind(all->env, "PATH");
+// 	if (!tmp)
+// 		return (1); // todo обработать ошибку если нет PATH
+// 	all->path = ft_split(find_after_equals(tmp->val), ':');
+// 	if (!all->path)
+// 		return (1); // todo обработать ошибку
+// 	while (all->path[i])
+// 	{
+// 		if (all->path[i][0] == '~')
+// 		{
+// 			str = ft_strdup(all->path[i] + 1);
+// 			free(all->path[i]);
+// 			tmp = ft_lstfind(all->env, "HOME");
+// 			if (!tmp)
+// 				return (1); // todo обработать ошибку если нет HOME
+// 			all->path[i] = ft_strjoin(find_after_equals(tmp->val), str);
+// 			free(str);
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 static void	path_pl_command(t_all *all, char *command)
 {
