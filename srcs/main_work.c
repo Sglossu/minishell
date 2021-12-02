@@ -54,6 +54,7 @@ int	main_work(t_all *all)
 {
 	int status;
 	int i = all->i; // просто для удобства
+//	int fd[2];
 
 	if (!all->cmd[i]->arg)
 		return (0);

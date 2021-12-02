@@ -18,10 +18,16 @@
 # include <readline/history.h>
 # include "stdbool.h"
 
+# define DIR		3 // >
+# define REDIR		4 // <
+# define DOUBLE_DIR	5 // >>
+# define NONE		0 // нет перенаправления
+
 typedef struct s_cmd {
 	t_list		*arg;
 	char 		*path_command; // под это нет маллока, так как замолочится потом
 	pid_t		pid;
+	int 		f_direct;
 }				t_cmd;
 
 typedef struct s_all {
@@ -49,8 +55,15 @@ char	*find_after_equals(char *str);
 //srcs_init
 void	init(t_all *all, char **envi);
 
-//pipe
+//pipe and redirect
 int		our_pipe(t_all *all);
+int		first_last_pipe(t_cmd *cmd, int fd, int fd_std);
+int		middle_pipe(t_all *all, int num_com, int com, int fd[com][2]);
+int		last_pipe(t_cmd *cmd, int fd_in);
+
+int		f_l_dir(t_cmd *cmd, int fd);
+int		f_l_doubledir(t_cmd *cmd, int fd);
+int		f_l_redir(t_cmd *cmd, int fd);
 
 //main
 int		main_work(t_all *all);
