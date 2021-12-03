@@ -32,7 +32,10 @@ int	main(int argc, char **argv, char **envi)
 		rl_bind_key('\t', rl_complete);
         add_history(input);
 		parse(all, input);
-		main_work(all); // основная функция работы
+		if (all->number_command == 1)
+			main_work(all); // основная функция работы
+		else
+			our_pipe(all);
         free(input);
 	}
 
