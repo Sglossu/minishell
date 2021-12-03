@@ -4,6 +4,26 @@
 
 #include "../includes/minishell.h"
 
+void	del_after_key(t_list *arg, int f_direct)
+{
+	t_list	*tmp;
+	t_list	*tmp2;
+
+	tmp = NULL;
+	if (f_direct == DIR)
+		tmp = ft_lstfind(arg, ">");
+	else if (f_direct == DOUBLE_DIR)
+		tmp = ft_lstfind(arg, ">>");
+	else if (f_direct == REDIR)
+		tmp = ft_lstfind(arg, "<");
+	while (tmp)
+	{
+		tmp2 = tmp->next;
+		ft_lstremove(&arg, tmp);
+		tmp = tmp2;
+	}
+}
+
 int first_last_pipe(t_cmd *cmd, int fd, int fd_std)
 {
 	int		ret;
@@ -21,9 +41,8 @@ int first_last_pipe(t_cmd *cmd, int fd, int fd_std)
 		printf("%s: %s\n", cmd->arg->val, strerror(errno));
 		return (1);
 	}
-	ft_lstremove(&cmd->arg, ft_lstfind(cmd->arg, ">"));
-	ft_lstremove(&cmd->arg, ft_lstfind(cmd->arg, "<"));
-	ft_lstremove(&cmd->arg, ft_lstfind(cmd->arg, ">>"));
+	if (cmd->f_direct != NONE)
+		del_after_key(cmd->arg, cmd->f_direct);
 	return (0);
 }
 

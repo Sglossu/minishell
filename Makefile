@@ -20,7 +20,7 @@ SRCS		=	main.c \
 				\
 				$(DIR_SRCS)init.c				$(DIR_SRCS)main_work.c			$(DIR_SRCS)command_exist.c \
 				\
-				$(DIR_PIPE)pipe_main.c			$(DIR_PIPE)first_middle_last.c	$(DIR_PIPE)first_com.c\
+				$(DIR_PIPE)pipe_main.c			$(DIR_PIPE)first_middle_last.c	$(DIR_PIPE)first_last_com.c\
 				\
 				$(DIR_PARSE)parser.c
 

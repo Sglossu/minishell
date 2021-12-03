@@ -122,21 +122,18 @@ int our_pipe(t_all *all)
 		// ИГОРЬ, СЧИТАЙ ЧТО НИЖЕ ПРОСТО НАПИСАН МЕЙНИК ДЛЯ ПАЙПОВ И РЕДИРЕКТОВ, ПОКА НЕТ ПАРСЕРА
 
 		if_command_exist(all); // путь для 1 команды записывается в переменную
+		all->i++;
+		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("wc"));
 		all->cmd[all->i]->f_direct = DIR;
 		ft_lstadd_back(&all->cmd[all->i]->arg, ft_lstnew(ft_strdup(">")));
-		ft_lstadd_back(&all->cmd[all->i]->arg, ft_lstnew(ft_strdup("1")));
-		all->i++;
-		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("cat"));
+		ft_lstadd_back(&all->cmd[all->i]->arg, ft_lstnew(ft_strdup("2")));
 		if_command_exist(all); // путь для 2 команды записывается в переменную
 		all->i++;
-//		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("ls"));
-//		if_command_exist(all); // путь для 3 команды записывается в переменную
-//		all->i++;
-//		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("cat"));
-//		if_command_exist(all); // путь для 2 команды записывается в переменную
-//		all->i++;
-//		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("wc"));
-//		if_command_exist(all); // путь для 4 команды записывается в переменную
+		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("cat"));
+		all->cmd[all->i]->f_direct = DIR;
+		ft_lstadd_back(&all->cmd[all->i]->arg, ft_lstnew(ft_strdup("<")));
+		ft_lstadd_back(&all->cmd[all->i]->arg, ft_lstnew(ft_strdup("2")));
+		if_command_exist(all); // путь для 3 команды записывается в переменную
 		all->i = 0;
 		return(pipe_for_another(all, all->number_command - 1, &status));
 	}
