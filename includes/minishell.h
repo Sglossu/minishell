@@ -28,6 +28,7 @@ typedef struct s_cmd {
 	char 		*path_command; // под это нет маллока, так как замолочится потом
 	pid_t		pid;
 	int 		f_direct;
+	char 		*name_file; // for redirect
 }				t_cmd;
 
 typedef struct s_all {
@@ -58,8 +59,7 @@ void	init(t_all *all, char **envi);
 //pipe and redirect
 int		our_pipe(t_all *all);
 int		first_last_pipe(t_cmd *cmd, int fd, int fd_std);
-int		middle_pipe(t_all *all, int num_com, int com, int fd[com][2]);
-int		last_pipe(t_cmd *cmd, int fd_in);
+int		middle_pipe(t_cmd *cmd, int fd_com1, int fd_com2);
 
 int		f_l_dir(t_cmd *cmd, int fd);
 int		f_l_doubledir(t_cmd *cmd, int fd);
