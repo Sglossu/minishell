@@ -51,7 +51,7 @@ void	ft_lstprint(t_list *HEAD)           // принтит все значени
 	count = 1;
 	while (tmp)
 	{
-		printf("|%s| - arg %d\n", tmp->val, count);
+		// printf("|%s| - arg %d\n", tmp->val, count);
 		count++;
 		tmp = tmp->next;
 	}
@@ -208,7 +208,7 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 				}
 			all->cmd[i]->type = BINARY;
 		}
-		printf("coomand number - %d\n", i+1);
+		// printf("coomand number - %d\n", i+1);
 		ft_lstprint(all->cmd[i]->arg);
 		i++;		
 	}
@@ -219,13 +219,13 @@ int	parse(t_all *all, char *input)
 {
 	t_list		*HEAD;
 
-	// parse_path(all);			 пока закоментил, а то адреса накладываются и команды считаются неправильно  //распарсили path
+	parse_path(all);			// пока закоментил, а то адреса накладываются и команды считаются неправильно  //распарсили path
 	HEAD = make_list_with_all_word(input);			 // раскдиал слова по односвязному списку (слово1->слово2->слово3)
 	all->number_command = num_of_commands(HEAD, all); // посчитал число команд в списке
 	init_cmd_struct(all);						// создал структуру кмд (еще не всю)
 	fill_cmd_struct(all, HEAD);					// заполнил структуру кмд
 
 	// ft_lstprint(HEAD);								//просто вывод строки по листам
-	printf("%d <- commands\n", all->number_command); // вывод числа команд для контроля
+	// printf("%d <- commands\n", all->number_command); // вывод числа команд для контроля
 	return 0;
 }

@@ -32,21 +32,21 @@ int	main(int argc, char **argv, char **envi)
 		rl_bind_key('\t', rl_complete);
         add_history(input);
 
-		printf("\n<<<<<parse start>>>>>\n\n");
+		// printf("\n<<<<<parse start>>>>>\n\n");
 		parse(all, input);
-		printf("\n<<<<<parse complete>>>>>\n");
+		// printf("\n<<<<<parse complete>>>>>\n");
 
-		printf("\n<<<<<main start>>>>>\n\n");
+		// printf("\n<<<<<main start>>>>>\n\n");
 		if (all->number_command == 1)
 			main_work(all); // основная функция работы
-		// else if (all->number_command > 1)
-		// 	our_pipe(all);
-		printf("\n<<<<<main complete>>>>>\n\n");
+		else if (all->number_command > 1)
+			our_pipe(all);
+		// printf("\n<<<<<main complete>>>>>\n\n");
 
-		printf("\n<<<<<free structs start>>>>>\n\n");
+		// printf("\n<<<<<free structs start>>>>>\n\n");
 		free(input);
 		ft_free(all);
-		printf("\n<<<<<free structs complete>>>>>\n\n");
+		// printf("\n<<<<<free structs complete>>>>>\n\n");
 	}
 
 	return 0;

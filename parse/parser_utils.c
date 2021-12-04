@@ -46,6 +46,8 @@ int	ft_free(t_all *all)
 		i++;
 	}
 	free(all->cmd);
+	all->cmd = NULL; // тестовый вариант
+	all->number_command = 0;
 	return (0);
 }
 

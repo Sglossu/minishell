@@ -100,32 +100,32 @@ int pipe_for_two(t_all *all, int *status)
 	return (0);
 }
 
-// int our_pipe(t_all *all)
-// {
-// 	int status = 0;
-// 	if (all->number_command == 2)
-// 	{
-// 		if_command_exist(all); // путь для 1 команды записывается в переменную
-// 		all->i++;
-// 		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("wc"));
-// 		if_command_exist(all); // путь для 2 команды записывается в переменную
-// 		all->i = 0;
-// 		return(pipe_for_two(all, &status));
-// 	}
-// 	else
-// 	{
-// 		if_command_exist(all); // путь для 1 команды записывается в переменную
-// 		all->i++;
-// 		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("cat"));
-// 		if_command_exist(all); // путь для 2 команды записывается в переменную
-// 		all->i++;
-// 		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("echo"));
-// 		if_command_exist(all); // путь для 3 команды записывается в переменную
-// 		all->i++;
-// 		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("wc"));
-// 		if_command_exist(all); // путь для 4 команды записывается в переменную
-// 		all->i = 0;
-// 		return(pipe_for_another(all, all->number_command - 1, &status));
-// 	}
-// 	return (0);
-// }
+int our_pipe(t_all *all)
+{
+	int status = 0;
+	if (all->number_command == 2)
+	{
+		// // if_command_exist(all); // путь для 1 команды записывается в переменную
+		// all->i++;
+		// all->cmd[all->i]->arg = ft_lstnew(ft_strdup("wc"));
+		// // if_command_exist(all); // путь для 2 команды записывается в переменную
+		// all->i = 0;
+		return(pipe_for_two(all, &status));
+	}
+	else
+	{
+		// // if_command_exist(all); // путь для 1 команды записывается в переменную
+		// all->i++;
+		// all->cmd[all->i]->arg = ft_lstnew(ft_strdup("cat"));
+		// // if_command_exist(all); // путь для 2 команды записывается в переменную
+		// all->i++;
+		// all->cmd[all->i]->arg = ft_lstnew(ft_strdup("echo"));
+		// // if_command_exist(all); // путь для 3 команды записывается в переменную
+		// all->i++;
+		// all->cmd[all->i]->arg = ft_lstnew(ft_strdup("wc"));
+		// // if_command_exist(all); // путь для 4 команды записывается в переменную
+		// all->i = 0;
+		return(pipe_for_another(all, all->number_command - 1, &status));
+	}
+	return (0);
+}
