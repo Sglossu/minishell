@@ -18,6 +18,11 @@
 # include <readline/history.h>
 # include "stdbool.h"
 
+# define DIR		3 // >
+# define REDIR		4 // <
+# define DOUBLE_DIR	5 // >>
+# define NONE		0 // нет перенаправления
+
 # define BUILDIN 1
 # define BINARY 0
 

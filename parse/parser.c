@@ -57,6 +57,23 @@ void	ft_lstprint(t_list *HEAD)           // принтит все значени
 	}
 }
 
+static void	make_list(char *input, t_list *tmp)
+{
+	int	i;
+
+	i = 0;
+	if (input[i] == '|')
+		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup("|")));
+	else if (input[i] == '>' && input[i+1] == '>')
+		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup(">>")));
+	else if (input[i] == '<' && input[i+1] == '<')
+		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup("<<")));
+	else if (input[i] == '>')
+		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup(">")));
+	else if (input[i] == '<')
+		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup("<")));
+}
+
 static t_list	*make_list_with_all_word(char *input)
 {
 	int		i;
@@ -71,17 +88,16 @@ static t_list	*make_list_with_all_word(char *input)
 		if (input[i] != ' ')
 		{
 			j = i;
-			while (input[j] && input[j] != ' ' && input[j] != '|')
+			while (input[j] && input[j] != ' ' && input[j] != '|'
+					 && input[j] != '<' && input[j] != '>' )
 				j++;
 			str = ft_substr(input, i, j - i);
-			i = j;
 			if (ft_strlen(str) > 0)
 				ft_lstadd_back(&tmp, ft_lstnew(str));
 			else
-			{
-				// printf("CHECK\n");      // Мне, конечно, интересно почему туда проскакивает пуская строка, но это пока не так важно
 				free(str);
-			}
+			i = j;
+			make_list(input + j, tmp);
 		}
 		i++;
 	}
@@ -93,25 +109,29 @@ static	int	num_of_commands(t_list *HEAD, t_all *all)
 {
 	int		res;
 	t_list	*tmp;
+	int		pipes;
 
 	res = 0;
+	pipes = 1;
 	parse_path(all);
 	tmp = HEAD;
 	while (tmp)
 	{
-		if (is_buildin(tmp->val) || is_binary(tmp->val, all))   // я пока не могу посчитать бинарные команды, хочу сделать билдины
+		if ((is_buildin(tmp->val) || is_binary(tmp->val, all)) && pipes)  // я пока не могу посчитать бинарные команды, хочу сделать билдины
+		{
 			res++;
+			pipes = 0;
+		}
+		if (!ft_strcmp(tmp->val, "|"))
+			pipes = 1;
 		tmp = tmp->next;
 	}
 	return res;
 }
 
-int	init_cmd_struct(t_all *all, t_list *HEAD)
+int	init_cmd_struct(t_all *all)
 {
-	t_list	*tmp;
 	int		i;
-
-	tmp = HEAD;
 
 	i = 0;
 	all->cmd = malloc(sizeof(t_cmd *) * (all->number_command + 1));
@@ -121,31 +141,58 @@ int	init_cmd_struct(t_all *all, t_list *HEAD)
 		i++;
 	}
 	all->cmd[i] = NULL;
-
-	i = 0;
-	while (i != all->number_command)
-	{
-		all->cmd[i]->arg = tmp;
-		all->cmd[i]->type = BINARY; // bin or buildin ??????????
-		i++;
-	}
 	return (0); 
+}
+
+t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command)
+{
+	t_list	*tmp;
+	t_list	*res;
+	tmp = HEAD;
+	res = NULL;
+
+	(void) all;
+
+	while (num_command)
+	{
+		if (!ft_strcmp(tmp->val, "|"))
+			num_command--;
+		tmp = tmp->next;
+	}
+	while (tmp && ft_strcmp(tmp->val, "|"))
+	{
+		ft_lstadd_back(&res, ft_lstnew(ft_strdup(tmp->val)));
+		tmp = tmp->next;
+	}
+	return(res);
+}
+
+int	fill_cmd_struct(t_all *all, t_list *HEAD)
+{
+	int		i;
+	i = 0;
+
+	while (all->cmd[i])
+	{
+		all->cmd[i]->arg = copy_part_of_list(all, HEAD, i);
+		printf("coomand number - %d\n", i+1);
+		ft_lstprint(all->cmd[i]->arg);
+		i++;		
+	}
+	return 0;
 }
 
 int	parse(t_all *all, char *input)
 {
 	t_list		*HEAD;
 
-	parse_path(all);
-	HEAD = make_list_with_all_word(input);
-	
-	all->number_command = num_of_commands(HEAD, all);
-	init_cmd_struct(all, HEAD);
+	// parse_path(all);			 пока закоментил, а то адреса накладываются и команды считаются неправильно  //распарсили path
+	HEAD = make_list_with_all_word(input);			 // раскдиал слова по односвязному списку (слово1->слово2->слово3)
+	all->number_command = num_of_commands(HEAD, all); // посчитал число команд в списке
+	init_cmd_struct(all);						// создал структуру кмд (еще не всю)
+	fill_cmd_struct(all, HEAD);					// заполнил структуру кмд
 
-	
-	
-	
-	ft_lstprint(HEAD);
-	printf("%d <- commands\n", all->number_command);
+	// ft_lstprint(HEAD);								//просто вывод строки по листам
+	printf("%d <- commands\n", all->number_command); // вывод числа команд для контроля
 	return 0;
 }

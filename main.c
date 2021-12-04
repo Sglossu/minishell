@@ -37,8 +37,8 @@ int	main(int argc, char **argv, char **envi)
 		printf("\n<<<<<parse complete>>>>>\n");
 
 		printf("\n<<<<<main start>>>>>\n\n");
-		if (all->number_command == 1)
-			main_work(all); // основная функция работы
+		// if (all->number_command == 1)
+		// 	main_work(all); // основная функция работы
 		// else if (all->number_command > 1)
 		// 	our_pipe(all);
 		printf("\n<<<<<main complete>>>>>\n\n");

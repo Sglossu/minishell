@@ -54,10 +54,13 @@ int find_com(t_all *all)
 
 	while (all->path[i])
 	{
+		// printf("%s ", all->path[i]);
 		if (!access(all->path[i], 0 | 1))
 		{
+			// printf(" status 1\n");
 			return (1); // команда нашлась по этому пути
 		}
+		// printf(" status 0\n");
 		i++;
 	}
 	return (0); // не нашел такой команды нигде
@@ -65,6 +68,7 @@ int find_com(t_all *all)
 
 int is_binary(char *val, t_all *all)    // проверка бинарника
 {
+	parse_path(all);
 	path_pl_command(all, val);
 	return(find_com(all));
 }
@@ -72,7 +76,7 @@ int is_binary(char *val, t_all *all)    // проверка бинарника
 int is_buildin(char *val)             // проверка билдина
 {
 	if ((!ft_strcmp(val, "cd")) || (!ft_strcmp(val, "pwd")) || (!ft_strcmp(val, "echo"))
-			|| (!ft_strcmp(val, "ls")) || (!ft_strcmp(val, "export")) || (!ft_strcmp(val, "unset"))
+			|| (!ft_strcmp(val, "export")) || (!ft_strcmp(val, "unset"))
 				|| (!ft_strcmp(val, "env")) || (!ft_strcmp(val, "exit")))
 		return 1;
 	else
