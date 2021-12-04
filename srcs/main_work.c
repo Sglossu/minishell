@@ -87,7 +87,7 @@ int	main_work(t_all *all)
 		if_buildins(&all->env, all->cmd[i]->arg);
 		return (0);
 	}
-	if (!if_command_exist(all))
+	if (all->cmd[i]->type == BINARY)
 	{
 		all->cmd[i]->pid = fork();
 		if (all->cmd[i]->pid == 0)

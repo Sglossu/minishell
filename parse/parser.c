@@ -117,7 +117,7 @@ static	int	num_of_commands(t_list *HEAD, t_all *all)
 	tmp = HEAD;
 	while (tmp)
 	{
-		if ((is_buildin(tmp->val) || is_binary(tmp->val, all)) && pipes)  // я пока не могу посчитать бинарные команды, хочу сделать билдины
+		if ((is_buildin(tmp->val) || is_binary(tmp->val, all)) && pipes)
 		{
 			res++;
 			pipes = 0;
@@ -167,14 +167,47 @@ t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command)
 	return(res);
 }
 
+char *path_com(t_all *all, char *command)
+{
+	int i = 0;
+	parse_path(all);
+	path_pl_command(all, command);
+
+	while (all->path[i])
+	{
+		if (!access(all->path[i], 0 | 1))
+		{
+			return (all->path[i]); // команда нашлась по этому пути
+		}
+		i++;
+	}
+	return (NULL);
+
+}
+
 int	fill_cmd_struct(t_all *all, t_list *HEAD)
 {
 	int		i;
 	i = 0;
 
 	while (all->cmd[i])
-	{
+	{ 
 		all->cmd[i]->arg = copy_part_of_list(all, HEAD, i);
+		if (is_buildin(all->cmd[i]->arg->val))
+		{
+			all->cmd[i]->path_command = NULL;
+			all->cmd[i]->type = BUILDIN;
+		}
+		else if (is_binary(all->cmd[i]->arg->val, all))
+		{
+			all->cmd[i]->path_command = path_com(all ,all->cmd[i]->arg->val);
+			if (!(all->cmd[i]->path_command))
+				{
+					printf("ВНИМАНИЕ! ПРОИЗОШЛА ЧУШЬ!\n");
+					exit(777);
+				}
+			all->cmd[i]->type = BINARY;
+		}
 		printf("coomand number - %d\n", i+1);
 		ft_lstprint(all->cmd[i]->arg);
 		i++;		

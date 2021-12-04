@@ -67,6 +67,7 @@ int		if_command_exist(t_all *all);
 void	child(t_all *all, int all_i);
 
 //parse
+void	path_pl_command(t_all *all, char *command);
 int		parse(t_all *all, char *input);
 int		is_binary(char *val, t_all *all);
 int		is_buildin(char *val);
