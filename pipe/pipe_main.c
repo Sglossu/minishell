@@ -4,24 +4,24 @@
 
 #include "../includes/minishell.h"
 
-void	child_for_pipe(t_all *all, int num_com, int com, int fd[com][2])
+void	child_for_pipe(t_all *all, int i, int com, int fd[com][2])
 {
-	// num_com - номер команды, com - общее количество пайпов
-	int i = 0;
+	// i - номер команды, com - общее количество пайпов
+	int k = 0;
 
-	if (num_com == 0) // num_com - номер команды
+	if (i == 0) // i - номер команды
 		first_last_pipe(all->cmd[0], fd[0][1], STDOUT_FILENO); // первая команда
-	else if (num_com == all->number_command - 1)
-		first_last_pipe(all->cmd[num_com - 1], fd[num_com - 1][0], STDIN_FILENO); // последняя
-	else // пока это num_com = 1 // номер команды
-		middle_pipe(all->cmd[num_com - 1], fd[num_com - 1][0], fd[num_com][1]);
-	while (i < com)
+	else if (i == com)
+		first_last_pipe(all->cmd[i], fd[com - 1][0], STDIN_FILENO); // последняя
+	else
+		middle_pipe(all->cmd[i - 1], fd[i - 1][0], fd[i][1]);
+	while (k < com)
 	{
-		close(fd[i][0]);
-		close(fd[i][1]);
-		i++;
+		close(fd[k][0]);
+		close(fd[k][1]);
+		k++;
 	}
-	child(all, num_com);
+	child(all, i);
 }
 
 int pipe_for_another(t_all *all, int com, int *status) // com - количество пайпов
@@ -122,22 +122,26 @@ int our_pipe(t_all *all)
 	else
 	{
 		// ИГОРЬ, СЧИТАЙ ЧТО НИЖЕ ПРОСТО НАПИСАН МЕЙНИК ДЛЯ ПАЙПОВ И РЕДИРЕКТОВ, ПОКА НЕТ ПАРСЕРА
-
-		if_command_exist(all); // путь для 1 команды записывается в переменную
-		all->i++;
-		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("ls"));
+		if_command_exist(all);
 		all->cmd[all->i]->f_direct = DIR;
 		all->cmd[all->i]->name_file = ft_strdup("2");
-//		ft_lstadd_back(&all->cmd[all->i]->arg, ft_lstnew(ft_strdup(">")));
-//		ft_lstadd_back(&all->cmd[all->i]->arg, ft_lstnew(ft_strdup("2")));
-		if_command_exist(all); // путь для 2 команды записывается в переменную
+
+		all->i++;
+		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("ls"));
+		if_command_exist(all);
+
+		all->i++;
+		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("wc"));
+		all->cmd[all->i]->f_direct = DIR;
+		all->cmd[all->i]->name_file = ft_strdup("3");
+		if_command_exist(all);
+
 		all->i++;
 		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("cat"));
 		all->cmd[all->i]->f_direct = REDIR;
-		all->cmd[all->i]->name_file = ft_strdup("2");
-//		ft_lstadd_back(&all->cmd[all->i]->arg, ft_lstnew(ft_strdup("<")));
-//		ft_lstadd_back(&all->cmd[all->i]->arg, ft_lstnew(ft_strdup("2")));
-		if_command_exist(all); // путь для 3 команды записывается в переменную
+		all->cmd[all->i]->name_file = ft_strdup("1");
+		if_command_exist(all);
+
 		all->i = 0;
 		return(pipe_for_another(all, all->number_command - 1, &status));
 	}

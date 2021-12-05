@@ -53,8 +53,8 @@ int middle_pipe(t_cmd *cmd, int fd_com1, int fd_com2)
 
 	if (cmd->f_direct == DIR)
 	{
-		ret = f_l_dir(cmd, STDOUT_FILENO);
 		ret2 = dup2(fd_com1, STDIN_FILENO);
+		ret = f_l_dir(cmd, STDOUT_FILENO);
 	}
 	else if (cmd->f_direct == DOUBLE_DIR)
 	{

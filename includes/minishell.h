@@ -18,10 +18,11 @@
 # include <readline/history.h>
 # include "stdbool.h"
 
-# define DIR		3 // >
-# define REDIR		4 // <
-# define DOUBLE_DIR	5 // >>
-# define NONE		0 // нет перенаправления
+# define DIR			3 // >
+# define REDIR			4 // <
+# define DOUBLE_DIR		5 // >>
+# define DOUBLE_REDIR	6 // <<
+# define NONE			0 // нет перенаправления
 
 typedef struct s_cmd {
 	t_list		*arg;
