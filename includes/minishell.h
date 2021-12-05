@@ -70,6 +70,8 @@ int		f_l_redir(t_cmd *cmd, int fd);
 int		main_work(t_all *all);
 int		if_command_exist(t_all *all);
 void	child(t_all *all, int all_i);
+int		if_buildins(t_list **env, t_list *arg);
+int		one_with_direct(t_all *all);
 
 //parse
 int		parse(t_all *all, char *input);

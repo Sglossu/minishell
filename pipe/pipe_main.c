@@ -21,7 +21,8 @@ void	child_for_pipe(t_all *all, int i, int com, int fd[com][2])
 		close(fd[k][1]);
 		k++;
 	}
-	child(all, i);
+	if (if_buildins(&all->env, all->cmd[i]->arg))
+		child(all, i);
 }
 
 int pipe_for_another(t_all *all, int com, int *status) // com - количество пайпов
@@ -127,19 +128,17 @@ int our_pipe(t_all *all)
 		all->cmd[all->i]->name_file = ft_strdup("2");
 
 		all->i++;
-		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("ls"));
+		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("env"));
 		if_command_exist(all);
 
 		all->i++;
 		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("wc"));
-		all->cmd[all->i]->f_direct = DIR;
-		all->cmd[all->i]->name_file = ft_strdup("3");
+//		all->cmd[all->i]->f_direct = REDIR;
+//		all->cmd[all->i]->name_file = ft_strdup("3");
 		if_command_exist(all);
 
 		all->i++;
 		all->cmd[all->i]->arg = ft_lstnew(ft_strdup("cat"));
-		all->cmd[all->i]->f_direct = REDIR;
-		all->cmd[all->i]->name_file = ft_strdup("1");
 		if_command_exist(all);
 
 		all->i = 0;

@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **envi)
 	if (!all)
 		return (1); //error
 	init(all, envi);
+
 	while (1)
 	{
 		input = readline("Minishell☺% ");
@@ -32,8 +33,15 @@ int	main(int argc, char **argv, char **envi)
 		rl_bind_key('\t', rl_complete);
         add_history(input);
 		parse(all, input);
-		if (all->number_command == 1)
+
+		if_command_exist(all);
+		all->cmd[all->i]->f_direct = DIR;
+		all->cmd[all->i]->name_file = ft_strdup("2");
+
+		if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
 			main_work(all); // основная функция работы
+		else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)
+			one_with_direct(all);
 		else
 			our_pipe(all);
         free(input);
