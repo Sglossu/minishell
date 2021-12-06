@@ -32,8 +32,15 @@ int	main(int argc, char **argv, char **envi)
 		rl_bind_key('\t', rl_complete);
         add_history(input);
 		parse(all, input);
-		if (all->number_command == 1)
+
+		all->cmd[0]->f_direct = REDIR;
+		all->cmd[0]->name_file = "1";
+		if_command_exist(all);
+
+		if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
 			main_work(all); // основная функция работы
+		else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)
+			one_direct(all);
 		else
 			our_pipe(all);
         free(input);
