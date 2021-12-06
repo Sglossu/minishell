@@ -14,10 +14,6 @@ FILE(GLOB SRC
         "parse/*.c")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall")
-<<<<<<< HEAD
 add_executable(minishell ${SRC} srcs/one_direct.c)
-=======
-add_executable(minishell ${SRC} srcs/one_with_direct.c)
->>>>>>> 973fa81f5b1b4ed802e81d0bcbe10ff5ba864eb5
 target_link_libraries (minishell ${CMAKE_CURRENT_SOURCE_DIR}/libft/libft.a)
 target_link_libraries (minishell readline)

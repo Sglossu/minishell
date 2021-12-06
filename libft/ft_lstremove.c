@@ -9,8 +9,6 @@ void	ft_lstremove(t_list **lst, t_list *elem)
 	t_list	*tmp2;
 
 	tmp = *lst;
-	if (!elem)
-		return ;
 	if (tmp == elem)
 	{
 		*lst = (*lst)->next;
