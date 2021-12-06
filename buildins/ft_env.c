@@ -19,6 +19,7 @@ int	ft_env(t_list *lst)
 		ft_putendl_fd(lst->val, STDOUT_FILENO);
 		lst = lst->next;
 	}
+//	write(2, "pipi\n", 5);
 	return (0); // не ошибка
 }
 

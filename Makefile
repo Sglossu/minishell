@@ -19,9 +19,13 @@ SRCS		=	main.c \
 				$(DIR_UTILS)ft_sort_params.c	$(DIR_UTILS)about_memory.c		$(DIR_UTILS)find.c\
 				\
 				$(DIR_SRCS)init.c				$(DIR_SRCS)main_work.c			$(DIR_SRCS)command_exist.c \
+<<<<<<< HEAD
 				$(DIR_SRCS)one_direct.c \
+=======
+				$(DIR_SRCS)one_with_direct.c \
+>>>>>>> 973fa81f5b1b4ed802e81d0bcbe10ff5ba864eb5
 				\
-				$(DIR_PIPE)pipe_main.c\
+				$(DIR_PIPE)pipe_main.c			$(DIR_PIPE)first_middle_last.c	$(DIR_PIPE)first_last_com.c\
 				\
 				$(DIR_PARSE)parser.c
 

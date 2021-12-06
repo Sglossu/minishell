@@ -33,8 +33,13 @@ void	child(t_all *all, int all_i)
 
 	arg = from_lst_to_buf(ft_lstsize(all->cmd[all_i]->arg), all->cmd[all_i]->arg, '\0');
 	env = from_lst_to_buf(ft_lstsize(all->env), all->env, '\0');
+<<<<<<< HEAD
 //	ft_putendl_fd(all->cmd[0]->path_command, 2);
+=======
+	write(2, "4\n", 2);
+>>>>>>> 973fa81f5b1b4ed802e81d0bcbe10ff5ba864eb5
 	execve(all->cmd[all_i]->path_command, arg, env);
+	write(2, "3\n", 2);
 	while (arg[i])
 	{
 		free(arg[i]);
@@ -55,6 +60,7 @@ int	main_work(t_all *all)
 {
 	int status;
 	int i = all->i; // просто для удобства
+//	int fd[2];
 
 	if (!all->cmd[i]->arg)
 		return (0);

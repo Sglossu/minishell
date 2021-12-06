@@ -31,6 +31,10 @@ static int ft_makelist(t_all *all, char *ready_str)
 		all->cmd[all->i]->arg = ft_lstnew("env");
 	else if (!ft_strcmp(ready_str, "exit"))
 		all->cmd[all->i]->arg = ft_lstnew("exit");
+	else if (!ft_strcmp(ready_str, "wc"))
+		all->cmd[all->i]->arg = ft_lstnew("wc");
+	else if (!ft_strcmp(ready_str, "cat"))
+		all->cmd[all->i]->arg = ft_lstnew("cat");
 	else
 		all->cmd[all->i]->arg = NULL;
 	return 0;

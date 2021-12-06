@@ -30,8 +30,14 @@ void	init(t_all *all, char **envi)
 	while(i < all->number_command)
 	{
 		all->cmd[i] = malloc(sizeof(t_cmd));
+<<<<<<< HEAD
 		all->cmd[i]->name_file = NULL;
 		all->cmd[i]->f_direct = NONE;
+=======
+		all->cmd[i]->f_direct = NONE;
+		all->cmd[i]->name_file = NULL;
+		all->cmd[i]->path_command = NULL;
+>>>>>>> 973fa81f5b1b4ed802e81d0bcbe10ff5ba864eb5
 		i++;
 	}
 	all->cmd[i] = NULL;
