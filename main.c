@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **envi)
 			main_work(all); // основная функция работы
 		else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)
 			one_direct(all);
-		else
+		if (all->number_command > 1)
 			our_pipe(all);
 		// printf("\n<<<<<main complete>>>>>\n\n");
 
