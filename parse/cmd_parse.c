@@ -23,7 +23,7 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 				}
 			all->cmd[i]->type = BINARY;
 		}
-		// printf("coomand number - %d\n", i+1);
+		printf("coomand number - %d\n", i+1);
 		ft_lstprint(all->cmd[i]->arg);
 		i++;		
 	}
