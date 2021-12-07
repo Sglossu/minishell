@@ -47,15 +47,21 @@ int ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
 	char	*line;
 
 	line = NULL;
+	write(0, "> ", 2);
 	i = get_next_line(fd_std, &line);
-	if (!i || !ft_strcmp(line, cmd->name_file))
-		i = 0;
+	if (!ft_strcmp(line, cmd->name_file))
+	{
+		free(line);
+		return (0);
+	}
+	ft_putendl_fd(line, fd_0);
 	while (i)
 	{
+		write(0, "> ", 2);
 		i = get_next_line(fd_std, &line);
-		ft_putstr_fd(line, fd_0);
-		if (!i || !ft_strcmp(line, cmd->name_file))
-			i = 0;
+		if (!ft_strcmp(line, cmd->name_file))
+			break;
+		ft_putendl_fd(line, fd_0);
 	}
 	free(line);
 	return (0);
@@ -90,6 +96,8 @@ int one_direct(t_all *all)
 	}
 	else
 	{
+		close(fd[0]);
+		close(fd[1]);
 		waitpid(all->cmd[0]->pid, &status, 0);
 	}
 	return (0);
