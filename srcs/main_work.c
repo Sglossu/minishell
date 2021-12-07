@@ -21,8 +21,8 @@ int if_buildins(t_list **env, t_list *arg)
 	else if (!ft_strcmp(arg->val, "unset"))
 		ft_unset(env, arg);
 	else
-		return (1); // совпадений нет
-	return (0); // запустился билдин
+		return (1);
+	return (0);
 }
 
 void	child(t_all *all, int all_i)
@@ -50,38 +50,14 @@ void	child(t_all *all, int all_i)
 	exit(0);
 }
 
-// int	main_work(t_all *all)
-// {
-// 	int status;
-// 	int i = all->i; // просто для удобства
-
-// 	if (!all->cmd[i]->arg)
-// 		return (0);
-// 	if (!if_buildins(&all->env, all->cmd[i]->arg))
-// 		return (0); // то есть есть такой билдин
-// 	else
-// 	{
-// 		if (!if_command_exist(all))
-// 		{
-// 			all->cmd[i]->pid = fork();
-// 			if (all->cmd[i]->pid == 0)
-// 			{
-// 				child(all, 0);
-// 			}
-// 			else
-// 				waitpid(all->cmd[i]->pid, &status, 0);
-// 		}
-// 	}
-// 	return (1);
-// }
-
 int	main_work(t_all *all)
 {
 	int status;
-	int i = all->i; // просто для удобства
+	int i = all->i;
 
 	if (!all->cmd[i]->arg)
 		return (0);
+	
 	if (all->cmd[i]->type == BUILDIN)
 	{
 		if_buildins(&all->env, all->cmd[i]->arg);

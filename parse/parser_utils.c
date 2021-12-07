@@ -33,24 +33,6 @@ int find_com(t_all *all)
 	return (0); // не нашел такой команды нигде
 }
 
-
-int	ft_free(t_all *all)
-{
-	//Нам нужно освободить память, которую мы выделяли для CMD и PATH (так как мы их всегда парсим заново)
-	int	i;
-
-	i = 0;
-	while(i < all->number_command)
-	{
-		free(all->cmd[i]);
-		i++;
-	}
-	free(all->cmd);
-	all->cmd = NULL; // тестовый вариант
-	all->number_command = 0;
-	return (0);
-}
-
 int is_binary(char *val, t_all *all)    // проверка бинарника
 {
 	parse_path(all);

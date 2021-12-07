@@ -17,12 +17,15 @@ SRCS		=	main.c \
 				$(DIR_BUILD)ft_exit.c \
 				\
 				$(DIR_UTILS)ft_sort_params.c	$(DIR_UTILS)about_memory.c		$(DIR_UTILS)find.c\
+				$(DIR_UTILS)free.c \
 				\
 				$(DIR_SRCS)init.c				$(DIR_SRCS)main_work.c			$(DIR_SRCS)command_exist.c \
 				\
 				$(DIR_PIPE)pipe_main.c\
 				\
-				$(DIR_PARSE)parser.c			$(DIR_PARSE)parser_utils.c
+				$(DIR_PARSE)parser.c			$(DIR_PARSE)parser_utils.c		$(DIR_PARSE)lists.c \
+				$(DIR_PARSE)cmd_parse.c\
+				\
 
 OBJS		=	$(SRCS:.c=.o)
 
