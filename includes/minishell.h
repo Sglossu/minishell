@@ -70,7 +70,7 @@ int		if_buildins(t_list **env, t_list *arg);
 //parse
 int		parse(t_all *all, char *input);
 
-
+int ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0);
 
 
 #endif

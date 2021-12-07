@@ -23,12 +23,16 @@ static int ft_makelist(t_all *all, char *ready_str)
 		all->cmd[all->i]->arg = ft_lstnew("pwd");
 	else if (!ft_strcmp(ready_str, "ls"))
 		all->cmd[all->i]->arg = ft_lstnew("ls");
+	else if (!ft_strcmp(ready_str, "wc"))
+		all->cmd[all->i]->arg = ft_lstnew("wc");
 	else if (!ft_strcmp(ready_str, "export"))
 		all->cmd[all->i]->arg = ft_lstnew("export");
 	else if (!ft_strcmp(ready_str, "unset"))
 		all->cmd[all->i]->arg = ft_lstnew("unset");
 	else if (!ft_strcmp(ready_str, "env"))
 		all->cmd[all->i]->arg = ft_lstnew("env");
+	else if (!ft_strcmp(ready_str, "cat"))
+		all->cmd[all->i]->arg = ft_lstnew("cat");
 	else if (!ft_strcmp(ready_str, "exit"))
 		all->cmd[all->i]->arg = ft_lstnew("exit");
 	else
