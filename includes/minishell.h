@@ -24,6 +24,9 @@
 # define 	DOUB_REDIR	6
 # define 	NONE		7
 
+# define	BUILDIN		0
+# define	BINARY		1
+
 typedef struct s_cmd {
 	t_list		*arg;
 	char 		*path_command; // под это нет маллока, так как замолочится потом
