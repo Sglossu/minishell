@@ -18,19 +18,19 @@
 # include <readline/history.h>
 # include "stdbool.h"
 
-# define DIR		3 // >
-# define REDIR		4 // <
-# define DOUBLE_DIR	5 // >>
-# define NONE		0 // нет перенаправления
-
-# define BUILDIN 1
-# define BINARY 0
+# define 	DIR			3
+# define	REDIR		4
+# define	DOUB_DIR	5
+# define 	DOUB_REDIR	6
+# define 	NONE		7
 
 typedef struct s_cmd {
 	t_list		*arg;
 	char 		*path_command; // под это нет маллока, так как замолочится потом
 	pid_t		pid;
 	int			type;
+	char 		*name_file;
+	int 		f_direct;
 }				t_cmd;
 
 typedef struct s_all {
@@ -65,6 +65,8 @@ int		our_pipe(t_all *all);
 int		main_work(t_all *all);
 int		if_command_exist(t_all *all);
 void	child(t_all *all, int all_i);
+int		one_direct(t_all *all);
+int		if_buildins(t_list **env, t_list *arg);
 
 //parse
 void	path_pl_command(t_all *all, char *command);

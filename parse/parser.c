@@ -12,7 +12,6 @@
 
 #include "../includes/minishell.h"
 
-
 //  (мои друзья)    ''  ""  \   $  |  > < >> <<  (мои друзья)
 
 // static char *ft_quote(char *str, int *i)

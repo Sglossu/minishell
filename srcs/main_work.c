@@ -33,6 +33,7 @@ void	child(t_all *all, int all_i)
 
 	arg = from_lst_to_buf(ft_lstsize(all->cmd[all_i]->arg), all->cmd[all_i]->arg, '\0');
 	env = from_lst_to_buf(ft_lstsize(all->env), all->env, '\0');
+//	ft_putendl_fd(all->cmd[0]->path_command, 2);
 	execve(all->cmd[all_i]->path_command, arg, env);
 	while (arg[i])
 	{
