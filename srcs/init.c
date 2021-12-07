@@ -21,7 +21,7 @@ t_list	*init_lst_env(char **envi)
 
 void	init(t_all *all, char **envi)
 {
-	all->number_command = 3; // потом убрать, когда научимся считать количество комманд
+	all->number_command = 1; // потом убрать, когда научимся считать количество комманд
 	int 	i = 0;
 
 	all->env = init_lst_env(envi);
@@ -30,8 +30,8 @@ void	init(t_all *all, char **envi)
 	while(i < all->number_command)
 	{
 		all->cmd[i] = malloc(sizeof(t_cmd));
-		all->cmd[i]->f_direct = NONE;
 		all->cmd[i]->name_file = NULL;
+		all->cmd[i]->f_direct = NONE;
 		i++;
 	}
 	all->cmd[i] = NULL;
