@@ -93,9 +93,8 @@ int pipe_for_two(t_all *all, int *status)
 		dup2(fd[0], STDIN_FILENO); // теперь stdin (ввод) это как fd[0]
 		close(fd[1]);
 		close(fd[0]);
-//		all->i++;
-//		main_function_for_one_direct(all);
-		if (if_buildins(&all->env, all->cmd[1]->arg))
+		main_function_for_one_direct(all);
+		if (if_buildins(&all->env, all->cmd[all->i]->arg))
 			child(all, 1);
 	}
 	close(fd[0]);

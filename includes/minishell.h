@@ -65,6 +65,10 @@ void	init(t_all *all, char **envi);
 int		our_pipe(t_all *all);
 int 	main_function_for_one_direct(t_all *all);
 int		one_direct(t_all *all);
+int		ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0);
+int 	ft_redir(t_cmd *cmd, int fd_std);
+int 	ft_doubledir(t_cmd *cmd, int fd_std);
+int 	ft_dir(t_cmd *cmd, int fd_std);
 
 //main
 		int		main_work(t_all *all);
