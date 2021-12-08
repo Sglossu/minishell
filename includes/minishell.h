@@ -61,14 +61,15 @@ char	*find_after_equals(char *str);
 //srcs_init
 void	init(t_all *all, char **envi);
 
-//pipe
+//pipe and redirect
 int		our_pipe(t_all *all);
+int 	main_function_for_one_direct(t_all *all);
+int		one_direct(t_all *all);
 
 //main
-int		main_work(t_all *all);
+		int		main_work(t_all *all);
 int		if_command_exist(t_all *all);
 void	child(t_all *all, int all_i);
-int		one_direct(t_all *all);
 int		if_buildins(t_list **env, t_list *arg);
 
 //parse

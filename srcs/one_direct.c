@@ -8,6 +8,8 @@ int ft_dir(t_cmd *cmd, int fd_std)
 {
 	int		fd_file;
 
+//	ft_putendl_fd(cmd->arg->val, 2);
+
 	fd_file = open(cmd->name_file, O_CREAT | O_TRUNC | O_WRONLY, 0777);
 	if (fd_file == -1)
 		return (1); // todo ошибка
@@ -33,6 +35,7 @@ int ft_redir(t_cmd *cmd, int fd_std)
 {
 	int		fd_file;
 
+//	ft_putendl_fd(cmd->arg->val, 2);
 	fd_file = open(cmd->name_file, O_RDONLY);
 	if (fd_file == -1)
 		return (1); // todo ошибка
@@ -67,38 +70,73 @@ int ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
 	return (0);
 }
 
-int one_direct(t_all *all)
+int main_function_for_one_direct(t_all *all)
 {
-	int status;
+//	ft_putendl_fd(all->cmd[all->i]->arg->val, 2);
+//	ft_putnbr_fd(all->cmd[all->i]->f_direct, 2);
+
 	int fd[2];
 
 	if (pipe(fd) == -1)
 		return 1; // todo error
-	all->cmd[0]->pid = fork();
-	if (all->cmd[0]->pid == 0)
+
+	if (all->cmd[all->i]->f_direct == DIR)
+		ft_dir(all->cmd[all->i], STDOUT_FILENO);
+	else if (all->cmd[all->i]->f_direct == DOUB_DIR)
+		ft_doubledir(all->cmd[all->i], STDOUT_FILENO);
+	else if (all->cmd[all->i]->f_direct == REDIR)
+		ft_redir(all->cmd[all->i], STDIN_FILENO);
+	else if (all->cmd[all->i]->f_direct == DOUB_REDIR)
 	{
-		if (all->cmd[0]->f_direct == DIR)
-			ft_dir(all->cmd[0], STDOUT_FILENO);
-		else if (all->cmd[0]->f_direct == DOUB_DIR)
-			ft_doubledir(all->cmd[0], STDOUT_FILENO);
-		else if (all->cmd[0]->f_direct == REDIR)
-			ft_redir(all->cmd[0], STDIN_FILENO);
-		else if (all->cmd[0]->f_direct == DOUB_REDIR)
-		{
-			ft_doubleredir(all->cmd[0], STDIN_FILENO, fd[1]);
-			dup2(fd[0], STDIN_FILENO);
-			close(fd[0]);
-			close(fd[1]);
-		}
-		if (if_buildins(&all->env, all->cmd[0]->arg))
-			child(all, 0);
+		ft_doubleredir(all->cmd[all->i], STDIN_FILENO, fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+	}
+	if (all->number_command == 1)
+	{
+		if (if_buildins(&all->env, all->cmd[all->i]->arg))
+			child(all, all->i);
+	}
+	return (0);
+}
+
+int one_direct(t_all *all)
+{
+	int status;
+//	int fd[2];
+//
+//	if (pipe(fd) == -1)
+//		return 1; // todo error
+	all->cmd[all->i]->pid = fork();
+	if (all->cmd[all->i]->pid == 0)
+	{
+//		if (all->cmd[all->i]->f_direct == DIR)
+//			ft_dir(all->cmd[all->i], STDOUT_FILENO);
+//		else if (all->cmd[all->i]->f_direct == DOUB_DIR)
+//			ft_doubledir(all->cmd[all->i], STDOUT_FILENO);
+//		else if (all->cmd[all->i]->f_direct == REDIR)
+//			ft_redir(all->cmd[all->i], STDIN_FILENO);
+//		else if (all->cmd[0]->f_direct == DOUB_REDIR)
+//		{
+//			ft_doubleredir(all->cmd[all->i], STDIN_FILENO, fd[1]);
+//			dup2(fd[0], STDIN_FILENO);
+//			close(fd[0]);
+//			close(fd[1]);
+//		}
+//		if (all->number_command == 1)
+//		{
+//			if (if_buildins(&all->env, all->cmd[all->i]->arg))
+//				child(all, all->i);
+//		}
+		main_function_for_one_direct(all);
 		exit(0);
 	}
 	else
 	{
-		close(fd[0]);
-		close(fd[1]);
-		waitpid(all->cmd[0]->pid, &status, 0);
+//		close(fd[0]);
+//		close(fd[1]);
+		waitpid(all->cmd[all->i]->pid, &status, 0);
 	}
 	return (0);
 }

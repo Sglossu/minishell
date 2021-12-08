@@ -80,6 +80,7 @@ int pipe_for_two(t_all *all, int *status)
 		dup2(fd[1], STDOUT_FILENO); // делает stdout (вывод) копией fd[1], теперь stdout это как fd[1]
 		close(fd[0]);
 		close(fd[1]);
+		main_function_for_one_direct(all);
 		if (if_buildins(&all->env, all->cmd[0]->arg))
 			child(all, 0);
 	}
@@ -92,6 +93,8 @@ int pipe_for_two(t_all *all, int *status)
 		dup2(fd[0], STDIN_FILENO); // теперь stdin (ввод) это как fd[0]
 		close(fd[1]);
 		close(fd[0]);
+//		all->i++;
+//		main_function_for_one_direct(all);
 		if (if_buildins(&all->env, all->cmd[1]->arg))
 			child(all, 1);
 	}
