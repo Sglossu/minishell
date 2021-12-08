@@ -32,26 +32,6 @@ int	main(int argc, char **argv, char **envi)
 		rl_bind_key('\t', rl_complete);
         add_history(input);
 		parse(all, input);
-
-//		 wc < 1 | cat
-//		all->cmd[0]->f_direct = REDIR;
-//		all->cmd[0]->name_file = "1";
-
-//		ls > 2 | cat
-//		all->cmd[0]->f_direct = DOUB_REDIR;
-//		all->cmd[0]->name_file = "2";
-
-//		ls | wc > 1
-//		all->cmd[1]->f_direct = DIR;
-//		all->cmd[1]->name_file = "1";
-
-//		ls > 2 | wc < 1
-//		all->cmd[0]->f_direct = DIR;
-//		all->cmd[0]->name_file = "2";
-//		all->cmd[1]->f_direct = REDIR;
-//		all->cmd[1]->name_file = "1";
-
-
 		if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
 			main_work(all); // основная функция работы
 		else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)

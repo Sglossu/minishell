@@ -17,6 +17,9 @@ void	child_for_pipe(t_all *all, int num_com, int fd[2][2])
 		dup2(fd[num_com - 1][0], STDIN_FILENO);
 		dup2(fd[num_com][1], STDOUT_FILENO);
 	}
+	all->i = num_com;
+	if (all->cmd[num_com]->f_direct != NONE)
+		main_function_for_one_direct(all);
 	while (i < all->number_command - 1)
 	{
 		close(fd[i][0]);

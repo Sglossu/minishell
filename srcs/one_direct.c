@@ -8,8 +8,6 @@ int main_function_for_one_direct(t_all *all)
 {
 	int fd[2];
 
-//	ft_putendl_fd(all->cmd[all->i]->arg->val, 2);
-//	ft_putnbr_fd(all->cmd[all->i]->f_direct, 2);
 
 	if (pipe(fd) == -1)
 		return 1; // todo error
@@ -24,8 +22,6 @@ int main_function_for_one_direct(t_all *all)
 	{
 		ft_doubleredir(all->cmd[all->i], STDIN_FILENO, fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-//		close(fd[0]);
-//		close(fd[1]);
 	}
 	close(fd[0]);
 	close(fd[1]);
