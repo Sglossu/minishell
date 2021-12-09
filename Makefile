@@ -6,6 +6,7 @@ DIR_UTILS	=	./utils/
 DIR_SRCS	=	./srcs/
 DIR_PIPE	=	./pipe/
 DIR_PARSE	=	./parse/
+DIR_SIGNAL	=	./signal/
 CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
 RM			=	rm -f
@@ -27,6 +28,7 @@ SRCS		=	main.c \
 				$(DIR_PARSE)parser.c			$(DIR_PARSE)parser_utils.c		$(DIR_PARSE)lists.c \
 				$(DIR_PARSE)cmd_parse.c\
 				\
+				$(DIR_SIGNAL)signal.c
 
 OBJS		=	$(SRCS:.c=.o)
 
@@ -34,6 +36,9 @@ HEAD		=	$(DIR_HEAD)minishell.h
 
 LIB			=	libft/libft.a
 BLIB		=	./libft/libft.a
+
+RDL			= -lreadline
+RDL_MAC		= -lreadline -L ~/.brew/opt/readline/lib
 
 .c.o:
 		$(CC) $(CFLAGS) -c  -I$(DIR_HEAD) $< -o $(<:.c=.o)
@@ -45,7 +50,7 @@ $(OBJS)		:	$(HEAD)
 
 $(NAME)		:	$(OBJS)
 		$(MAKE) -C libft
-		$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(OBJS) $(BLIB) -lreadline -o $(NAME)
+		$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(OBJS) $(BLIB) $(RDL_MAC) -o $(NAME)
 
 clean		:
 		$(MAKE) clean -C libft

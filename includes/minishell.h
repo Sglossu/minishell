@@ -104,4 +104,7 @@ void	ft_lstprint(t_list *HEAD);
 //free
 int		ft_free(t_all *all);
 
+//signal
+
+
 #endif
