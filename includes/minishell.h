@@ -85,9 +85,10 @@ int		num_of_commands(t_list *HEAD, t_all *all);
 int		init_cmd_struct(t_all *all);
 int		fill_cmd_struct(t_all *all, t_list *HEAD);
 char	*path_com(t_all *all, char *command);
+int		dir_parse(t_cmd *cmd);
 
 // {LISTS}
-void	make_list(char *input, t_list *tmp);
+void	make_list(char *input, t_list *tmp, int *o);
 t_list	*make_list_with_all_word(char *input);
 t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command);
 void	ft_lstprint(t_list *HEAD);
