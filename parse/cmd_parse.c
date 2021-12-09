@@ -25,7 +25,6 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 				}
 			dir_parse(all->cmd[i]);
 		}
-		// check //
 		printf("coomand number - %d\n", i+1);
 		ft_lstprint(all->cmd[i]->arg);
 		printf("f_direct status = %d\n", all->cmd[i]->f_direct);
