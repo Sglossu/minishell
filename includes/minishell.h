@@ -34,6 +34,7 @@ typedef struct s_cmd {
 	int			type;
 	char 		*name_file;
 	int 		f_direct;
+	bool		combo;
 }				t_cmd;
 
 typedef struct s_all {
@@ -91,6 +92,7 @@ int		init_cmd_struct(t_all *all);
 int		fill_cmd_struct(t_all *all, t_list *HEAD);
 char	*path_com(t_all *all, char *command);
 int		dir_parse(t_cmd *cmd);
+void	combo_check(t_cmd *cmd);
 
 // {LISTS}
 void	make_list(char *input, t_list *tmp, int *o);

@@ -6,30 +6,26 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 	i = 0;
 
 	while (all->cmd[i])
-	{ 
+	{
+
 		all->cmd[i]->arg = copy_part_of_list(all, HEAD, i);
+		combo_check(all->cmd[i]);
 		if (is_buildin(all->cmd[i]->arg->val))
 		{
 			all->cmd[i]->path_command = NULL;
-			all->cmd[i]->f_direct = NONE;
 			all->cmd[i]->type = BUILDIN;
 			dir_parse(all->cmd[i]);
 		}
 		else if (is_binary(all->cmd[i]->arg->val, all))
 		{
 			all->cmd[i]->type = BINARY;
-			all->cmd[i]->path_command = path_com(all ,all->cmd[i]->arg->val);
-			if (!(all->cmd[i]->path_command))
-				{
-					printf("ВНИМАНИЕ! ПРОИЗОШЛА ЧУШЬ!\n");
-					exit(777);
-				}
+			all->cmd[i]->path_command = path_com(all ,all->cmd[i]->arg->val); // потом когда-нибудь (никогда) добавить проверочку
 			dir_parse(all->cmd[i]);
 		}
-		printf("coomand number - %d\n", i+1);
-		ft_lstprint(all->cmd[i]->arg);
-		printf("f_direct status = %d\n", all->cmd[i]->f_direct);
-		printf("name_file = %s\n", all->cmd[i]->name_file);
+		// printf("coomand number - %d\n", i+1);
+		// ft_lstprint(all->cmd[i]->arg);
+		// printf("f_direct status = %d\n", all->cmd[i]->f_direct);
+		// printf("name_file = %s\n", all->cmd[i]->name_file);
 		i++;		
 	}
 	return 0;
@@ -123,4 +119,24 @@ int dir_parse(t_cmd *cmd)
 		cmd->name_file = tmp->val;
 	}
 	return 0;
+}
+
+void combo_check(t_cmd *cmd)
+{
+	int		i;
+	t_list	*tmp;
+
+	i = 0;
+	tmp = cmd->arg;
+	while (tmp)
+	{
+		if ((!ft_strcmp(tmp->val, "<")) || (!ft_strcmp(tmp->val, "<<"))
+				|| (!ft_strcmp(tmp->val, ">")) || (!ft_strcmp(tmp->val, ">>")))
+				i++;
+		tmp = tmp->next;
+	}
+	if (i > 1)
+		cmd->combo = true;
+	else
+		cmd->combo = false;
 }
