@@ -35,8 +35,12 @@ HEAD		=	$(DIR_HEAD)minishell.h
 LIB			=	libft/libft.a
 BLIB		=	./libft/libft.a
 
+RDL			= -lreadline
+RDL_MAC		= -lreadline -L/usr/local/opt/readline/lib
+RDL_MAC_C	= -I/usr/local/opt/readline/include
+
 .c.o:
-		$(CC) $(CFLAGS) -c  -I$(DIR_HEAD) $< -o $(<:.c=.o)
+		$(CC) $(CFLAGS) -c -I$(DIR_HEAD) $(RDL_MAC_C) $< -o $(<:.c=.o)
 
 .PHONY		:	all clean fclean re bonus
 all			:	$(NAME)
@@ -45,7 +49,7 @@ $(OBJS)		:	$(HEAD)
 
 $(NAME)		:	$(OBJS)
 		$(MAKE) -C libft
-		$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(OBJS) $(BLIB) -lreadline -o $(NAME)
+		$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(OBJS) $(BLIB)  -o $(NAME) $(RDL_MAC)
 
 clean		:
 		$(MAKE) clean -C libft
