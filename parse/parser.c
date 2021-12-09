@@ -6,13 +6,27 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/11/29 20:35:46 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/09 12:55:28 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 //  (мои друзья)    ''  ""  \   $  |  > < >> <<  (мои друзья)
+
+int	parse(t_all *all, char *input)
+{
+	t_list		*HEAD;
+
+	parse_path(all);			
+	HEAD = make_list_with_all_word(input);
+	all->number_command = num_of_commands(HEAD, all);
+	printf("%d COM\n", all->number_command);
+	init_cmd_struct(all);
+	fill_cmd_struct(all, HEAD);
+
+	return 0;
+}
 
 // static char *ft_quote(char *str, int *i)
 // {
@@ -41,14 +55,3 @@
 // 	return (before);
 // }
 
-int	parse(t_all *all, char *input)
-{
-	t_list		*HEAD;
-
-	parse_path(all);			
-	HEAD = make_list_with_all_word(input);
-	all->number_command = num_of_commands(HEAD, all);
-	init_cmd_struct(all);
-	fill_cmd_struct(all, HEAD);
-	return 0;
-}
