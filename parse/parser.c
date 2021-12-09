@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/09 12:55:28 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/09 13:20:16 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	parse(t_all *all, char *input)
 	parse_path(all);			
 	HEAD = make_list_with_all_word(input);
 	all->number_command = num_of_commands(HEAD, all);
-	printf("%d COM\n", all->number_command);
 	init_cmd_struct(all);
 	fill_cmd_struct(all, HEAD);
 
