@@ -15,7 +15,7 @@ void	ft_lstprint(t_list *HEAD)
 	}
 }
 
-void	make_list(char *input, t_list *tmp)
+void	make_list(char *input, t_list *tmp, int *o)
 {
 	int	i;
 
@@ -23,9 +23,15 @@ void	make_list(char *input, t_list *tmp)
 	if (input[i] == '|')
 		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup("|")));
 	else if (input[i] == '>' && input[i+1] == '>')
+	{
 		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup(">>")));
+		*o += 1;
+	}
 	else if (input[i] == '<' && input[i+1] == '<')
+	{
 		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup("<<")));
+		*o += 1;
+	}
 	else if (input[i] == '>')
 		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup(">")));
 	else if (input[i] == '<')
@@ -55,7 +61,7 @@ t_list	*make_list_with_all_word(char *input)
 			else
 				free(str);
 			i = j;
-			make_list(input + j, tmp);
+			make_list(input + j, tmp, &i);
 		}
 		i++;
 	}

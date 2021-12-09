@@ -12,19 +12,23 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		{
 			all->cmd[i]->path_command = NULL;
 			all->cmd[i]->type = BUILDIN;
+			dir_parse(all->cmd[i]);
 		}
 		else if (is_binary(all->cmd[i]->arg->val, all))
 		{
+			all->cmd[i]->type = BINARY;
 			all->cmd[i]->path_command = path_com(all ,all->cmd[i]->arg->val);
 			if (!(all->cmd[i]->path_command))
 				{
 					printf("ВНИМАНИЕ! ПРОИЗОШЛА ЧУШЬ!\n");
 					exit(777);
 				}
-			all->cmd[i]->type = BINARY;
+			dir_parse(all->cmd[i]);
 		}
 		printf("coomand number - %d\n", i+1);
 		ft_lstprint(all->cmd[i]->arg);
+		printf("f_direct status = %d\n", all->cmd[i]->f_direct);
+		printf("name_file = %s\n", all->cmd[i]->name_file);
 		i++;		
 	}
 	return 0;
@@ -84,4 +88,38 @@ char *path_com(t_all *all, char *command)
 		i++;
 	}
 	return (NULL);
+}
+
+int dir_parse(t_cmd *cmd)
+{
+	t_list *tmp;
+
+	if (ft_lstfind(cmd->arg, ">"))
+	{
+		cmd->f_direct = DIR;
+		tmp = ft_lstfind(cmd->arg, ">");
+  	}
+	else if (ft_lstfind(cmd->arg, ">>"))
+	{
+		cmd->f_direct = DOUB_DIR;
+		tmp = ft_lstfind(cmd->arg, ">>");
+	}
+	else if (ft_lstfind(cmd->arg, "<"))
+	{
+		cmd->f_direct = REDIR;
+		tmp = ft_lstfind(cmd->arg, "<");	
+	}
+	else if (ft_lstfind(cmd->arg, "<<"))
+	{
+		cmd->f_direct = DOUB_REDIR;
+		tmp = ft_lstfind(cmd->arg, "<<");
+	}
+	else
+		cmd->f_direct = NONE;
+	if (cmd->f_direct != NONE)
+	{
+		tmp = tmp->next;
+		cmd->name_file = tmp->val;
+	}
+	return 0;
 }
