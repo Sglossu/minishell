@@ -11,6 +11,7 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		if (is_buildin(all->cmd[i]->arg->val))
 		{
 			all->cmd[i]->path_command = NULL;
+			all->cmd[i]->f_direct = NONE;
 			all->cmd[i]->type = BUILDIN;
 			dir_parse(all->cmd[i]);
 		}

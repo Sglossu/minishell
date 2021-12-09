@@ -17,6 +17,9 @@ void	child_for_pipe(t_all *all, int num_com, int fd[2][2])
 		dup2(fd[num_com - 1][0], STDIN_FILENO);
 		dup2(fd[num_com][1], STDOUT_FILENO);
 	}
+	all->i = num_com;
+	if (all->cmd[num_com]->f_direct != NONE)
+		main_function_for_one_direct(all);
 	while (i < all->number_command - 1)
 	{
 		close(fd[i][0]);
@@ -80,6 +83,7 @@ int pipe_for_two(t_all *all, int *status)
 		dup2(fd[1], STDOUT_FILENO); // делает stdout (вывод) копией fd[1], теперь stdout это как fd[1]
 		close(fd[0]);
 		close(fd[1]);
+		main_function_for_one_direct(all);
 		if (if_buildins(&all->env, all->cmd[0]->arg))
 			child(all, 0);
 	}
@@ -92,7 +96,8 @@ int pipe_for_two(t_all *all, int *status)
 		dup2(fd[0], STDIN_FILENO); // теперь stdin (ввод) это как fd[0]
 		close(fd[1]);
 		close(fd[0]);
-		if (if_buildins(&all->env, all->cmd[1]->arg))
+		main_function_for_one_direct(all);
+		if (if_buildins(&all->env, all->cmd[all->i]->arg))
 			child(all, 1);
 	}
 	close(fd[0]);

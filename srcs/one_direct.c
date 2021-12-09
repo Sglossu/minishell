@@ -4,101 +4,48 @@
 
 #include "../includes/minishell.h"
 
-int ft_dir(t_cmd *cmd, int fd_std)
+int main_function_for_one_direct(t_all *all)
 {
-	int		fd_file;
+	int fd[2];
 
-	fd_file = open(cmd->name_file, O_CREAT | O_TRUNC | O_WRONLY, 0777);
-	if (fd_file == -1)
-		return (1); // todo ошибка
-	if (dup2(fd_file, fd_std) == -1)
-		return (1); // todo
-	close(fd_file);
-	return (0);
-}
 
-int ft_doubledir(t_cmd *cmd, int fd_std)
-{
-	int		fd_file;
+	if (pipe(fd) == -1)
+		return 1; // todo error
 
-	fd_file = open(cmd->name_file, O_CREAT | O_APPEND | O_WRONLY, 0777);
-	if (fd_file == -1)
-		return (1); // todo ошибка
-	dup2(fd_file, fd_std);
-	close(fd_file);
-	return (0);
-}
-
-int ft_redir(t_cmd *cmd, int fd_std)
-{
-	int		fd_file;
-
-	fd_file = open(cmd->name_file, O_RDONLY);
-	if (fd_file == -1)
-		return (1); // todo ошибка
-	dup2(fd_file, fd_std);
-	close(fd_file);
-	return (0);
-}
-
-int ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
-{
-	int		i;
-	char	*line;
-
-	line = NULL;
-	write(0, "> ", 2);
-	i = get_next_line(fd_std, &line);
-	if (!ft_strcmp(line, cmd->name_file))
+	if (all->cmd[all->i]->f_direct == DIR)
+		ft_dir(all->cmd[all->i], STDOUT_FILENO);
+	else if (all->cmd[all->i]->f_direct == DOUB_DIR)
+		ft_doubledir(all->cmd[all->i], STDOUT_FILENO);
+	else if (all->cmd[all->i]->f_direct == REDIR)
+		ft_redir(all->cmd[all->i], STDIN_FILENO);
+	else if (all->cmd[all->i]->f_direct == DOUB_REDIR)
 	{
-		free(line);
-		return (0);
+		ft_doubleredir(all->cmd[all->i], STDIN_FILENO, fd[1]);
+		dup2(fd[0], STDIN_FILENO);
 	}
-	ft_putendl_fd(line, fd_0);
-	while (i)
+	close(fd[0]);
+	close(fd[1]);
+	if (all->number_command == 1)
 	{
-		write(0, "> ", 2);
-		i = get_next_line(fd_std, &line);
-		if (!ft_strcmp(line, cmd->name_file))
-			break;
-		ft_putendl_fd(line, fd_0);
+		if (if_buildins(&all->env, all->cmd[all->i]->arg))
+			child(all, all->i);
 	}
-	free(line);
 	return (0);
 }
 
 int one_direct(t_all *all)
 {
 	int status;
-	int fd[2];
 
-	if (pipe(fd) == -1)
-		return 1; // todo error
-	all->cmd[0]->pid = fork();
-	if (all->cmd[0]->pid == 0)
+	all->cmd[all->i]->pid = fork();
+	if (all->cmd[all->i]->pid == 0)
 	{
-		if (all->cmd[0]->f_direct == DIR)
-			ft_dir(all->cmd[0], STDOUT_FILENO);
-		else if (all->cmd[0]->f_direct == DOUB_DIR)
-			ft_doubledir(all->cmd[0], STDOUT_FILENO);
-		else if (all->cmd[0]->f_direct == REDIR)
-			ft_redir(all->cmd[0], STDIN_FILENO);
-		else if (all->cmd[0]->f_direct == DOUB_REDIR)
-		{
-			ft_doubleredir(all->cmd[0], STDIN_FILENO, fd[1]);
-			dup2(fd[0], STDIN_FILENO);
-			close(fd[0]);
-			close(fd[1]);
-		}
-		if (if_buildins(&all->env, all->cmd[0]->arg))
-			child(all, 0);
+		main_function_for_one_direct(all);
 		exit(0);
 	}
 	else
 	{
-		close(fd[0]);
-		close(fd[1]);
-		waitpid(all->cmd[0]->pid, &status, 0);
+		waitpid(all->cmd[all->i]->pid, &status, 0);
 	}
 	return (0);
 }
