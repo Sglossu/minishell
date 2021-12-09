@@ -9,8 +9,8 @@ void	ft_lstprint(t_list *HEAD)
 	count = 1;
 	while (tmp)
 	{
-		// printf("|%s| - arg %d\n", tmp->val, count);
-		ft_putendl_fd(tmp->val, 2);
+		printf("|%s| - arg %d\n", tmp->val, count);
+		// ft_putendl_fd(tmp->val, 2);
 		count++;
 		tmp = tmp->next;
 	}

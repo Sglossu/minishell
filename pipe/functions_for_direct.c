@@ -55,15 +55,16 @@ int ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
 		free(line);
 		return (0);
 	}
-	ft_putendl_fd(line, fd_0);
+	ft_putstr_fd(line, fd_0);
 	while (i)
 	{
 		write(0, "> ", 2);
 		i = get_next_line(fd_std, &line);
 		if (!ft_strcmp(line, cmd->name_file))
 			break;
-		ft_putendl_fd(line, fd_0);
+		ft_putstr_fd(line, fd_0);
 	}
+	ft_putchar_fd('\n', fd_0);
 	free(line);
 	return (0);
 }

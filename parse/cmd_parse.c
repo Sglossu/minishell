@@ -89,36 +89,54 @@ char *path_com(t_all *all, char *command)
 
 int dir_parse(t_cmd *cmd)
 {
-	t_list *tmp;
+	t_list		*tmp;
 
-	if (ft_lstfind(cmd->arg, ">"))
+	tmp = cmd->arg;
+
+	while (tmp)
 	{
-		cmd->f_direct = DIR;
-		tmp = ft_lstfind(cmd->arg, ">");
-  	}
-	else if (ft_lstfind(cmd->arg, ">>"))
-	{
-		cmd->f_direct = DOUB_DIR;
-		tmp = ft_lstfind(cmd->arg, ">>");
-	}
-	else if (ft_lstfind(cmd->arg, "<"))
-	{
-		cmd->f_direct = REDIR;
-		tmp = ft_lstfind(cmd->arg, "<");	
-	}
-	else if (ft_lstfind(cmd->arg, "<<"))
-	{
-		cmd->f_direct = DOUB_REDIR;
-		tmp = ft_lstfind(cmd->arg, "<<");
-	}
-	else
-		cmd->f_direct = NONE;
-	if (cmd->f_direct != NONE)
-	{
+		if (!ft_strcmp(tmp->val, ">"))
+		{
+			cmd->f_direct = DIR;
+			cmd->name_file = tmp->next->val;
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			// ft_putendl_fd(cmd->name_file,2);
+			// ft_putnbr_fd(cmd->f_direct, 2);
+			return 0;
+		}
+		else if (!ft_strcmp(tmp->val, ">>"))
+		{
+			cmd->f_direct = DOUB_DIR;
+			cmd->name_file = tmp->next->val;
+			// ft_putendl_fd(cmd->name_file,2);
+			// ft_putnbr_fd(cmd->f_direct, 2);
+			return 0;
+		}
+		else if (!ft_strcmp(tmp->val, "<"))
+		{
+			cmd->f_direct = REDIR;
+			cmd->name_file = tmp->next->val;
+			// ft_putendl_fd(cmd->name_file,2);
+			// ft_putnbr_fd(cmd->f_direct, 2);
+			return 0;
+		}
+		else if (!ft_strcmp(tmp->val, "<<"))
+		{
+			cmd->f_direct = DOUB_REDIR;
+			cmd->name_file = tmp->next->val;
+			// ft_putendl_fd(cmd->name_file,2);
+			// ft_putnbr_fd(cmd->f_direct, 2);
+			return 0;
+		}
+		else
+		{
+			cmd->f_direct = NONE;
+			cmd->name_file = NULL;
+		}
 		tmp = tmp->next;
-		cmd->name_file = tmp->val;
 	}
-	return 0;
+	return 1;
 }
 
 void combo_check(t_cmd *cmd)
