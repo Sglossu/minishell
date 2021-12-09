@@ -9,7 +9,7 @@ void	ft_lstprint(t_list *HEAD)
 	count = 1;
 	while (tmp)
 	{
-		// printf("|%s| - arg %d\n", tmp->val, count);
+		printf("|%s| - arg %d\n", tmp->val, count);
 		count++;
 		tmp = tmp->next;
 	}
