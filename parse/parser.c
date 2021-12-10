@@ -14,37 +14,38 @@
 
 //  (мои друзья)    ''  ""  \   $  |  > < >> <<  (мои друзья)
 
-static char *preparse(char *input)
-{
-	int		i;
+// static char *preparse(char *input)
+// {
+// 	int		i;
 
-	i = 0;
-	while (input[i])
-	{
-		// printf("|%d|<-- i \n", i);
-		if (input[i] == '\'')
-			input = ft_quote(input, &i);
-		// if (input[i] == '\"')
-		// 	res = ft_dubquoute(input, &i);
-		// if (input[i] == '$')
-		// 	res = ft_dollar(input, &i);
-		i++;
-	}
-	return (input);
-}
+// 	i = 0;
+// 	while (input[i])
+// 	{
+// 		// printf("|%d|<-- i \n", i);
+// 		if (input[i] == '\'')
+// 			input = ft_quote(input, &i);
+// 		// if (input[i] == '\"')
+// 		// 	res = ft_dubquoute(input, &i);
+// 		// if (input[i] == '$')
+// 		// 	res = ft_dollar(input, &i);
+// 		i++;
+// 	}
+// 	return (input);
+// }
 
 int	parse(t_all *all, char *input)
 {
 	char		*parse_input;
 	t_list		*HEAD;
 
-	parse_input = preparse(input);
+	// parse_input = preparse(input);
+	parse_input = input;
 	parse_path(all);
 	HEAD = make_list_with_all_word(parse_input);
 	all->number_command = num_of_commands(HEAD, all);
 	ft_lstprint(HEAD);
-	// init_cmd_struct(all);
-	// fill_cmd_struct(all, HEAD);
+	init_cmd_struct(all);
+	fill_cmd_struct(all, HEAD);
 
 	return 0;
 }
