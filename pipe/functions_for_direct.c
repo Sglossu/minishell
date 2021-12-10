@@ -52,6 +52,7 @@ int ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
 	i = get_next_line(fd_std, &line);
 	if (!ft_strcmp(line, cmd->name_file))
 	{
+		ft_putchar_fd('9', fd_0);
 		free(line);
 		return (0);
 	}
@@ -62,6 +63,7 @@ int ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
 		i = get_next_line(fd_std, &line);
 		if (!ft_strcmp(line, cmd->name_file))
 			break;
+		ft_putchar_fd('\n', fd_0);
 		ft_putstr_fd(line, fd_0);
 	}
 	ft_putchar_fd('\n', fd_0);

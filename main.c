@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **envi)
 	if (!all)
 		return (1); //error
 	init(all, envi);
+	rl_replace_line("", 0);
 	while (1)
 	{
 		input = readline("Minishell☺% ");

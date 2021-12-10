@@ -46,6 +46,8 @@ typedef struct s_all {
 	int 		i; // номер вызываемой команды
 }				t_all;
 
+int	s_status;
+
 //buidins
 void	ft_pwd(void);
 int		ft_cd(t_list **env, t_list *arg);
@@ -105,6 +107,10 @@ void	ft_lstprint(t_list *HEAD);
 int		ft_free(t_all *all);
 
 //signal
-
+void	ft_signal_in_child(void);
+void	ft_signal_main(void);
+void	ft_signal_run_pipes(void);
+void	ft_signal_cltr_c(int sig);
+void	ft_signal_pipes(int sig);
 
 #endif
