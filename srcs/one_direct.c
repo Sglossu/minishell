@@ -47,12 +47,19 @@ int	what_is_direct(t_all *all)
 
 int main_function_for_one_direct(t_all *all)
 {
-	what_is_direct(all);	
+	bool	flag = false;
+
+
+	what_is_direct(all);
+
+	if (all->cmd[all->i]->combo)
+		flag = true;
 
 	if (check_for_rekurs_direct(all->cmd[all->i]))
 		main_function_for_one_direct(all);
-	
-	what_is_direct(all);
+
+	if (flag)
+		what_is_direct(all);
 	
 	if (all->number_command == 1)
 	{
