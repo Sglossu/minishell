@@ -47,8 +47,6 @@ int ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
 	int		i;
 	char	*line;
 
-	ft_putendl_fd("pupupu", 2);
-
 	line = NULL;
 	write(0, "> ", 2);
 	i = get_next_line(fd_std, &line);
