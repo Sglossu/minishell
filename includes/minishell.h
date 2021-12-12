@@ -110,7 +110,9 @@ int		ft_free(t_all *all);
 void	ft_signal_in_child(void);
 void	ft_signal_main(void);
 void	ft_signal_run_pipes(void);
-void	ft_signal_cltr_c(int sig);
+void	ft_signal_cltr_c_main(int sig);
 void	ft_signal_pipes(int sig);
+void	ft_signal_cltr_c_child(int sig);
+void	ft_signal_quit_child(int sig);
 
 #endif

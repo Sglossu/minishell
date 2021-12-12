@@ -4,17 +4,40 @@
 
 #include "../includes/minishell.h"
 
+// SIGINT	Cntrl+C
+// SIGTERM	Cntrl+
+// SIGQUIT	Cntrl+backslash
+
+void	ft_signal_quit_child(int sig)
+{
+	char	*quit;
+
+	quit = ft_itoa(sig);
+	ft_putstr_fd("Quit: ", STDERR_FILENO);
+	ft_putendl_fd(quit, STDERR_FILENO);
+	free(quit);
+	quit = NULL;
+	s_status= 131;
+}
+
+void	ft_signal_cltr_c_child(int sig)
+{
+	(void)sig;
+	write(2, "\n", 1);
+	s_status = 130;
+}
+
 void	ft_signal_in_child(void)
 {
 	signal(SIGTERM, SIG_DFL);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, ft_signal_cltr_c_child);
+	signal(SIGQUIT, ft_signal_quit_child);
 }
 
 void	ft_signal_main(void)
 {
 	signal(SIGTERM, SIG_IGN);
-	signal(SIGINT, ft_signal_cltr_c);
+	signal(SIGINT, ft_signal_cltr_c_main);
 	signal(SIGQUIT, SIG_IGN);
 }
 
@@ -24,11 +47,11 @@ void	ft_signal_run_pipes(void)
 	signal(SIGQUIT, ft_signal_pipes);
 }
 
-void	ft_signal_cltr_c(int sig)
+void	ft_signal_cltr_c_main(int sig)
 {
 	(void)sig;
 	write(2, "\n", 1);
-//	rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 	s_status = 130;

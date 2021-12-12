@@ -53,8 +53,9 @@ void	child(t_all *all, int all_i)
 
 int	main_work(t_all *all)
 {
-	int status;
 	int i = all->i;
+
+	ft_signal_in_child();
 
 	if (!all->cmd[i]->arg)
 		return (0);
@@ -72,7 +73,7 @@ int	main_work(t_all *all)
 			child(all, 0);
 		}
 		else
-			waitpid(all->cmd[i]->pid, &status, 0);
+			waitpid(all->cmd[i]->pid, &s_status, 0);
 	}
 	return (1);
 }
