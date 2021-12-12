@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **envi)
 	ft_signal_main();
 	while (1)
 	{
+
 		input = readline("Minishell☺% ");
 		if (!input)
 			exit(1);
