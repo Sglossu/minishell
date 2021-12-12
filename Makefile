@@ -1,4 +1,5 @@
 NAME		=	minishell
+
 DIR			=	./srcs/
 DIR_HEAD	=	./includes/
 DIR_BUILD	=	./buildins/
@@ -6,8 +7,10 @@ DIR_UTILS	=	./utils/
 DIR_SRCS	=	./srcs/
 DIR_PIPE	=	./pipe/
 DIR_PARSE	=	./parse/
+DIR_SIGNAL	=	./signal/
+
 CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra
+CFLAGS		=	-Wall -Wextra -Werror -I ~/.brew/opt/readline/include/
 RM			=	rm -f
 
 SRCS		=	main.c \
@@ -27,36 +30,37 @@ SRCS		=	main.c \
 				$(DIR_PARSE)parser.c			$(DIR_PARSE)parser_utils.c		$(DIR_PARSE)lists.c \
 				$(DIR_PARSE)cmd_parse.c\
 				\
+				$(DIR_SIGNAL)signal.c
 
 OBJS		=	$(SRCS:.c=.o)
-
 HEAD		=	$(DIR_HEAD)minishell.h
 
-LIB			=	libft/libft.a
-BLIB		=	./libft/libft.a
+LIB			=	./libft/libft.a
+HEAD_LIB	=	./libft/libft.h
 
-RDL			= -lreadline
-RDL_MAC		= -lreadline -L/usr/local/opt/readline/lib
-RDL_MAC_C	= -I/usr/local/opt/readline/include
+RDL			= 	-lreadline
+RDL_MAC		= 	-lreadline -L ~/.brew/opt/readline/lib
 
-.c.o:
-		$(CC) $(CFLAGS) -c -I$(DIR_HEAD) $(RDL_MAC_C) $< -o $(<:.c=.o)
+.PHONY		:	all clean fclean re
 
-.PHONY		:	all clean fclean re bonus
 all			:	$(NAME)
 
-$(OBJS)		:	$(HEAD)
+.c.o		:
+				$(CC) $(CFLAGS) -c -I$(DIR_HEAD) $< -o $(<:.c=.o)
 
-$(NAME)		:	$(OBJS)
-		$(MAKE) -C libft
-		$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(OBJS) $(BLIB)  -o $(NAME) $(RDL_MAC)
+$(NAME)		:	$(OBJS) $(HEAD) $(HEAD_LIB)
+				$(MAKE) -C libft
+				$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(OBJS) $(BLIB) -o $(NAME) $(RDL_MAC)
 
 clean		:
-		$(MAKE) clean -C libft
-		$(RM) $(OBJS)
+				$(MAKE) clean -C ./libft/
+				$(RM) $(OBJS)
+				@echo "\033[36;1m\nCleaning succeed\n\033[0m"
 
 fclean		:	clean
-		$(MAKE) fclean -C libft
-		$(RM) $(NAME)
+				$(MAKE) fclean -C ./libft/
+				$(RM) $(NAME)
+				@echo "\033[32;1m\nAll created files were deleted\n\033[0m"
 
-re			:	fclean all
+re:				fclean all
+				@echo "\033[35;1m\nRemake done\n\033[0m"

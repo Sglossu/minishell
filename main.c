@@ -20,10 +20,12 @@ int	main(int argc, char **argv, char **envi)
 	t_all	*all;
 	char	*input;
 
+	s_status = 0;
 	all = malloc(sizeof(t_all));
 	if (!all)
 		return (1); //error
 	init(all, envi);
+	ft_signal_main();
 	while (1)
 	{
 
@@ -37,7 +39,7 @@ int	main(int argc, char **argv, char **envi)
 			main_work(all); // основная функция работы
 		else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)
 			one_direct(all);
-		else
+		else if (all->number_command > 1)
 			our_pipe(all);
 
 		free(input);
