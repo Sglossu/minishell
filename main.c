@@ -25,10 +25,9 @@ int	main(int argc, char **argv, char **envi)
 	if (!all)
 		return (1); //error
 	init(all, envi);
-	ft_signal_main();
 	while (1)
 	{
-
+		ft_signal_main();
 		input = readline("Minishell☺% ");
 		if (!input)
 			exit(1);

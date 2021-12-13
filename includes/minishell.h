@@ -48,6 +48,7 @@ typedef struct s_all {
 
 int	s_status;
 
+
 //buidins
 void	ft_pwd(void);
 int		ft_cd(t_list **env, t_list *arg);

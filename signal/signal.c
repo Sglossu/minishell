@@ -23,7 +23,8 @@ void	ft_signal_quit_child(int sig)
 void	ft_signal_cltr_c_child(int sig)
 {
 	(void)sig;
-	write(2, "\n", 1);
+//	ft_putendl_fd("hui", STDERR_FILENO);
+	write(STDERR_FILENO, "\n", 1);
 	s_status = 130;
 }
 
@@ -54,6 +55,7 @@ void	ft_signal_cltr_c_main(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+//	ft_putendl_fd("hui2", STDERR_FILENO);
 	s_status = 130;
 }
 
