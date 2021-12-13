@@ -38,26 +38,22 @@ static void print_params(char **buf, int count)
 	}
 }
 
-int ft_export(t_list **env, t_list *arg)
+int ft_export(t_list **env, t_list *exp, t_list *arg)
 {
 	char 	**buf;
 	int 	count;
-	t_list	*exp = 0;
 	t_list	*tmp;
 
 	tmp = *env;
-	while(tmp)
-	{
-		ft_lstadd_back(&exp, ft_lstnew(tmp->val));
-		tmp = tmp->next;
-	}
 	if (arg)
 		arg = arg->next;
 	tmp = arg;
 	while (arg)
 	{
-		if(!ft_lstfind(exp, arg->val)) {
+		if(!ft_lstfind(exp, arg->val))
+		{
 			ft_lstadd_back(&exp, ft_lstnew(arg->val));
+			ft_lstadd_back(env, ft_lstnew(arg->val));
 		}
 		arg = arg->next;
 	}

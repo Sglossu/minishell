@@ -24,7 +24,10 @@ int ft_echo(t_list *arg)
 	}
 	while (arg)
 	{
-		ft_putstr_fd(arg->val, STDOUT_FILENO);
+		if (!ft_strcmp((arg->val), "$?"))
+			ft_putnbr_fd(s_status, STDOUT_FILENO);
+		else
+			ft_putstr_fd(arg->val, STDOUT_FILENO);
 		if (arg->next)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		arg = arg->next;

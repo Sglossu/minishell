@@ -26,7 +26,7 @@ void	child_for_pipe(t_all *all, int num_com, int fd[2][2])
 		close(fd[i][1]);
 		i++;
 	}
-	if (if_buildins(&all->env, all->cmd[num_com]->arg))
+	if (if_buildins(&all->env, all->exp, all->cmd[num_com]->arg))
 		child(all, num_com);
 }
 
@@ -87,7 +87,7 @@ int pipe_for_two(t_all *all, int *status)
 		close(fd[0]);
 		close(fd[1]);
 		main_function_for_one_direct(all);
-		if (if_buildins(&all->env, all->cmd[0]->arg))
+		if (if_buildins(&all->env, all->exp, all->cmd[0]->arg))
 			child(all, 0);
 	}
 	pid[1] = fork();
@@ -101,7 +101,7 @@ int pipe_for_two(t_all *all, int *status)
 		close(fd[1]);
 		close(fd[0]);
 		main_function_for_one_direct(all);
-		if (if_buildins(&all->env, all->cmd[all->i]->arg))
+		if (if_buildins(&all->env, all->exp, all->cmd[all->i]->arg))
 			child(all, 1);
 	}
 	close(fd[0]);

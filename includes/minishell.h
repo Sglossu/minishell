@@ -40,6 +40,7 @@ typedef struct s_cmd {
 
 typedef struct s_all {
 	t_list		*env;
+	t_list		*exp;
 	char 		**path; // под это нет маллока, так как замолочится потом
 	t_cmd		**cmd;
 	int 		number_command; // количество команд
@@ -48,13 +49,12 @@ typedef struct s_all {
 
 int	s_status;
 
-
 //buidins
 void	ft_pwd(void);
-int		ft_cd(t_list **env, t_list *arg);
+void	ft_cd(t_list **env, t_list *arg);
 int		ft_env(t_list *lst);
-int 	ft_unset(t_list **env, t_list *arg);
-int		ft_export(t_list **env, t_list *arg);
+int 	ft_unset(t_list **env, t_list *exp, t_list *arg);
+int		ft_export(t_list **env, t_list *exp, t_list *arg);
 int		ft_echo(t_list *arg);
 int		ft_exit(t_list *arg);
 
@@ -76,10 +76,10 @@ int 	ft_doubledir(t_cmd *cmd, int fd_std);
 int 	ft_dir(t_cmd *cmd, int fd_std);
 
 //main
-		int		main_work(t_all *all);
+int		main_work(t_all *all);
 int		if_command_exist(t_all *all);
 void	child(t_all *all, int all_i);
-int		if_buildins(t_list **env, t_list *arg);
+int		if_buildins(t_list **env, t_list *exp, t_list *arg);
 
 //parse
 void	path_pl_command(t_all *all, char *command);

@@ -69,7 +69,7 @@
 
 #include "../includes/minishell.h"
 
-int ft_unset(t_list **env, t_list *arg)
+int ft_unset(t_list **env, t_list *exp, t_list *arg)
 {
 	t_list *tmp;
 
@@ -80,6 +80,7 @@ int ft_unset(t_list **env, t_list *arg)
 		if (tmp)
 		{
 			ft_lstremove(env, tmp);
+			ft_lstremove(&exp, tmp);
 		}
 		arg = arg->next;
 	}

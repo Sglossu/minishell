@@ -4,7 +4,7 @@
 
 #include "../includes/minishell.h"
 
-int if_buildins(t_list **env, t_list *arg)
+int if_buildins(t_list **env, t_list *exp, t_list *arg)
 {
 	if (!ft_strcmp(arg->val, "cd"))
 		ft_cd(env, arg);
@@ -15,11 +15,11 @@ int if_buildins(t_list **env, t_list *arg)
 	else if (!ft_strcmp(arg->val, "exit"))
 		ft_exit(arg);
 	else if (!ft_strcmp(arg->val, "export"))
-		ft_export(env, arg);
+		ft_export(env, exp, arg);
 	else if (!ft_strcmp(arg->val, "pwd"))
 		ft_pwd();
 	else if (!ft_strcmp(arg->val, "unset"))
-		ft_unset(env, arg);
+		ft_unset(env, exp, arg);
 	else
 		return (1);
 	return (0);
@@ -61,7 +61,7 @@ int	main_work(t_all *all)
 	
 	if (all->cmd[i]->type == BUILDIN)
 	{
-		if_buildins(&all->env, all->cmd[i]->arg);
+		if_buildins(&all->env, all->exp, all->cmd[i]->arg);
 		return (0);
 	}
 	if (all->cmd[i]->type == BINARY)
