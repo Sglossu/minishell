@@ -89,8 +89,8 @@ int		is_buildin(char *val);
 
 // {preparse}
 char	*ft_quote(char *input, int *i);
-// char	*ft_dubquoute(char *input, int *i);
-// char	*ft_dollar(char *input, int *i);
+char	*ft_dubquoute(char *input, int *i, t_all *all);
+char	*ft_dollar(char *input, t_all *all);
 
 // {CMD}
 int		num_of_commands(t_list *HEAD, t_all *all);

@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/09 20:08:02 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/14 18:26:07 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,31 @@
 
 //  (мои друзья)    ''  ""  \   $  |  > < >> <<  (мои друзья)
 
-// static char *preparse(char *input)
-// {
-// 	int		i;
+static char *preparse(char *input, t_all *all)
+{
+	int		i;
 
-// 	i = 0;
-// 	while (input[i])
-// 	{
-// 		// printf("|%d|<-- i \n", i);
-// 		if (input[i] == '\'')
-// 			input = ft_quote(input, &i);
-// 		// if (input[i] == '\"')
-// 		// 	res = ft_dubquoute(input, &i);
-// 		// if (input[i] == '$')
-// 		// 	res = ft_dollar(input, &i);
-// 		i++;
-// 	}
-// 	return (input);
-// }
+	i = 0;
+	while (input[i])
+	{
+		// printf("|%d|<-- i \n", i);
+		if (input[i] == '\'')
+			input = ft_quote(input, &i);
+		if (input[i] == '\"')
+			input = ft_dubquoute(input, &i, all);
+		if (input[i] == '$')
+			input = ft_dollar(input, all);
+		i++;
+	}
+	return (input);
+}
 
 int	parse(t_all *all, char *input)
 {
 	char		*parse_input;
 	t_list		*HEAD;
 
-	// parse_input = preparse(input);
-	parse_input = input;
+	parse_input = preparse(input, all);
 	parse_path(all);
 	HEAD = make_list_with_all_word(parse_input);
 	all->number_command = num_of_commands(HEAD, all);
