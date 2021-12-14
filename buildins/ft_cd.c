@@ -11,12 +11,18 @@ char	*home(t_list **env)
 
 	tmp = ft_lstfind((*env), "HOME");
 	if (!tmp)
+	{
 		ft_putendl_fd("cd: HOME not set", STDOUT_FILENO);
+		s_status = 1;
+	}
 	else
 	{
 		str = find_after_equals(tmp->val);
 		if (!str) // нет =
+		{
 			ft_putendl_fd("cd: HOME not set", STDOUT_FILENO);
+			s_status = 1;
+		}
 		else
 			return (str);
 	}
@@ -56,7 +62,7 @@ void	ft_cd(t_list **env, t_list *arg)
 	if (!str)
 		s_status = errno; // error - уже напечатана
 	oldpwd = getcwd(NULL, 1024);
-	if (chdir(str) == -1)
+	if (chdir(str) == -1 && str)
 	{
 		s_status = errno;
 		printf("%s: %s: %s\n", arg->val, str, strerror(errno));

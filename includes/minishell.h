@@ -45,6 +45,7 @@ typedef struct s_all {
 	t_cmd		**cmd;
 	int 		number_command; // количество команд
 	int 		i; // номер вызываемой команды
+	char 		*home;
 }				t_all;
 
 int	s_status;
@@ -87,6 +88,7 @@ int		parse(t_all *all, char *input);
 int		parse_path(t_all *all);
 int		is_binary(char *val, t_all *all);
 int		is_buildin(char *val);
+int 	parse_path(t_all *all);
 
 //parse_utils
 

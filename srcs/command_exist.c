@@ -23,10 +23,14 @@ int parse_path(t_all *all)
 			str = ft_strdup(all->path[i] + 1);
 			free(all->path[i]);
 			tmp = ft_lstfind(all->env, "HOME");
-			if (!tmp)
-				return (1); // todo обработать ошибку если нет HOME
-			all->path[i] = ft_strjoin(find_after_equals(tmp->val), str);
-			free(str);
+			if (tmp)
+			{
+				all->path[i] = ft_strjoin(find_after_equals(tmp->val), str);
+				free(str);
+
+			}
+//			else
+//				return 1;
 		}
 		i++;
 	}
