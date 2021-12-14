@@ -60,7 +60,7 @@ void	ft_cd(t_list **env, t_list *arg)
 	else
 		str = ft_strdup(arg->next->val);
 	if (!str)
-		s_status = errno; // error - уже напечатана
+		return; // error - уже напечатана
 	oldpwd = getcwd(NULL, 1024);
 	if (chdir(str) == -1 && str)
 	{
