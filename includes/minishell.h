@@ -48,6 +48,13 @@ typedef struct s_all {
 	char 		*home;
 }				t_all;
 
+typedef struct s_str {
+	char *input;
+	int	quote;
+	int	dub_quote;
+	int	dollars;
+}				t_str;
+
 int	s_status;
 
 void path_print(t_all *all); // потом удалить
@@ -97,7 +104,7 @@ int 	parse_path(t_all *all);
 // {preparse}
 char	*ft_quote(char *input, int *i);
 char	*ft_dubquoute(char *input, int *i, t_all *all);
-char	*ft_dollar(char *input, t_all *all);
+// char	*ft_dollar(char *input, t_all *all, int *i);
 
 // {CMD}
 int		num_of_commands(t_list *HEAD, t_all *all);

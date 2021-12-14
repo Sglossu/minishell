@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/14 18:26:07 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/14 20:08:18 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,37 @@
 
 //  (мои друзья)    ''  ""  \   $  |  > < >> <<  (мои друзья)
 
+static void	initMyString(t_str *str, char *input)
+{
+	int i;
+
+	i = 0;
+	str = malloc(sizeof(t_str));
+	str->input = input;
+	str->quote = 0;
+	str->dub_quote = 0;
+	str->dollars = 0;
+
+	while (input[i])
+	{
+		if (input[i] == '\'')
+			str->quote += 1;
+		else if (input[i] == '\"')
+			str->dub_quote += 1;
+		else if (input[i] == '$')
+			str->dub_quote += 1;
+		i++;
+	}
+	
+}
+
 static char *preparse(char *input, t_all *all)
 {
+	t_str	*myString;
 	int		i;
 
+
+	initMyString(myString, input);
 	i = 0;
 	while (input[i])
 	{
@@ -26,8 +53,8 @@ static char *preparse(char *input, t_all *all)
 			input = ft_quote(input, &i);
 		if (input[i] == '\"')
 			input = ft_dubquoute(input, &i, all);
-		if (input[i] == '$')
-			input = ft_dollar(input, all);
+		// if (input[i] == '$')
+		// 	input = ft_dollar(input, all, &i);
 		i++;
 	}
 	return (input);
