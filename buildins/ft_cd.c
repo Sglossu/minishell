@@ -11,12 +11,18 @@ char	*home(t_list **env)
 
 	tmp = ft_lstfind((*env), "HOME");
 	if (!tmp)
+	{
 		ft_putendl_fd("cd: HOME not set", STDOUT_FILENO);
+		s_status = 1;
+	}
 	else
 	{
 		str = find_after_equals(tmp->val);
 		if (!str) // нет =
+		{
 			ft_putendl_fd("cd: HOME not set", STDOUT_FILENO);
+			s_status = 1;
+		}
 		else
 			return (str);
 	}
@@ -43,7 +49,7 @@ int	change_pwd_oldpwd(t_list **env, char **oldpwd)
 	return (0);
 }
 
-int	ft_cd(t_list **env, t_list *arg)
+void	ft_cd(t_list **env, t_list *arg)
 {
 	(void)env;
 	char 	*str;
@@ -54,11 +60,13 @@ int	ft_cd(t_list **env, t_list *arg)
 	else
 		str = ft_strdup(arg->next->val);
 	if (!str)
-		return (1); // error - уже напечатана
+		return; // error - уже напечатана
 	oldpwd = getcwd(NULL, 1024);
-	if (chdir(str) == -1)
+	if (chdir(str) == -1 && str)
+	{
+		s_status = errno;
 		printf("%s: %s: %s\n", arg->val, str, strerror(errno));
+	}
 	else
 		change_pwd_oldpwd(env, &oldpwd);
-	return (0);
 }

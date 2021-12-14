@@ -153,7 +153,7 @@ void combo_check(t_cmd *cmd)
 				i++;
 		tmp = tmp->next;
 	}
-	if (i > 1)
+	if (i > 2)
 		cmd->combo = true;
 	else
 		cmd->combo = false;

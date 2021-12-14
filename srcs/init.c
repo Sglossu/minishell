@@ -4,23 +4,25 @@
 
 #include "../includes/minishell.h"
 
-t_list	*init_lst_env(char **envi)
+t_list	*init_lst_env_or_exp(char **buf)
 {
-	t_list	*envp_l;
+	t_list	*tmp;
 	int		i;
 
-	envp_l = NULL;
+	tmp = NULL;
 	i = 0;
-	while (envi[i])
+	while (buf[i])
 	{
-		ft_lstadd_back(&envp_l, ft_lstnew(envi[i]));
+		ft_lstadd_back(&tmp, ft_lstnew(buf[i]));
 		i++;
 	}
-	return (envp_l);
+	return (tmp);
 }
 
 void	init(t_all *all, char **envi)
 {
-	all->env = init_lst_env(envi);
+	all->env = init_lst_env_or_exp(envi);
+	all->exp = init_lst_env_or_exp(envi);
+
 	all->i = 0;
 }

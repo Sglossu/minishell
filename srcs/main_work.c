@@ -4,7 +4,7 @@
 
 #include "../includes/minishell.h"
 
-int if_buildins(t_list **env, t_list *arg)
+int if_buildins(t_list **env, t_list *exp, t_list *arg)
 {
 	if (!ft_strcmp(arg->val, "cd"))
 		ft_cd(env, arg);
@@ -15,11 +15,11 @@ int if_buildins(t_list **env, t_list *arg)
 	else if (!ft_strcmp(arg->val, "exit"))
 		ft_exit(arg);
 	else if (!ft_strcmp(arg->val, "export"))
-		ft_export(env, arg);
+		ft_export(env, exp, arg);
 	else if (!ft_strcmp(arg->val, "pwd"))
 		ft_pwd();
 	else if (!ft_strcmp(arg->val, "unset"))
-		ft_unset(env, arg);
+		ft_unset(env, exp, arg);
 	else
 		return (1);
 	return (0);
@@ -33,7 +33,6 @@ void	child(t_all *all, int all_i)
 
 	arg = from_lst_to_buf(ft_lstsize(all->cmd[all_i]->arg), all->cmd[all_i]->arg, '\0');
 	env = from_lst_to_buf(ft_lstsize(all->env), all->env, '\0');
-//	ft_putendl_fd(all->cmd[0]->path_command, 2);
 	execve(all->cmd[all_i]->path_command, arg, env);
 	while (arg[i])
 	{
@@ -53,15 +52,16 @@ void	child(t_all *all, int all_i)
 
 int	main_work(t_all *all)
 {
-	int status;
 	int i = all->i;
+
+	ft_signal_in_child();
 
 	if (!all->cmd[i]->arg)
 		return (0);
 	
 	if (all->cmd[i]->type == BUILDIN)
 	{
-		if_buildins(&all->env, all->cmd[i]->arg);
+		if_buildins(&all->env, all->exp, all->cmd[i]->arg);
 		return (0);
 	}
 	if (all->cmd[i]->type == BINARY)
@@ -72,7 +72,7 @@ int	main_work(t_all *all)
 			child(all, 0);
 		}
 		else
-			waitpid(all->cmd[i]->pid, &status, 0);
+			waitpid(all->cmd[i]->pid, &s_status, 0);
 	}
 	return (1);
 }

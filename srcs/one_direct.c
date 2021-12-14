@@ -9,14 +9,16 @@ int	check_for_rekurs_direct(t_cmd *cmd)
 	combo_check(cmd);
 	if (cmd->combo)
 	{
+//		combo_check(cmd);
+		ft_lstremove(&cmd->arg, cmd->arg->next);
+		ft_lstremove(&cmd->arg, cmd->arg->next);
 		dir_parse(cmd);
-		ft_lstremove(&cmd->arg, cmd->arg->next);
-		ft_lstremove(&cmd->arg, cmd->arg->next);
 		return 1;
 	}
+	ft_lstremove(&cmd->arg, cmd->arg->next);
+	ft_lstremove(&cmd->arg, cmd->arg->next);
 	dir_parse(cmd);
-	ft_lstremove(&cmd->arg, cmd->arg->next);
-	ft_lstremove(&cmd->arg, cmd->arg->next);
+
 	return 0;
 }
 
@@ -47,16 +49,15 @@ int	what_is_direct(t_all *all)
 
 int main_function_for_one_direct(t_all *all)
 {
-	what_is_direct(all);	
-
-	if (check_for_rekurs_direct(all->cmd[all->i]))
-		main_function_for_one_direct(all);
-	
 	what_is_direct(all);
-	
+	if (check_for_rekurs_direct(all->cmd[all->i]))
+	{
+		main_function_for_one_direct(all);
+	}
+	what_is_direct(all);
 	if (all->number_command == 1)
 	{
-		if (if_buildins(&all->env, all->cmd[all->i]->arg))
+		if (if_buildins(&all->env, all->exp, all->cmd[all->i]->arg))
 			child(all, all->i);
 	}
 	return (0);

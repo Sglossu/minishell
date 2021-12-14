@@ -40,18 +40,24 @@ typedef struct s_cmd {
 
 typedef struct s_all {
 	t_list		*env;
+	t_list		*exp;
 	char 		**path; // под это нет маллока, так как замолочится потом
 	t_cmd		**cmd;
 	int 		number_command; // количество команд
 	int 		i; // номер вызываемой команды
+	char 		*home;
 }				t_all;
+
+int	s_status;
+
+void path_print(t_all *all); // потом удалить
 
 //buidins
 void	ft_pwd(void);
-int		ft_cd(t_list **env, t_list *arg);
+void	ft_cd(t_list **env, t_list *arg);
 int		ft_env(t_list *lst);
-int 	ft_unset(t_list **env, t_list *arg);
-int		ft_export(t_list **env, t_list *arg);
+int 	ft_unset(t_list **env, t_list *exp, t_list *arg);
+int		ft_export(t_list **env, t_list *exp, t_list *arg);
 int		ft_echo(t_list *arg);
 int		ft_exit(t_list *arg);
 
@@ -73,10 +79,10 @@ int 	ft_doubledir(t_cmd *cmd, int fd_std);
 int 	ft_dir(t_cmd *cmd, int fd_std);
 
 //main
-		int		main_work(t_all *all);
+int		main_work(t_all *all);
 int		if_command_exist(t_all *all);
 void	child(t_all *all, int all_i);
-int		if_buildins(t_list **env, t_list *arg);
+int		if_buildins(t_list **env, t_list *exp, t_list *arg);
 
 //parse
 void	path_pl_command(t_all *all, char *command);
@@ -84,6 +90,7 @@ int		parse(t_all *all, char *input);
 int		parse_path(t_all *all);
 int		is_binary(char *val, t_all *all);
 int		is_buildin(char *val);
+int 	parse_path(t_all *all);
 
 //parse_utils
 
@@ -108,5 +115,14 @@ void	ft_lstprint(t_list *HEAD);
 
 //free
 int		ft_free(t_all *all);
+
+//signal
+void	ft_signal_in_child(void);
+void	ft_signal_main(void);
+void	ft_signal_run_pipes(void);
+void	ft_signal_cltr_c_main(int sig);
+void	ft_signal_pipes(int sig);
+void	ft_signal_cltr_c_child(int sig);
+void	ft_signal_quit_child(int sig);
 
 #endif
