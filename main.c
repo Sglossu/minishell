@@ -25,6 +25,8 @@ int	main(int argc, char **argv, char **envi)
 	if (!all)
 		return (1); //error
 	init(all, envi);
+//	parse_path(all);
+//	path_print(all);
 	while (1)
 	{
 		ft_signal_main();

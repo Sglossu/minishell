@@ -50,6 +50,8 @@ typedef struct s_all {
 
 int	s_status;
 
+void path_print(t_all *all); // потом удалить
+
 //buidins
 void	ft_pwd(void);
 void	ft_cd(t_list **env, t_list *arg);

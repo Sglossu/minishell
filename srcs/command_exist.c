@@ -27,10 +27,9 @@ int parse_path(t_all *all)
 			{
 				all->path[i] = ft_strjoin(find_after_equals(tmp->val), str);
 				free(str);
-
 			}
-//			else
-//				return 1;
+			else
+				all->path[i] = NULL;
 		}
 		i++;
 	}
@@ -87,6 +86,5 @@ int if_command_exist(t_all *all)
 	// if (parse_path(all))
 	// 	return (1); // todo обработать ошибку
 	path_plus_command(all);
-//	path_print(all);
 	return (find_command(all));
 }
