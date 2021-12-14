@@ -80,6 +80,7 @@ int ft_unset(t_list **env, t_list *exp, t_list *arg)
 		if (tmp)
 		{
 			ft_lstremove(env, tmp);
+			tmp = ft_lstfind(exp, arg->val);
 			ft_lstremove(&exp, tmp);
 		}
 		arg = arg->next;
