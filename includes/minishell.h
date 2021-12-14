@@ -1,7 +1,14 @@
-
-//
-// Created by Shasta Glossu on 11/16/21.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:17:25 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:17:31 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -15,6 +22,7 @@
 # include "sys/wait.h"
 # include <errno.h>
 # include "../libft/libft.h"
+# include "../printf/ft_printf.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "stdbool.h"
@@ -51,6 +59,8 @@ typedef struct s_all {
 int	s_status;
 
 void path_print(t_all *all); // потом удалить
+
+int	ft_printf(const char *s, ...);
 
 //buidins
 void	ft_pwd(void);

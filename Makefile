@@ -38,8 +38,14 @@ HEAD		=	$(DIR_HEAD)minishell.h
 LIB			=	./libft/libft.a
 HEAD_LIB	=	./libft/libft.h
 
+LIB_PRINT	=	./printf/libftprintf.a
+HEAD_LIB_PRINT	=	./printf/ft_printf.h
+
 RDL			= 	-lreadline
 RDL_MAC		= 	-lreadline -L ~/.brew/opt/readline/lib
+
+#SOURCES		=	$(wildcard ./printf/*.c)
+#PRINTF_LIB	=	./printf/ft_printf.h
 
 .PHONY		:	all clean fclean re
 
@@ -50,7 +56,8 @@ all			:	$(NAME)
 
 $(NAME)		:	$(OBJS) $(HEAD) $(HEAD_LIB)
 				$(MAKE) -C libft
-				$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(OBJS) $(BLIB) -o $(NAME) $(RDL_MAC)
+				$(MAKE) -C printf
+				$(CC) -g $(CFLAGS) -Llibft -Lprintf -lft -I$(DIR_HEAD) $(OBJS) $(LIB) $(LIB_PRINT) -o $(NAME) $(RDL_MAC)
 
 clean		:
 				$(MAKE) clean -C ./libft/

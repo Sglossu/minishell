@@ -1,6 +1,14 @@
-//
-// Created by Shasta Glossu on 11/23/21.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:08:57 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:09:02 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
@@ -96,12 +104,14 @@ int	ft_exit(t_list *arg)
 {
 	arg = arg->next;
 	if (!arg)
-		printf("exit\n");
-	else
-		printf("exit %s\n", arg->val);
-	if (!arg)
-		exit (0);
-	if (ft_strisdigit(arg->val))
+	{
+		ft_putendl_fd("exit", STDOUT_FILENO);
+		s_status = 0;
+		exit (s_status);
+	}
+	ft_putstr_fd("exit ", STDOUT_FILENO);
+	ft_putendl_fd(arg->val, STDOUT_FILENO);
+	if (ft_strisdigit(arg->val)) // return 1 - есть буква
 	{
 		printf("exit: %s: numeric argument required\n", arg->val);
 		exit (255);

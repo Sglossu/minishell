@@ -1,26 +1,27 @@
-//
-// Created by Shasta Glossu on 11/18/21.
-//
-
-//t_list *arg = ft_lstnew(ft_strdup("echo"));
-//ft_lstadd_back(&arg, ft_lstnew(ft_strdup("-n")));
-//ft_lstadd_back(&arg, ft_lstnew(ft_strdup("var2")));
-//ft_lstadd_back(&arg, ft_lstnew(ft_strdup("var22=bbb")));
-//
-//ft_echo(arg);
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:08:01 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:08:03 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int ft_echo(t_list *arg)
 {
-	int line_break;
+	bool	line_break;
 
-	line_break = 1;
+	line_break = true;
 	arg = arg->next;
 	if (arg && !ft_strcmp(arg->val, "-n"))
 	{
 		arg = arg->next;
-		line_break = 0;
+		line_break = false;
 	}
 	while (arg)
 	{

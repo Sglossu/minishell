@@ -1,20 +1,14 @@
-//
-// Created by Shasta Glossu on 11/19/21.
-//
-
-//t_list	*env = 0;
-//ft_lstadd_back(&env, ft_lstnew(ft_strdup("PATH=aaa")));
-//ft_lstadd_back(&env, ft_lstnew(ft_strdup("sss=dddd")));
-//ft_lstadd_back(&env, ft_lstnew(ft_strdup("pupu=12345678")));
-//ft_lstadd_back(&env, ft_lstnew(ft_strdup("PWD=var2=var2=")));
-//ft_lstadd_back(&env, ft_lstnew(ft_strdup("var22=bbb")));
-//
-//t_list *arg = ft_lstnew(ft_strdup("export"));
-//ft_lstadd_back(&arg, ft_lstnew(ft_strdup("var2")));
-//ft_lstadd_back(&arg, ft_lstnew(ft_strdup("var22=bbb")));
-//
-//ft_export(&env, NULL);
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:09:29 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:10:12 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
