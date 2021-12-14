@@ -50,7 +50,10 @@ typedef struct s_all {
 
 typedef struct s_str {
 	char *input;
+	char *buf;
+	int iter;
 	int	quote;
+	int	ecran;
 	int	dub_quote;
 	int	dollars;
 }				t_str;
@@ -102,8 +105,8 @@ int 	parse_path(t_all *all);
 //parse_utils
 
 // {preparse}
-char	*ft_quote(char *input, int *i);
-char	*ft_dubquoute(char *input, int *i, t_all *all);
+char	*ft_quote(t_str *myString);
+// char	*ft_dubquoute(char *input, int *i, t_all *all);
 // char	*ft_dollar(char *input, t_all *all, int *i);
 
 // {CMD}

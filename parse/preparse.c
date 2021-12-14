@@ -6,13 +6,13 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/14 19:45:55 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/14 23:20:26 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char *ft_quote(char *input, int *i)
+char *ft_quote(t_str *myString)
 {
 	char *s;
 	char *m;
@@ -20,59 +20,59 @@ char *ft_quote(char *input, int *i)
 	char *res;
 	int j;
 
-	j = *i;
+	j = myString->iter;
 
-	while (input[j++])
-		if (input[j] == '\'')
+	while (myString->input[j++])
+		if (myString->input[j] == '\'')
 			break;
-	s = ft_substr(input, 0 , *i);
-	m = ft_substr(input, *i + 1, j - *i - 1);
-	f = strdup(input + j + 1);
+	s = ft_substr(myString->input, 0 , myString->iter);
+	m = ft_substr(myString->input, myString->iter + 1, j - myString->iter - 1);
+	f = strdup(myString->input + j + 1);
 	res = ft_strjoin(ft_strjoin(s,m), f);
-	// printf("|%s|<-s\n|%s|<-m\n|%s|<-f\n",s,m,f);
-	// printf("|%s|<-RES\n", res);
-	*i = -1;
+	myString->iter = -1;
+	printf("|%s|<-s\n|%s|<-m\n|%s|<-f\n",s,m,f);
+	printf("|%s|<-RES\n", res);
 	return(res);
 }
 
 
-int	isDollar(char *str)
-{
-	int i;
+// int	isDollar(char *str)
+// {
+// 	int i;
 
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return 1;
-		i++;
-	}
-	return 0;
-}
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '$')
+// 			return 1;
+// 		i++;
+// 	}
+// 	return 0;
+// }
 
-char *ft_dubquoute(char *input, int *i, t_all *all)
-{
-	char *s;
-	char *m;
-	char *f;
-	char *res;
-	int j;
+// char *ft_dubquoute(char *input, int *i, t_all *all)
+// {
+// 	char *s;
+// 	char *m;
+// 	char *f;
+// 	char *res;
+// 	int j;
 
-	(void) all;
-	j = *i;
+// 	(void) all;
+// 	j = *i;
 
-	while (input[j++])
-		if (input[j] == '\"')
-			break;
-	s = ft_substr(input, 0 , *i);
-	m = ft_substr(input, *i + 1, j - *i - 1);
-	// if (isDollar(s))
-	// 	m = ft_dollar(m, all, i);
-	f = strdup(input + j + 1);
-	res = ft_strjoin(ft_strjoin(s,m), f);
-	*i = -1;
-	return(res);
-}
+// 	while (input[j++])
+// 		if (input[j] == '\"')
+// 			break;
+// 	s = ft_substr(input, 0 , *i);
+// 	m = ft_substr(input, *i + 1, j - *i - 1);
+// 	// if (isDollar(s))
+// 	// 	m = ft_dollar(m, all, i);
+// 	f = strdup(input + j + 1);
+// 	res = ft_strjoin(ft_strjoin(s,m), f);
+// 	*i = -1;
+// 	return(res);
+// }
 
 // char *ft_dollar(char *input, t_all *all, int *ip)
 // {
