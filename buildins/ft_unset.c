@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int ft_unset(t_list **env, t_list *exp, t_list *arg)
+void	ft_unset(t_list **env, t_list *exp, t_list *arg)
 {
 	t_list *tmp;
 
@@ -28,5 +28,4 @@ int ft_unset(t_list **env, t_list *exp, t_list *arg)
 		}
 		arg = arg->next;
 	}
-	return (0);
 }

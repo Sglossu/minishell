@@ -27,7 +27,6 @@ int	main(int argc, char **argv, char **envi)
 	init(all, envi);
 //	parse_path(all);
 //	path_print(all);
-	ft_printf("hello world!\n");
 	while (1)
 	{
 		ft_signal_main();

@@ -44,6 +44,11 @@ int ft_export(t_list **env, t_list *exp, t_list *arg)
 	tmp = arg;
 	while (arg)
 	{
+		if(!ft_isalpha(arg->val[0])) // 1 - значит первая это БУКВА
+		{
+			ft_printf(2, "export: %s: not a valid identifier\n", arg->val);
+			s_status = 1;
+		}
 		if(!ft_lstfind(exp, arg->val))
 		{
 			ft_lstadd_back(&exp, ft_lstnew(arg->val));

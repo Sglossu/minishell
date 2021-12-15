@@ -60,13 +60,13 @@ int	s_status;
 
 void path_print(t_all *all); // потом удалить
 
-int	ft_printf(const char *s, ...);
+//int	ft_printf(const char *s, ...);
 
 //buidins
 void	ft_pwd(void);
-void	ft_cd(t_list **env, t_list *arg);
-int		ft_env(t_list *lst);
-int 	ft_unset(t_list **env, t_list *exp, t_list *arg);
+int		ft_cd(t_list **env, t_list *arg);
+void	ft_env(t_list *lst);
+void 	ft_unset(t_list **env, t_list *exp, t_list *arg);
 int		ft_export(t_list **env, t_list *exp, t_list *arg);
 int		ft_echo(t_list *arg);
 int		ft_exit(t_list *arg);

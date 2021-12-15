@@ -23,6 +23,7 @@ void	ft_pwd(void)
 	}
 	else
 	{
+		s_status = errno;
 		printf("%s\n", strerror(errno));
 	}
 }

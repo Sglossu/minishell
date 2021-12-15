@@ -19,11 +19,12 @@ typedef struct s_struct
 	int		space;
 	int		temp;
 	int		temp_w;
+	int		fd;
 }				t_struct;
 
 t_struct	ft_atoi_width(t_struct ptf, char *str);
 t_struct	ft_atoi_accuracy(t_struct ptf, char *str);
-int			ft_printf(const char *s, ...);
+int			ft_printf(int fd, const char *s, ...);
 t_struct	ft_putnbr(t_struct ptf, unsigned int n);
 t_struct	ft_putstr(t_struct ptf, char *s);
 t_struct	parsing(t_struct ptf, char *str);

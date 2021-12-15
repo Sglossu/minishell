@@ -12,15 +12,13 @@
 
 #include "../includes/minishell.h"
 
-int	ft_env(t_list *lst)
+void	ft_env(t_list *lst)
 {
-	if (!lst)
-		return (1);
 	while (lst)
 	{
 		ft_putendl_fd(lst->val, STDOUT_FILENO);
 		lst = lst->next;
 	}
-	return (0); // не ошибка
+	s_status = 0;
 }
 

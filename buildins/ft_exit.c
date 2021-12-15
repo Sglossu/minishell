@@ -12,22 +12,6 @@
 
 #include "../includes/minishell.h"
 
-int	ft_strisdigit(char *str)
-{
-	int i;
-
-	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		str++;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (1); // есть буква
-		i++;
-	}
-	return (0); // нет буков, тока циферы
-}
-
 int	problems(char *str, int minus)
 {
 	int	len;
@@ -109,16 +93,15 @@ int	ft_exit(t_list *arg)
 		s_status = 0;
 		exit (s_status);
 	}
-	ft_putstr_fd("exit ", STDOUT_FILENO);
-	ft_putendl_fd(arg->val, STDOUT_FILENO);
+	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (ft_strisdigit(arg->val)) // return 1 - есть буква
 	{
-		printf("exit: %s: numeric argument required\n", arg->val);
+		ft_printf(STDERR_FILENO, "exit: %s: numeric argument required\n", arg->val);
 		exit (255);
 	}
 	if (arg->next)
 	{
-		printf("exit: too many arguments\n");
+		ft_putendl_fd("exit: too many arguments\n", 2);
 		return (255);
 	}
 	exit (work_with_arg(arg->val));

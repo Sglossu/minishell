@@ -65,7 +65,7 @@ void	change_pwd_oldpwd(t_list **env, char **oldpwd)
 		tmp->val = ft_strjoin("OLDPWD=", *oldpwd);
 }
 
-void	ft_cd(t_list **env, t_list *arg)
+int	ft_cd(t_list **env, t_list *arg)
 {
 	(void)env;
 	char 	*str;
@@ -76,13 +76,13 @@ void	ft_cd(t_list **env, t_list *arg)
 	else
 		str = ft_strdup(arg->next->val);
 	if (!str)
-		return; // error - уже напечатана
+		return (s_status); // error - уже напечатана
 	oldpwd = getcwd(NULL, 1024);
 	if (!oldpwd)
 	{
 		s_status = errno;
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		return ;
+		return (s_status);
 	}
 	if (chdir(str) == -1 && str)
 	{
@@ -94,4 +94,5 @@ void	ft_cd(t_list **env, t_list *arg)
 	}
 	else
 		change_pwd_oldpwd(env, &oldpwd);
+	return (s_status);
 }

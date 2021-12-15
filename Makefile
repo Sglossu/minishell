@@ -54,18 +54,20 @@ all			:	$(NAME)
 .c.o		:
 				$(CC) $(CFLAGS) -c -I$(DIR_HEAD) $< -o $(<:.c=.o)
 
-$(NAME)		:	$(OBJS) $(HEAD) $(HEAD_LIB)
+$(NAME)		:	$(OBJS) $(HEAD) $(HEAD_LIB) $(HEAD_LIB_PRINT)
 				$(MAKE) -C libft
 				$(MAKE) -C printf
 				$(CC) -g $(CFLAGS) -Llibft -Lprintf -lft -I$(DIR_HEAD) $(OBJS) $(LIB) $(LIB_PRINT) -o $(NAME) $(RDL_MAC)
 
 clean		:
 				$(MAKE) clean -C ./libft/
+				$(MAKE) clean -C ./printf/
 				$(RM) $(OBJS)
 				@echo "\033[36;1m\nCleaning succeed\n\033[0m"
 
 fclean		:	clean
 				$(MAKE) fclean -C ./libft/
+				$(MAKE) fclean -C ./printf/
 				$(RM) $(NAME)
 				@echo "\033[32;1m\nAll created files were deleted\n\033[0m"
 

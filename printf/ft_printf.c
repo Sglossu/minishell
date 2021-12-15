@@ -26,7 +26,7 @@ static	t_struct	parsing_error(t_struct ptf, char *str)
 	return (ptf);
 }
 
-int	ft_printf(const char *s, ...)
+int	ft_printf(int fd, const char *s, ...)
 {
 	t_struct		ptf;
 	char			*str;
@@ -34,6 +34,7 @@ int	ft_printf(const char *s, ...)
 	str = (char *)s;
 	va_start(ptf.ap, s);
 	ptf.flag = 1;
+	ptf.fd = fd;
 	ptf = first_init_struct(ptf);
 	ptf = parsing_error(ptf, str);
 	va_end(ptf.ap);

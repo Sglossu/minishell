@@ -2,7 +2,7 @@
 
 t_struct	ft_putchar(t_struct ptf, char c)
 {
-	write(1, &c, 1);
+	write(ptf.fd, &c, 1);
 	ptf.count++;
 	return (ptf);
 }
@@ -14,7 +14,7 @@ t_struct	ft_putnbr(t_struct ptf, unsigned int n)
 	x = 0;
 	if (n == 4294967295)
 	{
-		write(1, "4294967295", 10);
+		write(ptf.fd, "4294967295", 10);
 		ptf.count += 10;
 		return (ptf);
 	}

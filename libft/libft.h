@@ -63,6 +63,8 @@ void		ft_putendl_fd(char *s, int fd);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 long long	ft_atoi_long(const char *str);
 int			ft_strcmp(const char *str1, const char *str2);
+int			ft_strisdigit(char *str);
+int			ft_strisalpha(char *str);
 
 
 t_list	    *ft_lstnew(void *val);
