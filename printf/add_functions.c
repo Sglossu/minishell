@@ -7,7 +7,7 @@ t_struct	about_u(t_struct ptf, unsigned int nb)
 		ptf = ft_putchar(ptf, ' ');
 		ptf.width--;
 	}
-	while (ptf.width > ft_strlen_nb(nb) && (nb >= 0))
+	while (ptf.width > ft_strlen_nb(nb))
 	{
 		ptf = ft_putchar(ptf, '0');
 		ptf.width--;

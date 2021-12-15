@@ -55,9 +55,9 @@ static	t_struct	flag_minus(t_struct ptf, unsigned int nb, int type)
 
 static	t_struct	flag_zero(t_struct ptf, unsigned int nb, int type)
 {
-	if (ptf.accuracy < ft_diglen16(nb) && ptf.accuracy != -2 && nb >= 0)
+	if (ptf.accuracy < ft_diglen16(nb) && ptf.accuracy != -2)
 		ptf.accuracy = ft_diglen16(nb);
-	else if (ptf.accuracy < ft_diglen16(nb) && ptf.accuracy != -2 && nb < 0)
+	else if (ptf.accuracy < ft_diglen16(nb) && ptf.accuracy != -2)
 		ptf.accuracy = ft_strlen_inint(nb);
 	if (ptf.width >= ptf.accuracy)
 	{

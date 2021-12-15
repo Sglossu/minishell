@@ -15,7 +15,7 @@ int	ft_strisdigit(char *str)
 	{
 		if (!ft_isdigit(str[i]))
 			return (1); // есть буква
-			i++;
+		i++;
 	}
 	return (0); // нет буков, тока циферы
 }

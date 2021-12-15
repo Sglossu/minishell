@@ -122,9 +122,9 @@ t_struct	for_unsigned(t_struct ptf)
 	}
 	else if (ptf.flag == '-')
 	{
-		if (ptf.accuracy < ft_strlen_nb(nb) && ptf.accuracy != 0 && nb >= 0)
+		if (ptf.accuracy < ft_strlen_nb(nb) && ptf.accuracy != 0)
 			ptf.accuracy = ft_strlen_nb(nb);
-		else if (ptf.accuracy < ft_strlen_nb(nb) && ptf.accuracy != 0 && nb < 0)
+		else if (ptf.accuracy < ft_strlen_nb(nb) && ptf.accuracy != 0)
 			ptf.accuracy = ft_strlen_inint(nb);
 		ptf = flag_minus(ptf, nb);
 	}

@@ -13,7 +13,7 @@ int	ft_strisalpha(char *str)
 	{
 		if (!ft_isalpha(str[i]))
 			return (1); // есть цифра
-			i++;
+		i++;
 	}
 	return (0); // только буквы
 }

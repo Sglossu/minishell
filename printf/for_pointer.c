@@ -117,10 +117,9 @@ t_struct	for_pointer(t_struct ptf)
 		ptf = flag_minus(ptf, nb);
 	else if (ptf.flag == 0)
 	{
-		if (ptf.accuracy < ft_diglenlong(nb) && ptf.accuracy != -2 && nb >= 0)
+		if (ptf.accuracy < ft_diglenlong(nb) && ptf.accuracy != -2)
 			ptf.accuracy = ft_diglenlong(nb);
-		else if (ptf.accuracy < ft_diglenlong(nb) && ptf.accuracy != -2 && \
-		nb < 0)
+		else if (ptf.accuracy < ft_diglenlong(nb) && ptf.accuracy != -2)
 			ptf.accuracy = ft_strlen_inint(nb);
 		ptf = flag_zero(ptf, nb);
 	}
