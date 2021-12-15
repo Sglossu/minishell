@@ -50,7 +50,7 @@ all			:	$(NAME)
 
 $(NAME)		:	$(OBJS) $(HEAD) $(HEAD_LIB)
 				$(MAKE) -C libft
-				$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(OBJS) $(BLIB) -o $(NAME) $(RDL_MAC)
+				$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(OBJS) $(LIB) $(RDL_MAC) -o $(NAME)
 
 clean		:
 				$(MAKE) clean -C ./libft/
