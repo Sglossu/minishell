@@ -31,7 +31,7 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 	return 0;
 }
 
-int	num_of_commands(t_list *HEAD, t_all *all)
+void	num_of_commands(t_all *all, t_list *HEAD)
 {
 	int		res;
 	t_list	*tmp;
@@ -52,7 +52,7 @@ int	num_of_commands(t_list *HEAD, t_all *all)
 			pipes = 1;
 		tmp = tmp->next;
 	}
-	return res;
+	all->number_command = res;
 }
 
 int	init_cmd_struct(t_all *all)
@@ -109,6 +109,8 @@ int dir_parse(t_cmd *cmd)
 		{
 			cmd->f_direct = DOUB_DIR;
 			cmd->name_file = ft_strdup(tmp->next->val);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;
@@ -117,6 +119,9 @@ int dir_parse(t_cmd *cmd)
 		{
 			cmd->f_direct = REDIR;
 			cmd->name_file = ft_strdup(tmp->next->val);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+
+			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;
@@ -125,6 +130,8 @@ int dir_parse(t_cmd *cmd)
 		{
 			cmd->f_direct = DOUB_REDIR;
 			cmd->name_file = ft_strdup(tmp->next->val);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;

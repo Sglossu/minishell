@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:31:56 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/14 21:15:09 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/16 20:38:44 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ int	main(int argc, char **argv, char **envi)
 		rl_bind_key('\t', rl_complete);
         add_history(input);
 		parse(all, input);
-		// if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
-		// 	main_work(all);
-		// else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)
-		// 	one_direct(all);
-		// else if (all->number_command > 1)
-		// 	our_pipe(all);
+		if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
+			main_work(all);
+		else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)
+			one_direct(all);
+		else if (all->number_command > 1)
+			our_pipe(all);
 
 		free(input);
 		// ft_free(all);

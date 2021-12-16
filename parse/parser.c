@@ -6,13 +6,13 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/14 23:15:52 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/16 23:39:34 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//  (мои друзья)    ''  ""  \   $  |  > < >> <<  (мои друзья)
+//  (мои друзья)  ''  ""  \   $  |  > < >> <<  (мои друзья)
 
 static void	initMyString(t_str *str, char *input)
 {
@@ -39,44 +39,41 @@ static void	initMyString(t_str *str, char *input)
 			str->dub_quote += 1;
 		i++;
 	}
-	
 }
 
-static char *preparse(char *input, t_all *all)
+static char *preparse(t_all *all, t_list **HEAD, char *input)
 {
 	t_str	*myString;
-	
 	(void) all;
+	
 	myString = malloc(sizeof(t_str));
 	initMyString(myString, input);
-	if (myString->quote || myString->dub_quote || myString->dollars || myString->ecran)
-	{
-		while (myString->input[myString->iter])
-		{
-			if (myString->input[myString->iter] == '\''
-			 || myString->input[myString->iter] == '\"')
-				myString->input = ft_quote(myString, myString->input[myString->iter]);
-			myString->iter++;
-		}
-	}
-	// else
-		// myString->buf = myString->input;
+
+	*HEAD = make_list_with_all_word(input);
+	// if (myString->quote || myString->dub_quote || myString->dollars || myString->ecran)
+	// {
+	// 	while (myString->input[myString->iter])
+	// 	{
+	// 		if (myString->input[myString->iter] == '\''
+	// 		 || myString->input[myString->iter] == '\"')
+	// 			myString->input = ft_quote(myString, myString->input[myString->iter]);
+	// 		myString->iter++;
+	// 	}
+	// }
 	return (myString->input);
 }
 
 int	parse(t_all *all, char *input)
 {
-	char		*parse_input;
 	t_list		*HEAD;
 
-	parse_input = preparse(input, all);
-	printf("|%s|\n", parse_input);
-	parse_path(all);
-	HEAD = make_list_with_all_word(parse_input);
-	all->number_command = num_of_commands(HEAD, all);
+	HEAD = NULL;
+	preparse(all, &HEAD, input);
+	ft_lstprint(HEAD);
+	num_of_commands(all, HEAD);
 	init_cmd_struct(all);
 	fill_cmd_struct(all, HEAD);
-
+	
 	return 0;
 }
 
