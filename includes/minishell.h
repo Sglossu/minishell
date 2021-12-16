@@ -105,7 +105,7 @@ int 	parse_path(t_all *all);
 //parse_utils
 
 // {preparse}
-char	*ft_quote(t_str *myString);
+char	*ft_quote(t_str *myString, char sym);
 // char	*ft_dubquoute(char *input, int *i, t_all *all);
 // char	*ft_dollar(char *input, t_all *all, int *i);
 

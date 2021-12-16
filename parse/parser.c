@@ -53,14 +53,15 @@ static char *preparse(char *input, t_all *all)
 	{
 		while (myString->input[myString->iter])
 		{
-			if (myString->input[myString->iter] == '\'')
-				myString->buf = ft_quote(myString);
+			if (myString->input[myString->iter] == '\''
+			 || myString->input[myString->iter] == '\"')
+				myString->input = ft_quote(myString, myString->input[myString->iter]);
 			myString->iter++;
 		}
 	}
-	else
-		myString->buf = myString->input;
-	return (myString->buf);
+	// else
+		// myString->buf = myString->input;
+	return (myString->input);
 }
 
 int	parse(t_all *all, char *input)

@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-char *ft_quote(t_str *myString)
+char *ft_quote(t_str *myString, char sym)
 {
 	char *s;
 	char *m;
@@ -23,13 +23,12 @@ char *ft_quote(t_str *myString)
 	j = myString->iter;
 
 	while (myString->input[j++])
-		if (myString->input[j] == '\'')
+		if (myString->input[j] == sym)
 			break;
-	s = ft_substr(myString->input, 0 , myString->iter);
+	s = ft_substr(myString->input, 0, myString->iter);
 	m = ft_substr(myString->input, myString->iter + 1, j - myString->iter - 1);
 	f = strdup(myString->input + j + 1);
 	res = ft_strjoin(ft_strjoin(s,m), f);
-	myString->iter = -1;
 	printf("|%s|<-s\n|%s|<-m\n|%s|<-f\n",s,m,f);
 	printf("|%s|<-RES\n", res);
 	return(res);
