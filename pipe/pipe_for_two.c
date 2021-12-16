@@ -32,7 +32,7 @@ void	second_pipe(t_all *all, int fd[2])
 		close(fd[1]);
 		close(fd[0]);
 		main_function_for_one_direct(all);
-		if (if_buildins(&all->env, all->exp, all->cmd[all->i]->arg))
+		if (if_buildins(all, &all->env, all->exp, all->cmd[all->i]->arg))
 			child(all, 1);
 		exit (g_status);
 	}
@@ -57,7 +57,7 @@ void	first_pipe(t_all *all, int fd[2])
 		close(fd[0]);
 		close(fd[1]);
 		main_function_for_one_direct(all);
-		if (if_buildins(&all->env, all->exp, all->cmd[0]->arg))
+		if (if_buildins(all, &all->env, all->exp, all->cmd[0]->arg))
 			child(all, 0);
 		exit(g_status);
 	}

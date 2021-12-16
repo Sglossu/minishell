@@ -68,11 +68,25 @@ static void	change_pwd_oldpwd(t_list **env, t_list *exp, char **oldpwd)
 		tmp->val = ft_strjoin("OLDPWD=", *oldpwd);
 }
 
-int	ft_cd(t_list **env, t_list *exp, t_list *arg)
+void	remember_pwd(t_all *all)
+{
+	char	*pwd;
+
+	pwd = getcwd(NULL, 1024);
+	if (pwd)
+	{
+		free(all->pwd);
+		all->pwd = ft_strdup(pwd);
+	}
+	free(pwd);
+}
+
+int	ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg)
 {
 	char	*str;
 	char	*oldpwd;
 
+	remember_pwd(all);
 	if (!arg->next)
 		str = home(env);
 	else

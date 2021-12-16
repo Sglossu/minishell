@@ -67,7 +67,7 @@ int	main_function_for_one_direct(t_all *all)
 	what_is_direct(all);
 	if (all->number_command == 1)
 	{
-		if (if_buildins(&all->env, all->exp, all->cmd[all->i]->arg))
+		if (if_buildins(all, &all->env, all->exp, all->cmd[all->i]->arg))
 			child(all, all->i);
 	}
 	return (0);

@@ -12,19 +12,21 @@
 
 #include "../includes/minishell.h"
 
-void	ft_pwd(void)
+int	ft_pwd(t_all *all)
 {
 	char	*pwd;
 
 	pwd = getcwd(NULL, 1024);
 	if (pwd)
 	{
-		printf("%s\n", pwd);
+		ft_putendl_fd(pwd, STDOUT_FILENO);
 		free(pwd);
+		return (0);
 	}
 	else
 	{
-		g_status = errno;
-		printf("%s\n", strerror(errno));
+		ft_putendl_fd(all->pwd, STDOUT_FILENO);
+		return (1);
 	}
+	return (0);
 }

@@ -61,8 +61,8 @@ int	g_status;
 void	path_print(t_all *all); // потом удалить
 
 //buidins
-void	ft_pwd(void);
-int		ft_cd(t_list **env, t_list *exp, t_list *arg);
+int		ft_pwd(t_all *all);
+int		ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg);
 void	ft_env(t_list *lst);
 void	ft_unset(t_list **env, t_list *exp, t_list *arg);
 int		ft_export(t_list **env, t_list *exp, t_list *arg);
@@ -74,8 +74,9 @@ char	**ft_sort_params(int argc, t_list *lst);
 char	**from_lst_to_buf(int argc, t_list *lst, char c);
 char	*find_after_equals(char *str);
 
-//srcs_init
+//srcs
 void	init(t_all *all, char **envi);
+void	remember_pwd(t_all *all);
 
 //pipe and redirect
 int		our_pipe(t_all *all);
@@ -90,7 +91,7 @@ int		pipe_for_two(t_all *all);
 //main
 int		main_work(t_all *all);
 void	child(t_all *all, int all_i);
-int		if_buildins(t_list **env, t_list *exp, t_list *arg);
+int		if_buildins(t_all *all, t_list **env, t_list *exp, t_list *arg);
 
 //parse
 void	path_pl_command(t_all *all, char *command);
