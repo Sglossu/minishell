@@ -20,10 +20,13 @@ int parse_path(t_all *all)
 
 	tmp = ft_lstfind(all->env, "PATH");
 	if (!tmp)
-		return (1); // todo обработать ошибку если нет PATH
+	{
+		all->path = NULL;
+		return (1); // нет PATH
+	}
 	all->path = ft_split(find_after_equals(tmp->val), ':');
 	if (!all->path)
-		return (1); // todo обработать ошибку
+		return (1); // нет PATH
 	while (all->path[i])
 	{
 		if (all->path[i][0] == '~')
@@ -42,17 +45,6 @@ int parse_path(t_all *all)
 		i++;
 	}
 	return (0);
-}
-
-void path_print(t_all *all)
-{
-	int i = 0;
-
-	while (all->path[i])
-	{
-		printf("%s\n", all->path[i]);
-		i++;
-	}
 }
 
 void	path_plus_command(t_all *all)
@@ -91,8 +83,9 @@ int find_command(t_all *all)
 
 int if_command_exist(t_all *all)
 {
-	// if (parse_path(all))
-	// 	return (1); // todo обработать ошибку
+	if (parse_path(all))
+	 	return (2);
 	path_plus_command(all);
 	return (find_command(all));
+	// нет PATH - return 2, есть PATH и команда - return 0, есть PATH, но нет команды - return  1
 }

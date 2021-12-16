@@ -63,7 +63,6 @@ void	ft_signal_cltr_c_main(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-//	ft_putendl_fd("hui2", STDERR_FILENO);
 	s_status = 130;
 }
 

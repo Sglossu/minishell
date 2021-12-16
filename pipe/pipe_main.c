@@ -48,17 +48,26 @@ int pipe_for_another(t_all *all, int com, int *status) // com - количест
 	while (i < com)
 	{
 		if (pipe(fd[i]) == -1)
-			return (1); // todo обработать ошибку
+		{
+			s_status = errno;
+			return(errno);
+		}
 		i++;
 	}
 	i = 0;
 	while (i < com + 1)
 	{
 		pid[i] = fork();
+		if (pid[i] < 0)
+		{
+			s_status = errno;
+			exit(errno);
+		}
 		if (pid[i] == 0)
 		{
 			ft_signal_in_child();
 			child_for_pipe(all, i, fd); // i - номер дочернего процесса, т. е. номер команды
+			exit (s_status);
 		}
 		i++;
 	}
@@ -85,14 +94,24 @@ int pipe_for_two(t_all *all, int *status)
 	pid_t	pid[2];
 
 	if (pipe(fd) == -1)
-		return (1); // todo обработать ошибку
+	{
+		s_status = errno;
+		return(errno);
+	}
 	pid[0] = fork();
 	if (pid[0] < 0)
-		return (2); // todo обработать ошибку
+	{
+		s_status = errno;
+		return(errno);
+	}
 	if (pid[0] == 0)
 	{
 		ft_signal_in_child();
-		dup2(fd[1], STDOUT_FILENO); // делает stdout (вывод) копией fd[1], теперь stdout это как fd[1]
+		if(dup2(fd[1], STDOUT_FILENO) == -1) // делает stdout (вывод) копией fd[1], теперь stdout это как fd[1]
+		{
+			s_status = errno;
+			exit(errno);
+		}
 		close(fd[0]);
 		close(fd[1]);
 		main_function_for_one_direct(all);
@@ -103,11 +122,18 @@ int pipe_for_two(t_all *all, int *status)
 	pid[1] = fork();
 	all->i = 1;
 	if (pid[1] < 0)
-		return (3); // todo обработать ошибку
+	{
+		s_status = errno;
+		return(errno);
+	}
 	if (pid[1] == 0)
 	{
 		ft_signal_in_child();
-		dup2(fd[0], STDIN_FILENO); // теперь stdin (ввод) это как fd[0]
+		if (dup2(fd[0], STDIN_FILENO) == -1) // теперь stdin (ввод) это как fd[0]
+		{
+			s_status = errno;
+			exit(errno);
+		}
 		close(fd[1]);
 		close(fd[0]);
 		main_function_for_one_direct(all);

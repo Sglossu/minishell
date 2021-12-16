@@ -47,7 +47,10 @@ char **from_lst_to_buf(int argc, t_list *lst, char c)
 	i = 0;
 	argv = (char**)malloc(sizeof(char *) * (argc + 1));
 	if (!argv)
+	{
+		s_status = errno;
 		return (NULL);
+	}
 	argv[argc] = NULL;
 	while(lst)
 	{
@@ -58,6 +61,7 @@ char **from_lst_to_buf(int argc, t_list *lst, char c)
 		if (!argv[i])
 		{
 			free_buf(argv);
+			s_status = errno;
 			return (NULL);
 		}
 		i++;

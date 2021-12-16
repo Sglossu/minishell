@@ -92,7 +92,7 @@ int 	ft_dir(t_cmd *cmd, int fd_std);
 int		main_work(t_all *all);
 int		if_command_exist(t_all *all);
 void	child(t_all *all, int all_i);
-int		if_buildins(t_list **env, t_list *exp, t_list *arg);
+int 	if_buildins(t_list **env, t_list *exp, t_list *arg);
 
 //parse
 void	path_pl_command(t_all *all, char *command);
@@ -100,7 +100,6 @@ int		parse(t_all *all, char *input);
 int		parse_path(t_all *all);
 int		is_binary(char *val, t_all *all);
 int		is_buildin(char *val);
-int 	parse_path(t_all *all);
 
 //parse_utils
 
