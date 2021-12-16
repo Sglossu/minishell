@@ -36,6 +36,7 @@ void	child_for_pipe(t_all *all, int num_com, int fd[2][2])
 	}
 	if (if_buildins(&all->env, all->exp, all->cmd[num_com]->arg))
 		child(all, num_com);
+	exit(s_status);
 }
 
 int pipe_for_another(t_all *all, int com, int *status) // com - количество пайпов
@@ -97,6 +98,7 @@ int pipe_for_two(t_all *all, int *status)
 		main_function_for_one_direct(all);
 		if (if_buildins(&all->env, all->exp, all->cmd[0]->arg))
 			child(all, 0);
+		exit(s_status);
 	}
 	pid[1] = fork();
 	all->i = 1;
@@ -111,6 +113,7 @@ int pipe_for_two(t_all *all, int *status)
 		main_function_for_one_direct(all);
 		if (if_buildins(&all->env, all->exp, all->cmd[all->i]->arg))
 			child(all, 1);
+		exit (s_status);
 	}
 	close(fd[0]);
 	close(fd[1]);

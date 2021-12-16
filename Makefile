@@ -41,11 +41,7 @@ HEAD_LIB	=	./libft/libft.h
 LIB_PRINT	=	./printf/libftprintf.a
 HEAD_LIB_PRINT	=	./printf/ft_printf.h
 
-RDL			= 	-lreadline
 RDL_MAC		= 	-lreadline -L ~/.brew/opt/readline/lib
-
-#SOURCES		=	$(wildcard ./printf/*.c)
-#PRINTF_LIB	=	./printf/ft_printf.h
 
 .PHONY		:	all clean fclean re
 
