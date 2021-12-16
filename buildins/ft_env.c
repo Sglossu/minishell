@@ -19,6 +19,5 @@ void	ft_env(t_list *lst)
 		ft_putendl_fd(lst->val, STDOUT_FILENO);
 		lst = lst->next;
 	}
-	s_status = 0;
+	g_status = 0;
 }
-

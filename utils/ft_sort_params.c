@@ -12,9 +12,9 @@
 
 #include "../includes/minishell.h"
 
-int		compare(char *s1, char *s2)
+int	compare(char *s1, char *s2)
 {
-	int k;
+	int	k;
 
 	k = 0;
 	while (s1[k] == s2[k] && s1[k] != '\0' && s2[k] != '\0')
@@ -55,5 +55,5 @@ char	**ft_sort_params(int argc, t_list *lst)
 	if (argv == NULL)
 		return (NULL);
 	sort_params(argc, argv);
-	return(argv);
+	return (argv);
 }

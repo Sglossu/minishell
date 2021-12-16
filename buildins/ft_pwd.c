@@ -15,6 +15,7 @@
 void	ft_pwd(void)
 {
 	char	*pwd;
+
 	pwd = getcwd(NULL, 1024);
 	if (pwd)
 	{
@@ -23,7 +24,7 @@ void	ft_pwd(void)
 	}
 	else
 	{
-		s_status = errno;
+		g_status = errno;
 		printf("%s\n", strerror(errno));
 	}
 }

@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static char *split_for_dup(char *str, char c)
+static	char	*split_for_dup(char *str, char c)
 {
 	while (*str != c)
 		str++;
@@ -20,14 +20,16 @@ static char *split_for_dup(char *str, char c)
 	return (ft_strdup(str));
 }
 
-void free_buf(char **buf)
+void	free_buf(char **buf)
 {
-	int i = 0;
-	int j = 0;
+	int	i;
+	int	j;
 
+	i = 0;
 	while (buf[i])
 	{
-		while(buf[j])
+		j = 0;
+		while (buf[j])
 		{
 			free(buf[j]);
 			buf[j] = NULL;
@@ -39,31 +41,34 @@ void free_buf(char **buf)
 	}
 }
 
-char **from_lst_to_buf(int argc, t_list *lst, char c)
+static	char	**argv_not_exist(char ***argv)
 {
-	char 	**argv;
-	int 	i;
+	free_buf(*argv);
+	g_status = errno;
+	return (NULL);
+}
+
+char	**from_lst_to_buf(int argc, t_list *lst, char c)
+{
+	char	**argv;
+	int		i;
 
 	i = 0;
-	argv = (char**)malloc(sizeof(char *) * (argc + 1));
+	argv = (char **)malloc(sizeof(char *) * (argc + 1));
 	if (!argv)
 	{
-		s_status = errno;
+		g_status = errno;
 		return (NULL);
 	}
 	argv[argc] = NULL;
-	while(lst)
+	while (lst)
 	{
 		if (c == '=')
 			argv[i] = split_for_dup(lst->val, c);
 		else
 			argv[i] = ft_strdup(lst->val);
 		if (!argv[i])
-		{
-			free_buf(argv);
-			s_status = errno;
-			return (NULL);
-		}
+			return (argv_not_exist(&argv));
 		i++;
 		lst = lst->next;
 	}

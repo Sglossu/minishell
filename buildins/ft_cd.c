@@ -16,16 +16,16 @@
 
 #include "../includes/minishell.h"
 
-char	*home(t_list **env)
+static char	*home(t_list **env)
 {
 	t_list	*tmp;
-	char 	*str;
+	char	*str;
 
 	tmp = ft_lstfind((*env), "HOME");
 	if (!tmp)
 	{
 		ft_putendl_fd("cd: HOME not set", STDOUT_FILENO);
-		s_status = 1;
+		g_status = 1;
 	}
 	else
 	{
@@ -33,7 +33,7 @@ char	*home(t_list **env)
 		if (!str) // нет =
 		{
 			ft_putendl_fd("cd: HOME not set", STDOUT_FILENO);
-			s_status = 1;
+			g_status = 1;
 		}
 		else
 			return (str);
@@ -41,7 +41,7 @@ char	*home(t_list **env)
 	return (NULL);
 }
 
-void	change_pwd_oldpwd(t_list **env, char **oldpwd)
+static void	change_pwd_oldpwd(t_list **env, char **oldpwd)
 {
 	char	*pwd;
 	t_list	*tmp;
@@ -49,7 +49,7 @@ void	change_pwd_oldpwd(t_list **env, char **oldpwd)
 	pwd = getcwd(NULL, 1024);
 	if (!pwd)
 	{
-		s_status = errno;
+		g_status = errno;
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		return ;
 	}
@@ -67,32 +67,28 @@ void	change_pwd_oldpwd(t_list **env, char **oldpwd)
 
 int	ft_cd(t_list **env, t_list *arg)
 {
-	(void)env;
-	char 	*str;
-	char 	*oldpwd;
+	char	*str;
+	char	*oldpwd;
 
 	if (!arg->next)
 		str = home(env);
 	else
 		str = ft_strdup(arg->next->val);
 	if (!str)
-		return (s_status); // error - уже напечатана
+		return (g_status); // error - уже напечатана
 	oldpwd = getcwd(NULL, 1024);
 	if (!oldpwd)
 	{
-		s_status = errno;
+		g_status = errno;
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		return (s_status);
+		return (g_status);
 	}
 	if (chdir(str) == -1 && str)
 	{
-		s_status = errno;
-		ft_putendl_fd("cd: ", STDERR_FILENO);
-		ft_putendl_fd(str, STDERR_FILENO);
-		ft_putchar_fd(' ', STDERR_FILENO);
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		g_status = errno;
+		ft_printf(2, "cd: %s: %s\n", str, strerror(errno));
 	}
 	else
 		change_pwd_oldpwd(env, &oldpwd);
-	return (s_status);
+	return (g_status);
 }

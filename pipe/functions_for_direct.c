@@ -10,66 +10,66 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int ft_dir(t_cmd *cmd, int fd_std)
+int	ft_dir(t_cmd *cmd, int fd_std)
 {
 	int		fd_file;
 
 	fd_file = open(cmd->name_file, O_CREAT | O_TRUNC | O_WRONLY, 0777);
 	if (fd_file == -1)
 	{
-		s_status = errno;
+		g_status = errno;
 		exit(errno);
 	}
 	if (dup2(fd_file, fd_std) == -1)
 	{
-		s_status = errno;
+		g_status = errno;
 		exit(errno);
 	}
 	close(fd_file);
 	return (0);
 }
 
-int ft_doubledir(t_cmd *cmd, int fd_std)
+int	ft_doubledir(t_cmd *cmd, int fd_std)
 {
 	int		fd_file;
 
 	fd_file = open(cmd->name_file, O_CREAT | O_APPEND | O_WRONLY, 0777);
 	if (fd_file == -1)
 	{
-		s_status = errno;
-		return(errno);
+		g_status = errno;
+		return (errno);
 	}
 	if (dup2(fd_file, fd_std) == -1)
 	{
-		s_status = errno;
-		exit(errno);
+		g_status = errno;
+		exit (errno);
 	}
 	close(fd_file);
 	return (0);
 }
 
-int ft_redir(t_cmd *cmd, int fd_std)
+int	ft_redir(t_cmd *cmd, int fd_std)
 {
-	int		fd_file;
+	int	fd_file;
 
 	fd_file = open(cmd->name_file, O_RDONLY);
 	if (fd_file == -1)
 	{
-		s_status = errno;
-		return(errno);
+		g_status = errno;
+		return (errno);
 	}
 	if (dup2(fd_file, fd_std) == -1)
 	{
-		s_status = errno;
+		g_status = errno;
 		exit(errno);
 	}
 	close(fd_file);
 	return (0);
 }
 
-int ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
+int	ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
 {
 	int		i;
 	char	*line;
@@ -77,7 +77,6 @@ int ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
 	line = NULL;
 	write(STDOUT_FILENO, "> ", 2);
 	i = get_next_line(fd_std, &line);
-
 	if (!ft_strcmp(line, cmd->name_file))
 	{
 		free(line);
@@ -89,7 +88,7 @@ int ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
 		write(STDOUT_FILENO, "> ", 2);
 		i = get_next_line(fd_std, &line);
 		if (!ft_strcmp(line, cmd->name_file))
-			break;
+			break ;
 		ft_putchar_fd('\n', fd_0);
 		ft_putstr_fd(line, fd_0);
 	}

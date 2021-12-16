@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-char *find_after_equals(char *str)
+char	*find_after_equals(char *str)
 {
 	bool	equals;
 
@@ -27,7 +27,7 @@ char *find_after_equals(char *str)
 			{
 				equals = true;
 				str++;
-				break;
+				break ;
 			}
 			str++;
 		}
@@ -36,4 +36,3 @@ char *find_after_equals(char *str)
 		return (ft_strdup(str));
 	return (NULL);
 }
-

@@ -14,8 +14,9 @@
 
 void	child_for_pipe(t_all *all, int com, int num_com, int fd[com][2])
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	if (num_com == 0)
 		dup2(fd[num_com][1], STDOUT_FILENO); // первая команда
 	else if (num_com == all->number_command - 1)
@@ -36,24 +37,24 @@ void	child_for_pipe(t_all *all, int com, int num_com, int fd[com][2])
 	}
 	if (if_buildins(&all->env, all->exp, all->cmd[num_com]->arg))
 		child(all, num_com);
-	exit(s_status);
+	exit(g_status);
 }
 
-void fork_and_close(t_all *all, int com, int fd[com][2], int i)
+void	fork_and_close(t_all *all, int com, int fd[com][2], int i)
 {
 	while (i < com + 1)
 	{
 		all->cmd[i]->pid = fork();
 		if (all->cmd[i]->pid < 0)
 		{
-			s_status = errno;
+			g_status = errno;
 			exit(errno);
 		}
 		if (all->cmd[i]->pid == 0)
 		{
 			ft_signal_in_child();
 			child_for_pipe(all, com, i, fd); // i - номер дочернего процесса, т. е. номер команды
-			exit (s_status);
+			exit (g_status);
 		}
 		i++;
 	}
@@ -66,18 +67,18 @@ void fork_and_close(t_all *all, int com, int fd[com][2], int i)
 	}
 }
 
-int pipe_for_another(t_all *all, int com, int *status) // com - количество пайпов
+int	pipe_for_another(t_all *all, int com) // com - количество пайпов
 {
-	int 	fd[com][2];
-	int 	i;
+	int		fd[com][2];
+	int		i;
 
 	i = 0;
 	while (i < com)
 	{
 		if (pipe(fd[i]) == -1)
 		{
-			s_status = errno;
-			return(errno);
+			g_status = errno;
+			return (errno);
 		}
 		i++;
 	}
@@ -85,24 +86,23 @@ int pipe_for_another(t_all *all, int com, int *status) // com - количест
 	fork_and_close(all, com, fd, i);
 	while (i < com + 1)
 	{
-		waitpid(all->cmd[i]->pid, status, 0);
+		waitpid(all->cmd[i]->pid, &g_status, 0);
 		i++;
 	}
 	ft_signal_main();
 	return (0);
 }
 
-int our_pipe(t_all *all)
+int	our_pipe(t_all *all)
 {
-	int status = 0;
 	ft_signal_run_pipes();
 	if (all->number_command == 2)
 	{
-		return(pipe_for_two(all, &status));
+		return (pipe_for_two(all));
 	}
 	else
 	{
-		return(pipe_for_another(all, all->number_command - 1, &status));
+		return (pipe_for_another(all, all->number_command - 1));
 	}
 	return (0);
 }

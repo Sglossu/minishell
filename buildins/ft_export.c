@@ -12,10 +12,10 @@
 
 #include "../includes/minishell.h"
 
-static void print_params(char **buf, int count)
+static void	print_params(char **buf, int count)
 {
-	int 	i;
-	int 	j;
+	int		i;
+	int		j;
 
 	j = 0;
 	while (j < count)
@@ -32,10 +32,21 @@ static void print_params(char **buf, int count)
 	}
 }
 
-int ft_export(t_list **env, t_list *exp, t_list *arg)
+static int	tmp_not_exist(t_list *exp, char ***buf)
 {
-	char 	**buf;
-	int 	count;
+	int	count;
+
+	count = ft_lstsize(exp);
+	*buf = ft_sort_params(count, exp);
+	if (!(*buf))
+		return (1); // error
+	print_params(*buf, count);
+	return (0);
+}
+
+int	ft_export(t_list **env, t_list *exp, t_list *arg)
+{
+	char	**buf;
 	t_list	*tmp;
 
 	tmp = *env;
@@ -44,12 +55,12 @@ int ft_export(t_list **env, t_list *exp, t_list *arg)
 	tmp = arg;
 	while (arg)
 	{
-		if(!ft_isalpha(arg->val[0])) // 1 - значит первая это БУКВА
+		if (!ft_isalpha(arg->val[0])) // 1 - значит первая это БУКВА
 		{
 			ft_printf(2, "export: %s: not a valid identifier\n", arg->val);
-			s_status = 1;
+			g_status = 1;
 		}
-		if(!ft_lstfind(exp, arg->val))
+		if (!ft_lstfind(exp, arg->val))
 		{
 			ft_lstadd_back(&exp, ft_lstnew(arg->val));
 			ft_lstadd_back(env, ft_lstnew(arg->val));
@@ -57,12 +68,6 @@ int ft_export(t_list **env, t_list *exp, t_list *arg)
 		arg = arg->next;
 	}
 	if (!tmp)
-	{
-		count = ft_lstsize(exp);
-		buf = ft_sort_params(count, exp);
-		if (!buf)
-			return (1); // error
-		print_params(buf, count);
-	}
-    return (1);
+		return (tmp_not_exist(exp, &buf));
+	return (0);
 }

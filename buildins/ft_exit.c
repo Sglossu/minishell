@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	problems(char *str, int minus)
+static int	problems(char *str, int minus)
 {
 	int	len;
 
@@ -36,7 +36,7 @@ int	problems(char *str, int minus)
 	return (0);
 }
 
-long long	ft_atoi_overflow(char *str)
+static long long	ft_atoi_overflow(char *str)
 {
 	int			i;
 	long long	minus;
@@ -65,20 +65,20 @@ long long	ft_atoi_overflow(char *str)
 	return (nb * minus);
 }
 
-int work_with_arg(char *str)
+static int	work_with_arg(char *str)
 {
 	long long	status_exit;
 
-	if (!ft_atoi_overflow(str) && (ft_strcmp(str, "0") || ft_strcmp(str, "-0") || ft_strcmp(str, "+0")))
+	if (!ft_atoi_overflow(str) && (ft_strcmp(str, "0")
+			|| ft_strcmp(str, "-0") || ft_strcmp(str, "+0")))
 	{
 		// overflow
 		printf("exit: %s: numeric argument required\n", str);
 		exit (255);
 	}
 	status_exit = ft_atoi_long(str);
-	if (status_exit > 0) {
+	if (status_exit > 0)
 		return ((int)status_exit % 256);
-	}
 	else if (status_exit % 256 != 0)
 		return ((int)(status_exit % 256 + 256));
 	return (0);
@@ -90,13 +90,13 @@ int	ft_exit(t_list *arg)
 	if (!arg)
 	{
 		ft_putendl_fd("exit", STDOUT_FILENO);
-		s_status = 0;
-		exit (s_status);
+		g_status = 0;
+		exit (g_status);
 	}
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (ft_strisdigit(arg->val)) // return 1 - есть буква
 	{
-		ft_printf(STDERR_FILENO, "exit: %s: numeric argument required\n", arg->val);
+		ft_printf(2, "exit: %s: numeric argument required\n", arg->val);
 		exit (255);
 	}
 	if (arg->next)

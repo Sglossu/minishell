@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 22:26:02 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/16 22:26:04 by sglossu          ###   ########.fr       */
+/*   Created: 2021/12/14 18:16:07 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:16:14 by sglossu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-t_list	*ft_lstnew(void *val)
+// SIGINT	Cntrl+C
+// SIGTERM	Cntrl+
+// SIGQUIT	Cntrl+backslash
+
+void	ft_signal_main(void)
 {
-	t_list	*new_elem;
+	signal(SIGTERM, SIG_IGN);
+	signal(SIGINT, ft_signal_cltr_c_main);
+	signal(SIGQUIT, SIG_IGN);
+}
 
-	new_elem = malloc(sizeof(t_list));
-	if (!new_elem)
-		return (NULL);
-	new_elem->val = val;
-	new_elem->next = NULL;
-	return (new_elem);
+void	ft_signal_cltr_c_main(int sig)
+{
+	(void)sig;
+	write(2, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	g_status = 130;
 }

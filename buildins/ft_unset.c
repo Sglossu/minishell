@@ -14,10 +14,10 @@
 
 void	ft_unset(t_list **env, t_list *exp, t_list *arg)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	arg = arg->next;
-	while(arg)
+	while (arg)
 	{
 		tmp = ft_lstfind(*env, arg->val);
 		if (tmp)

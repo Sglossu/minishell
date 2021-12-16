@@ -17,8 +17,7 @@ int	ft_free(t_all *all)
 	int	i;
 
 	i = 0;
-
-	while(all->cmd[i])
+	while (all->cmd[i])
 	{
 		free(all->cmd[i]);
 		i++;
