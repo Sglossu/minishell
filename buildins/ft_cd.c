@@ -41,7 +41,7 @@ static char	*home(t_list **env)
 	return (NULL);
 }
 
-static void	change_pwd_oldpwd(t_list **env, char **oldpwd)
+static void	change_pwd_oldpwd(t_list **env, t_list *exp, char **oldpwd)
 {
 	char	*pwd;
 	t_list	*tmp;
@@ -60,12 +60,15 @@ static void	change_pwd_oldpwd(t_list **env, char **oldpwd)
 		tmp->val = ft_strjoin("PWD=", pwd);
 	tmp = ft_lstfind(*env, "OLDPWD");
 	if (!tmp)
+	{
 		ft_lstadd_back(env, ft_lstnew(ft_strjoin("OLDPWD=", *oldpwd)));
+		ft_lstadd_back(&exp, ft_lstnew(ft_strjoin("OLDPWD=", *oldpwd)));
+	}
 	else
 		tmp->val = ft_strjoin("OLDPWD=", *oldpwd);
 }
 
-int	ft_cd(t_list **env, t_list *arg)
+int	ft_cd(t_list **env, t_list *exp, t_list *arg)
 {
 	char	*str;
 	char	*oldpwd;
@@ -89,6 +92,6 @@ int	ft_cd(t_list **env, t_list *arg)
 		ft_printf(2, "cd: %s: %s\n", str, strerror(errno));
 	}
 	else
-		change_pwd_oldpwd(env, &oldpwd);
+		change_pwd_oldpwd(env, exp, &oldpwd);
 	return (g_status);
 }

@@ -15,7 +15,7 @@
 int	if_buildins(t_list **env, t_list *exp, t_list *arg)
 {
 	if (!ft_strcmp(arg->val, "cd"))
-		ft_cd(env, arg);
+		ft_cd(env, exp, arg);
 	else if (!ft_strcmp(arg->val, "echo"))
 		ft_echo(arg);
 	else if (!ft_strcmp(arg->val, "env"))

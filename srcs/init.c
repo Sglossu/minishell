@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-t_list	*init_lst_env_or_exp(char **buf)
+static	t_list	*init_lst_env_or_exp(char **buf)
 {
 	t_list	*tmp;
 	int		i;
@@ -27,9 +27,20 @@ t_list	*init_lst_env_or_exp(char **buf)
 	return (tmp);
 }
 
+//int	init_pwd(t_all *all)
+//{
+//
+//}
+
 void	init(t_all *all, char **envi)
 {
+//	t_list	*tmp;
 	all->env = init_lst_env_or_exp(envi);
 	all->exp = init_lst_env_or_exp(envi);
+//	tmp = ft_lstfind(all->exp, "PWD");
+//	if (tmp)
+//		all->pwd = ft_strdup(tmp->val);
+//	else
+//		all->pwd = NULL;
 	all->i = 0;
 }
