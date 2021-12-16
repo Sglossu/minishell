@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	child_for_pipe(t_all *all, int num_com, int fd[2][2])
+void	child_for_pipe(t_all *all, int com, int num_com, int fd[com][2])
 {
 	int i = 0;
 
@@ -39,34 +39,20 @@ void	child_for_pipe(t_all *all, int num_com, int fd[2][2])
 	exit(s_status);
 }
 
-int pipe_for_another(t_all *all, int com, int *status) // com - количество пайпов
+void fork_and_close(t_all *all, int com, int fd[com][2], int i)
 {
-	int 	fd[com][2];
-	pid_t	pid[com + 1];
-	int 	i = 0;
-
-	while (i < com)
-	{
-		if (pipe(fd[i]) == -1)
-		{
-			s_status = errno;
-			return(errno);
-		}
-		i++;
-	}
-	i = 0;
 	while (i < com + 1)
 	{
-		pid[i] = fork();
-		if (pid[i] < 0)
+		all->cmd[i]->pid = fork();
+		if (all->cmd[i]->pid < 0)
 		{
 			s_status = errno;
 			exit(errno);
 		}
-		if (pid[i] == 0)
+		if (all->cmd[i]->pid == 0)
 		{
 			ft_signal_in_child();
-			child_for_pipe(all, i, fd); // i - номер дочернего процесса, т. е. номер команды
+			child_for_pipe(all, com, i, fd); // i - номер дочернего процесса, т. е. номер команды
 			exit (s_status);
 		}
 		i++;
@@ -78,74 +64,30 @@ int pipe_for_another(t_all *all, int com, int *status) // com - количест
 		close(fd[i][1]);
 		i++;
 	}
-	i = 0;
-	while (i < com + 1)
-	{
-		waitpid(pid[i], status, 0);
-		i++;
-	}
-	ft_signal_main();
-	return (0);
 }
 
-int pipe_for_two(t_all *all, int *status)
+int pipe_for_another(t_all *all, int com, int *status) // com - количество пайпов
 {
-	int		fd[2];
-	pid_t	pid[2];
+	int 	fd[com][2];
+	int 	i;
 
-	if (pipe(fd) == -1)
+	i = 0;
+	while (i < com)
 	{
-		s_status = errno;
-		return(errno);
-	}
-	pid[0] = fork();
-	if (pid[0] < 0)
-	{
-		s_status = errno;
-		return(errno);
-	}
-	if (pid[0] == 0)
-	{
-		ft_signal_in_child();
-		if(dup2(fd[1], STDOUT_FILENO) == -1) // делает stdout (вывод) копией fd[1], теперь stdout это как fd[1]
+		if (pipe(fd[i]) == -1)
 		{
 			s_status = errno;
-			exit(errno);
+			return(errno);
 		}
-		close(fd[0]);
-		close(fd[1]);
-		main_function_for_one_direct(all);
-		if (if_buildins(&all->env, all->exp, all->cmd[0]->arg))
-			child(all, 0);
-		exit(s_status);
+		i++;
 	}
-	pid[1] = fork();
-	all->i = 1;
-	if (pid[1] < 0)
+	i = 0;
+	fork_and_close(all, com, fd, i);
+	while (i < com + 1)
 	{
-		s_status = errno;
-		return(errno);
+		waitpid(all->cmd[i]->pid, status, 0);
+		i++;
 	}
-	if (pid[1] == 0)
-	{
-		ft_signal_in_child();
-		if (dup2(fd[0], STDIN_FILENO) == -1) // теперь stdin (ввод) это как fd[0]
-		{
-			s_status = errno;
-			exit(errno);
-		}
-		close(fd[1]);
-		close(fd[0]);
-		main_function_for_one_direct(all);
-		if (if_buildins(&all->env, all->exp, all->cmd[all->i]->arg))
-			child(all, 1);
-		exit (s_status);
-	}
-	close(fd[0]);
-	close(fd[1]);
-
-	waitpid(pid[0], status, 0);
-	waitpid(pid[1], status, 0);
 	ft_signal_main();
 	return (0);
 }

@@ -25,7 +25,7 @@ SRCS		=	main.c \
 				$(DIR_SRCS)init.c				$(DIR_SRCS)main_work.c			$(DIR_SRCS)command_exist.c \
 				$(DIR_SRCS)one_direct.c \
 				\
-				$(DIR_PIPE)pipe_main.c			$(DIR_PIPE)functions_for_direct.c \
+				$(DIR_PIPE)pipe_main.c			$(DIR_PIPE)pipe_for_two.c			$(DIR_PIPE)functions_for_direct.c \
 				\
 				$(DIR_PARSE)parser.c			$(DIR_PARSE)parser_utils.c		$(DIR_PARSE)lists.c \
 				$(DIR_PARSE)cmd_parse.c\
