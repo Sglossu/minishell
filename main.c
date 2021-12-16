@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:31:56 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/16 20:38:44 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/17 01:11:56 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	main(int argc, char **argv, char **envi)
 	while (1)
 	{
 		ft_signal_main();
-		input = readline("Minishell☺% ");
+		input = readline(MINISHELL);
 		if (!input)
-			exit(1);
+			input = ft_strdup("exit");
 		rl_bind_key('\t', rl_complete);
         add_history(input);
 		parse(all, input);

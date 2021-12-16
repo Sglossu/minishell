@@ -26,6 +26,7 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		// ft_lstprint(all->cmd[i]->arg);
 		// printf("f_direct status = %d\n", all->cmd[i]->f_direct);
 		// printf("name_file = %s\n", all->cmd[i]->name_file);
+		// printf("path_command = %s\n", all->cmd[i]->path_command);
 		i++;		
 	}
 	return 0;
@@ -120,7 +121,6 @@ int dir_parse(t_cmd *cmd)
 			cmd->f_direct = REDIR;
 			cmd->name_file = ft_strdup(tmp->next->val);
 			ft_lstremove(&cmd->arg, cmd->arg->next);
-
 			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);

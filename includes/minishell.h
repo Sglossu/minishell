@@ -19,11 +19,16 @@
 # include <readline/history.h>
 # include "stdbool.h"
 
+# define MINISHELL	"\033[32mMinishell$ \033[0m"
+
 # define 	DIR			3
 # define	REDIR		4
 # define	DOUB_DIR	5
 # define 	DOUB_REDIR	6
 # define 	NONE		7
+
+# define	TEXT		8
+# define	PIPE		9
 
 # define	BUILDIN		0
 # define	BINARY		1

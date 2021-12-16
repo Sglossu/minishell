@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/16 23:39:34 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/17 00:44:11 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char *preparse(t_all *all, t_list **HEAD, char *input)
 	initMyString(myString, input);
 
 	*HEAD = make_list_with_all_word(input);
-	// if (myString->quote || myString->dub_quote || myString->dollars || myString->ecran)
+	// if (myString->quote || myString->dub_quote || myString->dollars || myStrin§g->ecran)
 	// {
 	// 	while (myString->input[myString->iter])
 	// 	{

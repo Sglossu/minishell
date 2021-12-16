@@ -60,7 +60,8 @@ static void make_part_world(char *input, t_list **tmp, int *i)
 	
 	j = *i + 1;
 	while (input[j] && input[j] != ' ' && input[j] != '|'
-			 && input[j] != '<' && input[j] != '>' )
+			 && input[j] != '<' && input[j] != '>'
+			 	&& input[j] != '\'' && input[j] != '\"')
 		j++;
 	str = ft_substr(input, *i, j - *i);
 	if (ft_strlen(str) > 0)
