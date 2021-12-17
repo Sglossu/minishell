@@ -12,13 +12,31 @@
 
 #include "../includes/minishell.h"
 
+int	check_flag_n(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '-' && str[i + 1] == 'n')
+		i++;
+	else
+		return (1);
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	ft_echo(t_list *arg)
 {
 	bool	line_break;
 
 	line_break = true;
 	arg = arg->next;
-	if (arg && !ft_strcmp(arg->val, "-n"))
+	if (arg && !check_flag_n(arg->val))
 	{
 		arg = arg->next;
 		line_break = false;
