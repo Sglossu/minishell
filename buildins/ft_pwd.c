@@ -25,7 +25,7 @@ int	ft_pwd(t_all *all)
 	}
 	else
 	{
-		ft_putendl_fd(all->pwd, STDOUT_FILENO);
+		ft_putendl_fd(all->oldpwd, STDOUT_FILENO);
 		return (1);
 	}
 	return (0);

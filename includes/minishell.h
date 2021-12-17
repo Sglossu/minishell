@@ -54,6 +54,7 @@ typedef struct s_all {
 	int			number_command; // количество команд
 	int			i; // номер вызываемой команды
 	char 		*pwd;
+	char 		*oldpwd;
 }				t_all;
 
 int	g_status;
@@ -65,7 +66,7 @@ int		ft_pwd(t_all *all);
 int		ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg);
 void	ft_env(t_list *lst);
 void	ft_unset(t_list **env, t_list *exp, t_list *arg);
-int		ft_export(t_list **env, t_list *exp, t_list *arg);
+int		ft_export(t_all *all, t_list **env, t_list *exp, t_list *arg);
 int		ft_echo(t_list *arg);
 int		ft_exit(t_list *arg);
 

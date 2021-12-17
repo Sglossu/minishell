@@ -26,7 +26,7 @@ int	if_buildins(t_all *all, t_list **env, t_list *exp, t_list *arg)
 	else if (!ft_strcmp(arg->val, "exit"))
 		g_status = ft_exit(arg);
 	else if (!ft_strcmp(arg->val, "export"))
-		ft_export(env, exp, arg);
+		ft_export(all, env, exp, arg);
 	else if (!ft_strcmp(arg->val, "pwd"))
 	{
 		if (!ft_pwd(all))

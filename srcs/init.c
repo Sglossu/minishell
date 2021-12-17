@@ -30,8 +30,11 @@ static	t_list	*init_lst_env_or_exp(char **buf)
 static	void	init_pwd(t_all *all)
 {
 	all->pwd = getcwd(NULL, 1024);
+	all->oldpwd = getcwd(NULL, 1024);
 	if (!all->pwd)
+	{
 		ft_putendl_fd("Error", STDERR_FILENO);
+	}
 }
 
 void	init(t_all *all, char **envi)

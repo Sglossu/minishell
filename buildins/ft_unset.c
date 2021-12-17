@@ -15,6 +15,7 @@
 void	ft_unset(t_list **env, t_list *exp, t_list *arg)
 {
 	t_list	*tmp;
+	(void)exp;
 
 	arg = arg->next;
 	while (arg)
@@ -23,8 +24,8 @@ void	ft_unset(t_list **env, t_list *exp, t_list *arg)
 		if (tmp)
 		{
 			ft_lstremove(env, tmp);
-			tmp = ft_lstfind(exp, arg->val);
-			ft_lstremove(&exp, tmp);
+//			tmp = ft_lstfind(exp, arg->val);
+//			ft_lstremove(&exp, tmp);
 		}
 		arg = arg->next;
 	}
