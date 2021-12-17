@@ -66,7 +66,7 @@ int		ft_pwd(t_all *all);
 int		ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg);
 void	ft_env(t_list *lst);
 void	ft_unset(t_list **env, t_list *exp, t_list *arg);
-int		ft_export(t_all *all, t_list **env, t_list *exp, t_list *arg);
+int		ft_export(t_all *all, t_list *arg);
 int		ft_echo(t_list *arg);
 int		ft_exit(t_list *arg);
 
@@ -92,7 +92,7 @@ int		pipe_for_two(t_all *all);
 //main
 int		main_work(t_all *all);
 void	child(t_all *all, int all_i);
-int		if_buildins(t_all *all, t_list **env, t_list *exp, t_list *arg);
+int		if_buildins(t_all *all, t_list *arg);
 
 //parse
 void	path_pl_command(t_all *all, char *command);

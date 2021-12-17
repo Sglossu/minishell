@@ -12,28 +12,28 @@
 
 #include "../includes/minishell.h"
 
-int	if_buildins(t_all *all, t_list **env, t_list *exp, t_list *arg)
+int	if_buildins(t_all *all, t_list *arg)
 {
 	if (!ft_strcmp(arg->val, "cd"))
 	{
-		if (!ft_cd(all, env, exp, arg))
+		if (!ft_cd(all, &all->env, all->exp, arg))
 			remember_pwd(all);
 	}
 	else if (!ft_strcmp(arg->val, "echo"))
 		ft_echo(arg);
 	else if (!ft_strcmp(arg->val, "env"))
-		ft_env(*env);
+		ft_env(all->env);
 	else if (!ft_strcmp(arg->val, "exit"))
 		g_status = ft_exit(arg);
 	else if (!ft_strcmp(arg->val, "export"))
-		ft_export(all, env, exp, arg);
+		ft_export(all, arg);
 	else if (!ft_strcmp(arg->val, "pwd"))
 	{
 		if (!ft_pwd(all))
 			remember_pwd(all);
 	}
 	else if (!ft_strcmp(arg->val, "unset"))
-		ft_unset(env, exp, arg);
+		ft_unset(&all->env, all->exp, arg);
 	else
 		return (1);
 	return (0);
@@ -80,7 +80,7 @@ int	main_work(t_all *all)
 		return (0); // нет команды, работаем дальше
 	if (all->cmd[0]->type == BUILDIN)
 	{
-		if_buildins(all, &all->env, all->exp, all->cmd[0]->arg);
+		if_buildins(all, all->cmd[0]->arg);
 		return (g_status);
 	}
 	if (all->cmd[0]->type == BINARY)

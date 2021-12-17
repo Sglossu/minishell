@@ -35,7 +35,7 @@ void	child_for_pipe(t_all *all, int com, int num_com, int fd[com][2])
 		close(fd[i][1]);
 		i++;
 	}
-	if (if_buildins(all, &all->env, all->exp, all->cmd[num_com]->arg))
+	if (if_buildins(all, all->cmd[num_com]->arg))
 		child(all, num_com);
 	exit(g_status);
 }
