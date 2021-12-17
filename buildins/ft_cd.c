@@ -45,10 +45,12 @@ static void	change_pwd_oldpwd(t_list **env, t_list *exp, char **oldpwd)
 {
 	char	*pwd;
 	t_list	*tmp;
+	t_list	*tmp2;
 
 	pwd = getcwd(NULL, 1024);
 	if (!pwd)
 	{
+
 		g_status = errno;
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		return ;
@@ -59,13 +61,17 @@ static void	change_pwd_oldpwd(t_list **env, t_list *exp, char **oldpwd)
 	else
 		tmp->val = ft_strjoin("PWD=", pwd);
 	tmp = ft_lstfind(*env, "OLDPWD");
+	tmp2 = ft_lstfind(exp, "OLDPWD");
 	if (!tmp)
 	{
 		ft_lstadd_back(env, ft_lstnew(ft_strjoin("OLDPWD=", *oldpwd)));
 		ft_lstadd_back(&exp, ft_lstnew(ft_strjoin("OLDPWD=", *oldpwd)));
 	}
 	else
+	{
 		tmp->val = ft_strjoin("OLDPWD=", *oldpwd);
+		tmp2->val = ft_strjoin("OLDPWD=", *oldpwd);
+	}
 }
 
 void	remember_pwd(t_all *all)
@@ -87,7 +93,7 @@ int	ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg)
 	char	*oldpwd;
 
 	remember_pwd(all);
-	if (!arg->next)
+	if (!arg->next || (arg->next && !ft_strcmp(arg->next->val, "~")))
 		str = home(env);
 	else
 		str = ft_strdup(arg->next->val);
@@ -96,14 +102,18 @@ int	ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg)
 	oldpwd = getcwd(NULL, 1024);
 	if (!oldpwd)
 	{
-		g_status = errno;
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		return (g_status);
+		oldpwd = ft_strdup(all->pwd);
+//		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+//		return (errno);
 	}
-	if (chdir(str) == -1 && str)
+	if (str && chdir(str) == -1)
 	{
-		g_status = errno;
-		ft_printf(2, "cd: %s: %s\n", str, strerror(errno));
+		chdir(all->pwd);
+		if (str && chdir(str) == -1)
+		{
+			g_status = errno;
+			ft_printf(2, "cd: %s: %s\n", str, strerror(errno));
+		}
 	}
 	else
 		change_pwd_oldpwd(env, exp, &oldpwd);
