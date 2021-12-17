@@ -36,3 +36,59 @@ char	*find_after_equals(char *str)
 		return (ft_strdup(str));
 	return (NULL);
 }
+
+char	*find_before_equals(char *str)
+{
+	int		i;
+	char	*dst;
+	int 	j;
+
+	i = 0;
+	j = 0;
+	if (!ft_strchr(str, '='))
+		return NULL;
+	while (str[i])
+	{
+		if (str[i] == '=')
+		{
+			i++;
+			break;
+		}
+		else
+			i++;
+	}
+	dst = (char *)malloc(sizeof(char) * (i + 1));
+	if (!dst)
+	{
+//		error// todo
+		return NULL;
+	}
+	while (i > 0)
+	{
+		dst[j] = str[j];
+		j++;
+		i--;
+	}
+	dst[j] = '\0';
+	return (dst);
+}
+
+void	print_params(char **buf, int count)
+{
+	int		i;
+	int		j;
+
+	j = 0;
+	while (j < count)
+	{
+		i = 0;
+		write(STDOUT_FILENO, "declare -x ", 11);
+		while (buf[j][i] != 0)
+		{
+			write(1, &buf[j][i], 1);
+			i++;
+		}
+		write(1, "\n", 1);
+		j++;
+	}
+}
