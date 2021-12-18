@@ -16,7 +16,8 @@ void	ft_env(t_list *lst)
 {
 	while (lst)
 	{
-		ft_putendl_fd(lst->val, STDOUT_FILENO);
+		if (ft_strchr(lst->val, '='))
+			ft_putendl_fd(lst->val, STDOUT_FILENO);
 		lst = lst->next;
 	}
 	g_status = 0;

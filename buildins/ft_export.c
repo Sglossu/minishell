@@ -42,7 +42,6 @@ static	void	if_arg_exist(t_all *all, char *str)
 	if (tmp)
 		ft_lstremove(&all->env, tmp);
 	ft_lstadd_back(&all->env, ft_lstnew(str));
-//	free(str);
 	free(tmp_str);
 	free(find_b_e);
 }

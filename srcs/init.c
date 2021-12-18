@@ -40,7 +40,6 @@ static	void	init_pwd(t_all *all)
 void	init(t_all *all, char **envi)
 {
 	all->env = init_lst_env_or_exp(envi);
-//	all->exp = init_lst_env_or_exp(envi);
 	all->exp = NULL;
 	init_pwd(all);
 	all->i = 0;
