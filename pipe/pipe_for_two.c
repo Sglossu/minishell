@@ -12,14 +12,15 @@
 
 #include "../includes/minishell.h"
 
-void	second_pipe(t_all *all, int fd[2])
+int	second_pipe(t_all *all, int fd[2])
 {
 	all->i = 1;
 	all->cmd[1]->pid = fork();
-	if (all->cmd[1]->pid < 0)
+	if (all->cmd[1]->pid == -1)
 	{
+		ft_printf(2, "fork failed: %s\n", strerror(errno));
 		g_status = errno;
-		ft_putendl_fd(strerror(errno), 2);
+		return (1);
 	}
 	if (all->cmd[1]->pid == 0)
 	{
@@ -36,15 +37,17 @@ void	second_pipe(t_all *all, int fd[2])
 			child(all, 1);
 		exit (g_status);
 	}
+	return (0);
 }
 
-void	first_pipe(t_all *all, int fd[2])
+int	first_pipe(t_all *all, int fd[2])
 {
 	all->cmd[0]->pid = fork();
-	if (all->cmd[0]->pid < 0)
+	if (all->cmd[1]->pid == -1)
 	{
+		ft_printf(2, "fork failed: %s\n", strerror(errno));
 		g_status = errno;
-		ft_putendl_fd(strerror(errno), 2);
+		return (1);
 	}
 	if (all->cmd[0]->pid == 0)
 	{
@@ -61,6 +64,7 @@ void	first_pipe(t_all *all, int fd[2])
 			child(all, 0);
 		exit(g_status);
 	}
+	return (0);
 }
 
 int	pipe_for_two(t_all *all)
@@ -72,8 +76,10 @@ int	pipe_for_two(t_all *all)
 		g_status = errno;
 		return (errno);
 	}
-	first_pipe(all, fd);
-	second_pipe(all, fd);
+	if (first_pipe(all, fd))
+		return (1);
+	if (second_pipe(all, fd))
+		return (1);
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(all->cmd[0]->pid, &g_status, 0);

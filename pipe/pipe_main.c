@@ -40,15 +40,20 @@ void	child_for_pipe(t_all *all, int com, int num_com, int fd[com][2])
 	exit(g_status);
 }
 
-void	fork_and_close(t_all *all, int com, int fd[com][2], int i)
+int	fork_and_close(t_all *all, int com, int fd[com][2], int i)
 {
+	int	iserror;
+
+	iserror = 0;
 	while (i < com + 1)
 	{
 		all->cmd[i]->pid = fork();
 		if (all->cmd[i]->pid < 0)
 		{
+			ft_printf(2, "fork failed: %s\n", strerror(errno));
 			g_status = errno;
-			exit(errno);
+			iserror = 1;
+			break ;
 		}
 		if (all->cmd[i]->pid == 0)
 		{
@@ -65,6 +70,7 @@ void	fork_and_close(t_all *all, int com, int fd[com][2], int i)
 		close(fd[i][1]);
 		i++;
 	}
+	return (iserror);
 }
 
 int	pipe_for_another(t_all *all, int com) // com - количество пайпов
@@ -77,13 +83,18 @@ int	pipe_for_another(t_all *all, int com) // com - количество пайп
 	{
 		if (pipe(fd[i]) == -1)
 		{
+			ft_putendl_fd(strerror(errno), STDERR_FILENO);
 			g_status = errno;
 			return (errno);
 		}
 		i++;
 	}
 	i = 0;
-	fork_and_close(all, com, fd, i);
+	if (fork_and_close(all, com, fd, i))
+	{
+		ft_signal_main();
+		return (g_status);
+	}
 	while (i < com + 1)
 	{
 		waitpid(all->cmd[i]->pid, &g_status, 0);

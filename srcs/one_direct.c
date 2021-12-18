@@ -78,6 +78,12 @@ int	one_direct(t_all *all)
 	int	status;
 
 	all->cmd[all->i]->pid = fork();
+	if (all->cmd[all->i]->pid == -1)
+	{
+		g_status = errno;
+		ft_printf(2, "fork failed: %s\n", strerror(errno));
+		return (1);
+	}
 	if (all->cmd[all->i]->pid == 0)
 	{
 		main_function_for_one_direct(all);

@@ -60,6 +60,7 @@ static	int	binary(t_all *all)
 	all->cmd[0]->pid = fork();
 	if (all->cmd[0]->pid < 0)
 	{
+		ft_printf(2, "fork failed: %s\n", strerror(errno));
 		g_status = errno;
 		return (g_status);
 	}
