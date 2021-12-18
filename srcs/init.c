@@ -21,7 +21,7 @@ static	t_list	*init_lst_env_or_exp(char **buf)
 	i = 0;
 	while (buf[i])
 	{
-		ft_lstadd_back(&tmp, ft_lstnew(buf[i]));
+		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup(buf[i])));
 		i++;
 	}
 	return (tmp);
@@ -40,8 +40,8 @@ static	void	init_pwd(t_all *all)
 void	init(t_all *all, char **envi)
 {
 	all->env = init_lst_env_or_exp(envi);
-	all->exp = init_lst_env_or_exp(envi);
-//	all->exp = NULL;
+//	all->exp = init_lst_env_or_exp(envi);
+	all->exp = NULL;
 	init_pwd(all);
 	all->i = 0;
 }

@@ -67,6 +67,8 @@ int		ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg);
 void	ft_env(t_list *lst);
 void	ft_unset(t_list **env, t_list *exp, t_list *arg);
 int		ft_export(t_all *all, t_list *arg);
+void	new_copy_env(t_all *all);
+char	*str_arg_in_quote(char *str);
 int		ft_echo(t_list *arg);
 int		ft_exit(t_list *arg);
 

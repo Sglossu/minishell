@@ -15,27 +15,27 @@
 char	*find_after_equals(char *str)
 {
 	bool	equals;
+	int 	i;
 
+	i = 0;
 	equals = false;
 	if (!str)
 		return (NULL); // в cd этот вариант обрабатывается раньше, от туда сюда точно не зайдет, но оставлю на будущее на всякий
-	else
+	while (str[i])
 	{
-		while (*str)
+		if (str[i] == '=')
 		{
-			if (*str == '=')
-			{
-				equals = true;
-				str++;
-				break ;
-			}
-			str++;
+			equals = true;
+			i++;
+			break ;
 		}
+		i++;
 	}
 	if (equals)
-		return (ft_strdup(str));
+		return (ft_substr(str, i, ft_strlen(str) - i));
 	return (NULL);
 }
+
 
 char	*find_before_equals(char *str)
 {
@@ -50,13 +50,10 @@ char	*find_before_equals(char *str)
 	while (str[i])
 	{
 		if (str[i] == '=')
-		{
-			i++;
 			break;
-		}
-		else
-			i++;
+		i++;
 	}
+	i++;
 	dst = (char *)malloc(sizeof(char) * (i + 1));
 	if (!dst)
 	{
