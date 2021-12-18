@@ -76,7 +76,7 @@ char	**from_lst_to_buf(int argc, t_list *lst, char c);
 char	*find_after_equals(char *str);
 char	*find_before_equals(char *str);
 void	print_params(char **buf, int count);
-void	change_after_equals_in_list(t_all *all, t_list tmp, char *str);
+void	change_after_equals_in_list(t_all *all, t_list *tmp, char *str);
 
 //srcs
 void	init(t_all *all, char **envi);

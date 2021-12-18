@@ -88,15 +88,12 @@ static	void	if_arg_exist(t_all *all, char *str)
 		tmp_str[i] = find_b_e[i];
 		i++;
 	}
+	find_b_e[i] = '\0';
 	tmp = ft_lstfind(all->env, tmp_str);
-	if (!tmp)
-	{
-		ft_lstadd_back(&all->env, ft_lstnew(str));
-	}
-	else
-	{
-		change_after_equals_in_list(all, *tmp, str);
-	}
+	if (tmp)
+		ft_lstremove(&all->env, tmp);
+	ft_lstadd_back(&all->env, ft_lstnew(str));
+//	free(str);
 	free(tmp_str);
 	free(find_b_e);
 }
