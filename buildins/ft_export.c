@@ -12,19 +12,6 @@
 
 #include "../includes/minishell.h"
 
-//int	tmp_not_exist(t_all *all, char ***buf)
-//{
-//	int	count;
-//
-//	new_copy_env(all);
-//	count = ft_lstsize(all->exp);
-//	*buf = ft_sort_params(count, all->exp);
-//	if (!(*buf))
-//		return (1); // error
-//	print_params(*buf, count);
-//	return (0);
-//}
-
 static	void	if_arg_exist(t_all *all, char *str)
 {
 	t_list	*tmp;
@@ -34,6 +21,11 @@ static	void	if_arg_exist(t_all *all, char *str)
 
 	i = 0;
 	find_b_e = find_before_equals(str);
+	if (!find_b_e)
+	{
+		ft_lstadd_back(&all->env, ft_lstnew(str));
+		return ;
+	}
 	tmp_str = (char *)malloc(sizeof(char) * ft_strlen(find_b_e));
 	if (!tmp_str)
 	{
@@ -59,14 +51,12 @@ int	ft_export(t_all *all, t_list *arg)
 {
 	char	**buf;
 	t_list	*tmp;
-	char 	*arg_str;
+//	char 	*arg_str;
 	int 	count;
 
-//	tmp = all->env;
 	if (arg)
 		arg = arg->next;
 	tmp = arg;
-//	new_copy_env(all);
 	while (arg)
 	{
 		if (!ft_isalpha(arg->val[0])) // 1 - значит первая это БУКВА
@@ -74,10 +64,10 @@ int	ft_export(t_all *all, t_list *arg)
 			ft_printf(2, "export: %s: not a valid identifier\n", arg->val);
 			g_status = 1;
 		}
-		if (!ft_lstfind(all->exp, arg->val))
+		if (!ft_lstfind(all->env, arg->val))
 		{
-			arg_str = str_arg_in_quote(arg->val); // делает нормальную строчку для добавления в список
-			if_arg_exist(all, arg_str);
+//			arg_str = str_arg_in_quote(arg->val); // делает нормальную строчку для добавления в список
+			if_arg_exist(all, arg->val);
 		}
 		arg = arg->next;
 	}
@@ -90,6 +80,5 @@ int	ft_export(t_all *all, t_list *arg)
 			return (1); // error
 		print_params(buf, count);
 	}
-//		return (tmp_not_exist(all, &buf));
 	return (0);
 }
