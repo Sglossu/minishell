@@ -58,12 +58,12 @@ int	ft_export(t_all *all, t_list *arg)
 	tmp = arg;
 	while (arg)
 	{
-		if (!ft_isalpha(arg->val[0])) // 1 - значит первая это БУКВА
+		if (str_is_variable(arg->val))
 		{
 			ft_printf(2, "export: %s: not a valid identifier\n", arg->val);
 			g_status = 1;
 		}
-		if (!ft_lstfind(all->env, arg->val))
+		else if (!ft_lstfind(all->env, arg->val))
 		{
 //			arg_str = str_arg_in_quote(arg->val); // делает нормальную строчку для добавления в список
 			if_arg_exist(all, arg->val);

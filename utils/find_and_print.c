@@ -36,7 +36,6 @@ char	*find_after_equals(char *str)
 	return (NULL);
 }
 
-
 char	*find_before_equals(char *str)
 {
 	int		i;
@@ -68,6 +67,23 @@ char	*find_before_equals(char *str)
 	}
 	dst[j] = '\0';
 	return (dst);
+}
+
+int	str_is_variable(char *str)
+{
+	int i;
+
+	i = 0;
+	if (!ft_isalpha(str[i]) && str[i] != '_') // 0 - нет буквы
+		return (1);
+	i++;
+	while(str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 void	print_params(char **buf, int count)
