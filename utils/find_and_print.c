@@ -77,7 +77,7 @@ int	str_is_variable(char *str)
 	if (!ft_isalpha(str[i]) && str[i] != '_') // 0 - нет буквы
 		return (1);
 	i++;
-	while(str[i])
+	while(str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (1);
