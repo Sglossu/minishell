@@ -51,7 +51,11 @@ int	parse_path(t_all *all)
 	}
 	all->path = ft_split(find_after_equals(tmp->val), ':');
 	if (!all->path)
-		return (1); // нет PATH
+	{
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		g_status = errno;
+		return (g_status); // проблема с маллок
+	}
 	loop_for_while(all, tmp);
 	return (0);
 }

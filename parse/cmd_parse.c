@@ -121,6 +121,8 @@ int dir_parse(t_cmd *cmd)
 		{
 			cmd->f_direct = DOUB_DIR;
 			cmd->name_file = tmp->next->val;
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;
@@ -129,6 +131,8 @@ int dir_parse(t_cmd *cmd)
 		{
 			cmd->f_direct = REDIR;
 			cmd->name_file = tmp->next->val;
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;
@@ -137,6 +141,8 @@ int dir_parse(t_cmd *cmd)
 		{
 			cmd->f_direct = DOUB_REDIR;
 			cmd->name_file = tmp->next->val;
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;

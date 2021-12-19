@@ -50,7 +50,6 @@ int	ft_export(t_all *all, t_list *arg)
 {
 	char	**buf;
 	t_list	*tmp;
-//	char 	*arg_str;
 	int 	count;
 
 	if (arg)
@@ -65,7 +64,6 @@ int	ft_export(t_all *all, t_list *arg)
 		}
 		else if (!ft_lstfind(all->env, arg->val))
 		{
-//			arg_str = str_arg_in_quote(arg->val); // делает нормальную строчку для добавления в список
 			if_arg_exist(all, arg->val);
 		}
 		arg = arg->next;
