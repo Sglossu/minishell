@@ -40,9 +40,7 @@ static	void	loop_for_while(t_all *all, t_list *tmp)
 int	parse_path(t_all *all)
 {
 	t_list	*tmp;
-	int		i;
 
-	i = 0;
 	tmp = ft_lstfind(all->env, "PATH");
 	if (!tmp)
 	{

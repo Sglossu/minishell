@@ -84,7 +84,6 @@ static char *preparse(t_all *all, t_list **HEAD, char *input)
 
 int	parse(t_all *all, char *input)
 {
-	char		*parse_input;
 	t_list		*HEAD;
 
 	HEAD = NULL;
