@@ -54,7 +54,7 @@ all			:	$(NAME)
 $(NAME)		:	$(OBJS) $(HEAD) $(HEAD_LIB) $(HEAD_LIB_PRINT)
 				$(MAKE) -C libft
 				$(MAKE) -C printf
-				$(CC) -g $(CFLAGS) -Llibft -Lprintf -lft -I$(DIR_HEAD) $(OBJS) $(LIB) $(LIB_PRINT) -o $(NAME) $(RDL_MAC)
+				$(CC) -g $(CFLAGS) -Llibft -lft -I$(DIR_HEAD) $(OBJS) $(LIB) $(LIB_PRINT) $(RDL_MAC) -o $(NAME)
 
 clean		:
 				$(MAKE) clean -C ./libft/

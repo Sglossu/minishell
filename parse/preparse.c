@@ -6,13 +6,13 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/09 20:08:00 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/16 21:35:59 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char *ft_quote(char *input, int *i)
+char *ft_quote(t_str *myString, char sym)
 {
 	char *s;
 	char *m;
@@ -20,32 +20,17 @@ char *ft_quote(char *input, int *i)
 	char *res;
 	int j;
 
-	j = *i;
+	j = myString->iter;
 
-	while (input[j++])
-		if (input[j] == '\'')
+	while (myString->input[j++])
+		if (myString->input[j] == sym)
 			break;
-	s = ft_substr(input, 0 , *i);
-	m = ft_substr(input, *i + 1, j - *i - 1);
-	f = strdup(input + j + 1);
+	s = ft_substr(myString->input, 0, myString->iter);
+	m = ft_substr(myString->input, myString->iter + 1, j - myString->iter - 1);
+	f = strdup(myString->input + j + 1);
 	res = ft_strjoin(ft_strjoin(s,m), f);
+	myString->iter = j - 2;
 	// printf("|%s|<-s\n|%s|<-m\n|%s|<-f\n",s,m,f);
 	// printf("|%s|<-RES\n", res);
-	// *i = -1;
-	if (input)
-	{
-		free(input);
-		input = NULL;
-	}
 	return(res);
 }
-
-// char *ft_dubquoute(char *input, int *i)
-// {
-
-// }
-
-// char *ft_dollar(char *input, int *i)
-// {
-
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sglossu <sglossu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 18:16:52 by sglossu           #+#    #+#             */
-/*   Updated: 2021/08/19 18:16:53 by sglossu          ###   ########.fr       */
+/*   Updated: 2021/12/17 00:07:40 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct s_list
 {
 	char			*val;
+	int				flag;
 	struct s_list	*next;
 }				t_list;
 

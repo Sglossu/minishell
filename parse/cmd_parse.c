@@ -38,12 +38,13 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		// ft_lstprint(all->cmd[i]->arg);
 		// printf("f_direct status = %d\n", all->cmd[i]->f_direct);
 		// printf("name_file = %s\n", all->cmd[i]->name_file);
+		// printf("path_command = %s\n", all->cmd[i]->path_command);
 		i++;		
 	}
 	return 0;
 }
 
-int	num_of_commands(t_list *HEAD, t_all *all)
+void	num_of_commands(t_all *all, t_list *HEAD)
 {
 	int		res;
 	t_list	*tmp;
@@ -64,7 +65,7 @@ int	num_of_commands(t_list *HEAD, t_all *all)
 			pipes = 1;
 		tmp = tmp->next;
 	}
-	return res;
+	all->number_command = res;
 }
 
 int	init_cmd_struct(t_all *all)
@@ -120,7 +121,7 @@ int dir_parse(t_cmd *cmd)
 		else if (!ft_strcmp(tmp->val, ">>"))
 		{
 			cmd->f_direct = DOUB_DIR;
-			cmd->name_file = tmp->next->val;
+			cmd->name_file = ft_strdup(tmp->next->val);
 			ft_lstremove(&cmd->arg, cmd->arg->next);
 			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
@@ -130,7 +131,7 @@ int dir_parse(t_cmd *cmd)
 		else if (!ft_strcmp(tmp->val, "<"))
 		{
 			cmd->f_direct = REDIR;
-			cmd->name_file = tmp->next->val;
+			cmd->name_file = ft_strdup(tmp->next->val);
 			ft_lstremove(&cmd->arg, cmd->arg->next);
 			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
@@ -140,7 +141,7 @@ int dir_parse(t_cmd *cmd)
 		else if (!ft_strcmp(tmp->val, "<<"))
 		{
 			cmd->f_direct = DOUB_REDIR;
-			cmd->name_file = tmp->next->val;
+			cmd->name_file = ft_strdup(tmp->next->val);
 			ft_lstremove(&cmd->arg, cmd->arg->next);
 			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);

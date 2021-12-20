@@ -38,21 +38,21 @@ int find_com(t_all *all)
 	{
 		if (!access(all->path[i], 0 | 1))
 		{
-			return (1); // команда нашлась по этому пути
+			return (1);
 		}
 		i++;
 	}
-	return (0); // не нашел такой команды нигде
+	return (0);
 }
 
-int is_binary(char *val, t_all *all)    // проверка бинарника
+int is_binary(char *val, t_all *all)
 {
 	parse_path(all);
 	path_pl_command(all, val);
 	return(find_com(all));
 }
 
-int is_buildin(char *val)             // проверка билдина
+int is_buildin(char *val)
 {
 	if ((!ft_strcmp(val, "cd")) || (!ft_strcmp(val, "pwd")) || (!ft_strcmp(val, "echo"))
 			|| (!ft_strcmp(val, "export")) || (!ft_strcmp(val, "unset"))

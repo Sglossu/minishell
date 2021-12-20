@@ -27,14 +27,19 @@
 # include <readline/history.h>
 # include "stdbool.h"
 
-# define DIR        3
-# define REDIR		4
-# define DOUB_DIR	5
-# define DOUB_REDIR	6
-# define NONE		7
+# define MINISHELL	"\033[32mMinishell$ \033[0m"
 
-# define BUILDIN	0
-# define BINARY		1
+# define 	DIR			3
+# define	REDIR		4
+# define	DOUB_DIR	5
+# define 	DOUB_REDIR	6
+# define 	NONE		7
+
+# define	TEXT		8
+# define	PIPE		9
+
+# define	BUILDIN		0
+# define	BINARY		1
 
 typedef struct s_cmd {
 	t_list		*arg;
@@ -56,6 +61,16 @@ typedef struct s_all {
 	char 		*pwd;
 	char 		*oldpwd;
 }				t_all;
+
+typedef struct s_str {
+	char *input;
+	char *buf;
+	int iter;
+	int	quote;
+	int	ecran;
+	int	dub_quote;
+	int	dollars;
+}				t_str;
 
 int	g_status;
 
@@ -109,12 +124,12 @@ int		is_buildin(char *val);
 //parse_utils
 
 // {preparse}
-char	*ft_quote(char *input, int *i);
-// char	*ft_dubquoute(char *input, int *i);
-// char	*ft_dollar(char *input, int *i);
+char	*ft_quote(t_str *myString, char sym);
+// char	*ft_dubquoute(char *input, int *i, t_all *all);
+// char	*ft_dollar(char *input, t_all *all, int *i);
 
 // {CMD}
-int		num_of_commands(t_list *HEAD, t_all *all);
+void	num_of_commands(t_all *all, t_list *HEAD);
 int		init_cmd_struct(t_all *all);
 int		fill_cmd_struct(t_all *all, t_list *HEAD);
 char	*path_com(t_all *all, char *command);
@@ -122,7 +137,6 @@ int		dir_parse(t_cmd *cmd);
 void	combo_check(t_cmd *cmd);
 
 // {LISTS}
-void	make_list(char *input, t_list *tmp, int *o);
 t_list	*make_list_with_all_word(char *input);
 t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command);
 void	ft_lstprint(t_list *HEAD);
