@@ -1,7 +1,14 @@
-
-//
-// Created by Shasta Glossu on 11/16/21.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:17:25 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:17:31 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -15,6 +22,7 @@
 # include "sys/wait.h"
 # include <errno.h>
 # include "../libft/libft.h"
+# include "../printf/ft_printf.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "stdbool.h"
@@ -35,22 +43,23 @@
 
 typedef struct s_cmd {
 	t_list		*arg;
-	char 		*path_command; // под это нет маллока, так как замолочится потом
+	char		*path_command; // под это нет маллока, так как замолочится потом
 	pid_t		pid;
 	int			type;
-	char 		*name_file;
-	int 		f_direct;
+	char		*name_file;
+	int			f_direct;
 	bool		combo;
 }				t_cmd;
 
 typedef struct s_all {
 	t_list		*env;
 	t_list		*exp;
-	char 		**path; // под это нет маллока, так как замолочится потом
+	char		**path; // под это нет маллока, так как замолочится потом
 	t_cmd		**cmd;
-	int 		number_command; // количество команд
-	int 		i; // номер вызываемой команды
-	char 		*home;
+	int			number_command; // количество команд
+	int			i; // номер вызываемой команды
+	char 		*pwd;
+	char 		*oldpwd;
 }				t_all;
 
 typedef struct s_str {
@@ -63,16 +72,18 @@ typedef struct s_str {
 	int	dollars;
 }				t_str;
 
-int	s_status;
+int	g_status;
 
-void path_print(t_all *all); // потом удалить
+void	path_print(t_all *all); // потом удалить
 
 //buidins
-void	ft_pwd(void);
-void	ft_cd(t_list **env, t_list *arg);
-int		ft_env(t_list *lst);
-int 	ft_unset(t_list **env, t_list *exp, t_list *arg);
-int		ft_export(t_list **env, t_list *exp, t_list *arg);
+int		ft_pwd(t_all *all);
+int		ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg);
+void	ft_env(t_list *lst);
+void	ft_unset(t_list **env, t_list *exp, t_list *arg);
+int		ft_export(t_all *all, t_list *arg);
+void	new_copy_env(t_all *all);
+char	*str_arg_in_quote(char *str);
 int		ft_echo(t_list *arg);
 int		ft_exit(t_list *arg);
 
@@ -80,24 +91,28 @@ int		ft_exit(t_list *arg);
 char	**ft_sort_params(int argc, t_list *lst);
 char	**from_lst_to_buf(int argc, t_list *lst, char c);
 char	*find_after_equals(char *str);
+char	*find_before_equals(char *str);
+void	print_params(char **buf, int count);
+int		str_is_variable(char *str);
 
-//srcs_init
+//srcs
 void	init(t_all *all, char **envi);
+void	remember_pwd(t_all *all);
 
 //pipe and redirect
 int		our_pipe(t_all *all);
-int 	main_function_for_one_direct(t_all *all);
+int		main_function_for_one_direct(t_all *all);
 int		one_direct(t_all *all);
 int		ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0);
-int 	ft_redir(t_cmd *cmd, int fd_std);
-int 	ft_doubledir(t_cmd *cmd, int fd_std);
-int 	ft_dir(t_cmd *cmd, int fd_std);
+int		ft_redir(t_cmd *cmd, int fd_std);
+int		ft_doubledir(t_cmd *cmd, int fd_std);
+int		ft_dir(t_cmd *cmd, int fd_std);
+int		pipe_for_two(t_all *all);
 
 //main
 int		main_work(t_all *all);
-int		if_command_exist(t_all *all);
 void	child(t_all *all, int all_i);
-int		if_buildins(t_list **env, t_list *exp, t_list *arg);
+int		if_buildins(t_all *all, t_list *arg);
 
 //parse
 void	path_pl_command(t_all *all, char *command);
@@ -105,7 +120,6 @@ int		parse(t_all *all, char *input);
 int		parse_path(t_all *all);
 int		is_binary(char *val, t_all *all);
 int		is_buildin(char *val);
-int 	parse_path(t_all *all);
 
 //parse_utils
 

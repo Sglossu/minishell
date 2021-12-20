@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:15:53 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:15:55 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	path_pl_command(t_all *all, char *command)
@@ -6,7 +18,7 @@ void	path_pl_command(t_all *all, char *command)
 	char 	*str1;
 	char 	*str2;
 
-	while (all->path[i])
+	while (all->path && all->path[i])
 	{
 		str1 = ft_strdup(all->path[i]);
 		free(all->path[i]);
@@ -22,7 +34,7 @@ int find_com(t_all *all)
 {
 	int i = 0;
 
-	while (all->path[i])
+	while (all->path && all->path[i])
 	{
 		if (!access(all->path[i], 0 | 1))
 		{

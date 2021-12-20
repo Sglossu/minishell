@@ -1,20 +1,32 @@
-//
-// Created by Shasta Glossu on 11/16/21.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:09:08 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:09:13 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_pwd(void)
+int	ft_pwd(t_all *all)
 {
 	char	*pwd;
+
 	pwd = getcwd(NULL, 1024);
 	if (pwd)
 	{
-		printf("%s\n", pwd);
+		ft_putendl_fd(pwd, STDOUT_FILENO);
 		free(pwd);
+		return (0);
 	}
 	else
 	{
-		printf("%s\n", strerror(errno));
+		ft_putendl_fd(all->oldpwd, STDOUT_FILENO);
+		return (1);
 	}
+	return (0);
 }

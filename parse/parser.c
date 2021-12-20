@@ -63,8 +63,28 @@ static char *preparse(t_all *all, t_list **HEAD, char *input)
 	return (myString->input);
 }
 
+// static char *preparse(char *input)
+// {
+// 	int		i;
+
+// 	i = 0;
+// 	while (input[i])
+// 	{
+// 		// printf("|%d|<-- i \n", i);
+// 		if (input[i] == '\'')
+// 			input = ft_quote(input, &i);
+// 		// if (input[i] == '\"')
+// 		// 	res = ft_dubquoute(input, &i);
+// 		// if (input[i] == '$')
+// 		// 	res = ft_dollar(input, &i);
+// 		i++;
+// 	}
+// 	return (input);
+// }
+
 int	parse(t_all *all, char *input)
 {
+	char		*parse_input;
 	t_list		*HEAD;
 
 	HEAD = NULL;

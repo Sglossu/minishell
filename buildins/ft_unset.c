@@ -1,24 +1,32 @@
-//
-// Created by Shasta Glossu on 11/19/21.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:10:18 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:10:28 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ft_unset(t_list **env, t_list *exp, t_list *arg)
+void	ft_unset(t_list **env, t_list *exp, t_list *arg)
 {
-	t_list *tmp;
+	t_list	*tmp;
+	(void)exp;
 
 	arg = arg->next;
-	while(arg)
+	while (arg)
 	{
 		tmp = ft_lstfind(*env, arg->val);
 		if (tmp)
 		{
 			ft_lstremove(env, tmp);
-			tmp = ft_lstfind(exp, arg->val);
-			ft_lstremove(&exp, tmp);
+//			tmp = ft_lstfind(exp, arg->val);
+//			ft_lstremove(&exp, tmp);
 		}
 		arg = arg->next;
 	}
-	return (0);
 }
