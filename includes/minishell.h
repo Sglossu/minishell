@@ -108,6 +108,11 @@ int		is_buildin(char *val);
 
 //parse_utils
 
+// {preparse}
+char	*ft_quote(char *input, int *i);
+// char	*ft_dubquoute(char *input, int *i);
+// char	*ft_dollar(char *input, int *i);
+
 // {CMD}
 int		num_of_commands(t_list *HEAD, t_all *all);
 int		init_cmd_struct(t_all *all);

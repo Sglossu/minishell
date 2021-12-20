@@ -110,7 +110,7 @@ int dir_parse(t_cmd *cmd)
 		if (!ft_strcmp(tmp->val, ">"))
 		{
 			cmd->f_direct = DIR;
-			cmd->name_file = tmp->next->val;
+			cmd->name_file = ft_strdup(tmp->next->val);
 			ft_lstremove(&cmd->arg, cmd->arg->next);
 			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);

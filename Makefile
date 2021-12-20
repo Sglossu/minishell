@@ -28,7 +28,7 @@ SRCS		=	main.c \
 				$(DIR_PIPE)pipe_main.c			$(DIR_PIPE)pipe_for_two.c			$(DIR_PIPE)functions_for_direct.c \
 				\
 				$(DIR_PARSE)parser.c			$(DIR_PARSE)parser_utils.c		$(DIR_PARSE)lists.c \
-				$(DIR_PARSE)cmd_parse.c\
+				$(DIR_PARSE)cmd_parse.c			$(DIR_PARSE)preparse.c	\
 				\
 				$(DIR_SIGNAL)signal_for_main.c	$(DIR_SIGNAL)signal_for_child.c
 

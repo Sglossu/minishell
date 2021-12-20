@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:31:56 by bshawn            #+#    #+#             */
-/*   Updated: 2021/11/29 19:48:57 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/09 18:22:37 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envi)
 			our_pipe(all);
 
 		free(input);
-		ft_free(all);
+		// ft_free(all);
 	}
 
 	return 0;
