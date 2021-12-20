@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 22:21:09 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/16 22:21:23 by sglossu          ###   ########.fr       */
+/*   Created: 2021/12/14 18:16:07 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:16:14 by sglossu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+// SIGINT	Cntrl+C
+// SIGTERM	Cntrl+
+// SIGQUIT	Cntrl+backslash
+
+void	ft_signal_main(void)
 {
-	if (del && lst)
-	{
-		del(lst->val);
-		free(lst);
-	}
+	signal(SIGTERM, SIG_IGN);
+	signal(SIGINT, ft_signal_cltr_c_main);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	ft_signal_cltr_c_main(int sig)
+{
+	(void)sig;
+	write(2, "\n", 1);
+//	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	g_status = 130;
 }

@@ -16,7 +16,8 @@ SRC_NAME	=	ft_strlen.c				ft_strnstr.c				ft_strncmp.c\
 				ft_lstnew.c				ft_lstadd_front.c			ft_lstsize.c\
                 ft_lstlast.c			ft_lstadd_back.c			ft_lstdelone.c\
                 ft_lstclear.c			ft_lstiter.c				ft_lstmap.c\
-                ft_lstfind.c			ft_lstremove.c
+                ft_lstfind.c			ft_lstremove.c				ft_strisdigit.c\
+                ft_strisalpha.c
 
 
 OBJS = $(SRC_NAME:.c=.o)

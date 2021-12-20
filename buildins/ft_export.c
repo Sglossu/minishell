@@ -1,73 +1,81 @@
-//
-// Created by Shasta Glossu on 11/19/21.
-//
-
-//t_list	*env = 0;
-//ft_lstadd_back(&env, ft_lstnew(ft_strdup("PATH=aaa")));
-//ft_lstadd_back(&env, ft_lstnew(ft_strdup("sss=dddd")));
-//ft_lstadd_back(&env, ft_lstnew(ft_strdup("pupu=12345678")));
-//ft_lstadd_back(&env, ft_lstnew(ft_strdup("PWD=var2=var2=")));
-//ft_lstadd_back(&env, ft_lstnew(ft_strdup("var22=bbb")));
-//
-//t_list *arg = ft_lstnew(ft_strdup("export"));
-//ft_lstadd_back(&arg, ft_lstnew(ft_strdup("var2")));
-//ft_lstadd_back(&arg, ft_lstnew(ft_strdup("var22=bbb")));
-//
-//ft_export(&env, NULL);
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:09:29 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:10:12 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void print_params(char **buf, int count)
+static	void	if_arg_exist(t_all *all, char *str)
 {
+	t_list	*tmp;
+	char 	*tmp_str;
+	char	*find_b_e;
 	int 	i;
-	int 	j;
 
-	j = 0;
-	while (j < count)
+	i = 0;
+	find_b_e = find_before_equals(str);
+	if (!find_b_e)
 	{
-		i = 0;
-		write(STDOUT_FILENO, "declare -x ", 11);
-		while (buf[j][i] != 0)
-		{
-			write(1, &buf[j][i], 1);
-			i++;
-		}
-		write(1, "\n", 1);
-		j++;
+		ft_lstadd_back(&all->env, ft_lstnew(str));
+		return ;
 	}
+	tmp_str = (char *)malloc(sizeof(char) * ft_strlen(find_b_e));
+	if (!tmp_str)
+	{
+//		error
+		return ;
+	}
+	while (find_b_e[i + 1])
+	{
+		tmp_str[i] = find_b_e[i];
+		i++;
+	}
+	find_b_e[i] = '\0';
+	tmp = ft_lstfind(all->env, tmp_str);
+	if (tmp)
+		ft_lstremove(&all->env, tmp);
+	ft_lstadd_back(&all->env, ft_lstnew(str));
+	free(tmp_str);
+	free(find_b_e);
 }
 
-int ft_export(t_list **env, t_list *arg)
+int	ft_export(t_all *all, t_list *arg)
 {
-	char 	**buf;
-	int 	count;
-	t_list	*exp = 0;
+	char	**buf;
 	t_list	*tmp;
+	int 	count;
 
-	tmp = *env;
-	while(tmp)
-	{
-		ft_lstadd_back(&exp, ft_lstnew(tmp->val));
-		tmp = tmp->next;
-	}
 	if (arg)
 		arg = arg->next;
 	tmp = arg;
 	while (arg)
 	{
-		if(!ft_lstfind(exp, arg->val)) {
-			ft_lstadd_back(&exp, ft_lstnew(arg->val));
+		if (str_is_variable(arg->val))
+		{
+			ft_printf(2, "export: %s: not a valid identifier\n", arg->val);
+			g_status = 1;
+		}
+		else if (!ft_lstfind(all->env, arg->val))
+		{
+			if_arg_exist(all, arg->val);
 		}
 		arg = arg->next;
 	}
 	if (!tmp)
 	{
-		count = ft_lstsize(exp);
-		buf = ft_sort_params(count, exp);
-		if (!buf)
+		new_copy_env(all);
+		count = ft_lstsize(all->exp);
+		buf = ft_sort_params(count, all->exp);
+		if (!(buf))
 			return (1); // error
 		print_params(buf, count);
 	}
-    return (1);
+	return (0);
 }

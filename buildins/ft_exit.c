@@ -1,26 +1,18 @@
-//
-// Created by Shasta Glossu on 11/23/21.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:08:57 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:09:02 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_strisdigit(char *str)
-{
-	int i;
-
-	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		str++;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (1); // есть буква
-		i++;
-	}
-	return (0); // нет буков, тока циферы
-}
-
-int	problems(char *str, int minus)
+static int	problems(char *str, int minus)
 {
 	int	len;
 
@@ -44,7 +36,7 @@ int	problems(char *str, int minus)
 	return (0);
 }
 
-long long	ft_atoi_overflow(char *str)
+static long long	ft_atoi_overflow(char *str)
 {
 	int			i;
 	long long	minus;
@@ -73,20 +65,20 @@ long long	ft_atoi_overflow(char *str)
 	return (nb * minus);
 }
 
-int work_with_arg(char *str)
+static int	work_with_arg(char *str)
 {
 	long long	status_exit;
 
-	if (!ft_atoi_overflow(str) && (ft_strcmp(str, "0") || ft_strcmp(str, "-0") || ft_strcmp(str, "+0")))
+	if (!ft_atoi_overflow(str) && (ft_strcmp(str, "0")
+			|| ft_strcmp(str, "-0") || ft_strcmp(str, "+0")))
 	{
 		// overflow
 		printf("exit: %s: numeric argument required\n", str);
 		exit (255);
 	}
 	status_exit = ft_atoi_long(str);
-	if (status_exit > 0) {
+	if (status_exit > 0)
 		return ((int)status_exit % 256);
-	}
 	else if (status_exit % 256 != 0)
 		return ((int)(status_exit % 256 + 256));
 	return (0);
@@ -96,19 +88,20 @@ int	ft_exit(t_list *arg)
 {
 	arg = arg->next;
 	if (!arg)
-		printf("exit\n");
-	else
-		printf("exit %s\n", arg->val);
-	if (!arg)
-		exit (0);
-	if (ft_strisdigit(arg->val))
 	{
-		printf("exit: %s: numeric argument required\n", arg->val);
+		ft_putendl_fd("exit", STDOUT_FILENO);
+		g_status = 0;
+		exit (g_status);
+	}
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	if (ft_strisdigit(arg->val)) // return 1 - есть буква
+	{
+		ft_printf(2, "exit: %s: numeric argument required\n", arg->val);
 		exit (255);
 	}
 	if (arg->next)
 	{
-		printf("exit: too many arguments\n");
+		ft_putendl_fd("exit: too many arguments\n", 2);
 		return (255);
 	}
 	exit (work_with_arg(arg->val));

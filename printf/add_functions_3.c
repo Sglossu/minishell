@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   add_functions_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 22:21:09 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/16 22:21:23 by sglossu          ###   ########.fr       */
+/*   Created: 2021/12/16 22:42:39 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/16 22:42:41 by sglossu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+t_struct	ft_point_2(t_struct ptf, unsigned long nb)
 {
-	if (del && lst)
+	if (ptf.temp < 0)
 	{
-		del(lst->val);
-		free(lst);
+		ptf.width = ft_diglenlong(nb) + 2;
+		ptf.accuracy = 1;
 	}
+	if (ptf.flag != 0)
+	{
+		if (ptf.accuracy < ft_diglenlong(nb) && ptf.accuracy != 0)
+			ptf.accuracy = ft_diglenlong(nb);
+	}
+	return (ptf);
 }

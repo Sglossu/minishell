@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_strisdigit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 22:21:09 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/16 22:21:23 by sglossu          ###   ########.fr       */
+/*   Created: 2021/12/16 22:27:18 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/16 22:27:24 by sglossu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+int	ft_strisdigit(char *str)
 {
-	if (del && lst)
+	int	i;
+
+	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		str++;
+	while (str[i])
 	{
-		del(lst->val);
-		free(lst);
+		if (!ft_isdigit(str[i]))
+			return (1); // есть буква
+		i++;
 	}
+	return (0); // нет буков, тока циферы
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_parse.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:15:27 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	fill_cmd_struct(t_all *all, t_list *HEAD)
@@ -108,7 +120,9 @@ int dir_parse(t_cmd *cmd)
 		else if (!ft_strcmp(tmp->val, ">>"))
 		{
 			cmd->f_direct = DOUB_DIR;
-			cmd->name_file = ft_strdup(tmp->next->val);
+			cmd->name_file = tmp->next->val;
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;
@@ -116,7 +130,9 @@ int dir_parse(t_cmd *cmd)
 		else if (!ft_strcmp(tmp->val, "<"))
 		{
 			cmd->f_direct = REDIR;
-			cmd->name_file = ft_strdup(tmp->next->val);
+			cmd->name_file = tmp->next->val;
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;
@@ -124,7 +140,9 @@ int dir_parse(t_cmd *cmd)
 		else if (!ft_strcmp(tmp->val, "<<"))
 		{
 			cmd->f_direct = DOUB_REDIR;
-			cmd->name_file = ft_strdup(tmp->next->val);
+			cmd->name_file = tmp->next->val;
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;

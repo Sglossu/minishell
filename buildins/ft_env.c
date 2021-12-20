@@ -1,24 +1,24 @@
-//
-// Created by Shasta Glossu on 11/18/21.
-//
-
-//t_list	*lst = 0;
-//ft_lstadd_back(&lst, ft_lstnew(ft_strdup("12345678")));
-//ft_lstadd_back(&lst, ft_lstnew(ft_strdup("styshfj")));
-//ft_lstadd_back(&lst, ft_lstnew(ft_strdup("sh   yh sst")));
-//ft_lstadd_back(&lst, ft_lstnew(ft_strdup("uytrr89  cvbmn")));
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 18:08:30 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/14 18:08:36 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_env(t_list *lst)
+void	ft_env(t_list *lst)
 {
-	if (!lst)
-		return (1);
 	while (lst)
 	{
-		ft_putendl_fd(lst->val, STDOUT_FILENO);
+		if (ft_strchr(lst->val, '='))
+			ft_putendl_fd(lst->val, STDOUT_FILENO);
 		lst = lst->next;
 	}
-	return (0); // не ошибка
+	g_status = 0;
 }
-
