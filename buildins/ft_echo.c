@@ -36,7 +36,7 @@ int	ft_echo(t_list *arg)
 
 	line_break = true;
 	arg = arg->next;
-	if (arg && !check_flag_n(arg->val))
+	while (arg && !check_flag_n(arg->val))
 	{
 		arg = arg->next;
 		line_break = false;
