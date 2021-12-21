@@ -48,6 +48,8 @@ int	what_is_direct(t_all *all)
 		ft_doubleredir(all->cmd[all->i], STDIN_FILENO, fd[1]);
 		if (dup2(fd[0], STDIN_FILENO) == -1)
 		{
+			close(fd[0]);
+			close(fd[1]);
 			g_status = errno;
 			return (errno);
 		}
@@ -67,6 +69,8 @@ int	main_function_for_one_direct(t_all *all)
 	what_is_direct(all);
 	if (all->number_command == 1)
 	{
+		if (g_status)
+			return (g_status);
 		if (if_buildins(all, all->cmd[all->i]->arg))
 			child(all, all->i);
 	}
@@ -75,6 +79,8 @@ int	main_function_for_one_direct(t_all *all)
 
 int	one_direct(t_all *all)
 {
+//	main_function_for_one_direct(all);
+
 	int	status;
 
 	all->cmd[all->i]->pid = fork();
@@ -82,7 +88,7 @@ int	one_direct(t_all *all)
 	{
 		g_status = errno;
 		ft_printf(2, "fork failed: %s\n", strerror(errno));
-		return (1);
+		return (g_status);
 	}
 	if (all->cmd[all->i]->pid == 0)
 	{
@@ -91,7 +97,7 @@ int	one_direct(t_all *all)
 	}
 	else
 	{
-		waitpid(all->cmd[all->i]->pid, &status, 0);
+		waitpid(all->cmd[all->i]->pid, &status, 0); // выводить печать статуса если ошибка?
 	}
-	return (0);
+	return (0); // что возвращать если несколько команд?
 }

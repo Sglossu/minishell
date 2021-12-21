@@ -57,6 +57,7 @@ int	ft_redir(t_cmd *cmd, int fd_std)
 	fd_file = open(cmd->name_file, O_RDONLY);
 	if (fd_file == -1)
 	{
+		ft_printf(STDERR_FILENO, "%s_: %s\n", cmd->name_file, strerror(errno)); // убрать _]
 		g_status = errno;
 		return (errno);
 	}
