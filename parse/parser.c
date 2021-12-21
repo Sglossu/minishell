@@ -88,7 +88,7 @@ int	parse(t_all *all, char *input)
 
 	HEAD = NULL;
 	preparse(all, &HEAD, input);
-	ft_lstprint(HEAD);
+	// ft_lstprint(HEAD);
 	num_of_commands(all, HEAD);
 	init_cmd_struct(all);
 	fill_cmd_struct(all, HEAD);

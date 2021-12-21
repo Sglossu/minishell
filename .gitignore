@@ -5,6 +5,8 @@
 
 #testers
 *tester*
+/test
+/test/test.sh
 
 # OS generated files #
 .DS_Store
