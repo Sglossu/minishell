@@ -17,6 +17,8 @@ int	check_for_rekurs_direct(t_cmd *cmd)
 	combo_check(cmd);
 	if (cmd->combo)
 	{
+		if (g_status)
+			exit(g_status);
 		ft_lstremove(&cmd->arg, cmd->arg->next);
 		ft_lstremove(&cmd->arg, cmd->arg->next);
 		dir_parse(cmd);
