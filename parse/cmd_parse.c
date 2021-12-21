@@ -93,9 +93,15 @@ char *path_com(t_all *all, char *command)
 	{
 		if (!access(all->path[i], 0 | 1))
 		{
+			// printf("|%s|\n", all->path[i]);
 			return (all->path[i]); // команда нашлась по этому пути
 		}
 		i++;
+	}
+	if (!access(command, 0 | 1))
+	{
+		// printf("|%s|\n", command);
+		return (command);
 	}
 	return (NULL);
 }
