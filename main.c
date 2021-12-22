@@ -25,7 +25,6 @@ int	main(int argc, char **argv, char **envi)
 	if (!all)
 		return (1); //error
 	init(all, envi);
-
 	while (1)
 	{
 		ft_signal_main();
@@ -35,10 +34,6 @@ int	main(int argc, char **argv, char **envi)
 		rl_bind_key('\t', rl_complete);
         add_history(input);
 		parse(all, input);
-		// printf("%d <- num of command\n", all->number_command);
-		// printf("|%s| <- fileName\n", all->cmd[0]->name_file);
-		// ft_lstprint(all->cmd[0]->arg);
-
 		if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
 			main_work(all);
 		else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)
