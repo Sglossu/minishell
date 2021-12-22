@@ -106,7 +106,7 @@ int	parse(t_all *all, char *input)
 	if (status)
 		return 1;
 
-	// ft_lstprint(HEAD);
+	ft_lstprint(HEAD);
 	num_of_commands(all, HEAD);
 	init_cmd_struct(all);
 	fill_cmd_struct(all, HEAD);
