@@ -70,19 +70,22 @@ static void make_part_world(char *input, t_list **tmp, int *i)
 	char	*str;
 	char	sym;
 	int		j;
+	bool	inQuote;
 	
 	j = *i;
 	while (input[j] && input[j] != ' ' && input[j] != '>' && input[j] != '<' && input[j] != '|')
 	{
 		if (input[j] == '\'' || input[j] == '\"')
 		{
-			
+			inQuote = true;
 			sym = input[j++];
-			// printf("%c\n", sym);
-			while (input[j] && input[j] != sym)
+			while (input[j] && inQuote)
+			{
+				if (input[j] == sym)
+					inQuote = false;
 				j++;
-			j += 1;
-			break;
+			}
+			j--;
 		}
 		j++;
 	}

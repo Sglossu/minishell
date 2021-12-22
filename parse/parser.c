@@ -51,10 +51,19 @@ static int preparse_valid(t_str *str)
 	return 0; // все в порядке
 }
 
+// static int	flag_check(t_list *tmp)
+// {
+// 	char *str;
+
+// 	str = tmp->val;
+
+// }
+
 static int	preparse(t_all *all, t_list **HEAD, char *input)
 {
 	t_str	*myString;
 	int		status;
+	t_list	*tmp;
 	(void) all;
 	
 	myString = malloc(sizeof(t_str));
@@ -64,6 +73,13 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 		return 1;
 
 	*HEAD = make_list_with_all_word(input);
+	tmp = *HEAD;
+	while (tmp)
+	{
+		// tmp->flag = flag_check(tmp);
+		tmp = tmp->next;
+	}
+	
 	// if (myString->quote || myString->dub_quote || myString->dollars || myString->ecran)
 	// {
 	// 	while (myString->input[myString->iter])
