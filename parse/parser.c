@@ -41,16 +41,30 @@ static void	initMyString(t_str *str, char *input)
 	}
 }
 
-static char *preparse(t_all *all, t_list **HEAD, char *input)
+static int preparse_valid(t_str *str)
+{
+	if (str->dub_quote % 2 != 0)
+		return 1; // ковычки не закрыты
+	if (str->dub_quote % 2 != 0)
+		return 1; // двойные ковычки не закрыты
+
+	return 0; // все в порядке
+}
+
+static int	preparse(t_all *all, t_list **HEAD, char *input)
 {
 	t_str	*myString;
+	int		status;
 	(void) all;
 	
 	myString = malloc(sizeof(t_str));
 	initMyString(myString, input);
+	status = preparse_valid(myString);
+	if (status)
+		return 1;
 
 	*HEAD = make_list_with_all_word(input);
-	// if (myString->quote || myString->dub_quote || myString->dollars || myStrin§g->ecran)
+	// if (myString->quote || myString->dub_quote || myString->dollars || myString->ecran)
 	// {
 	// 	while (myString->input[myString->iter])
 	// 	{
@@ -60,7 +74,7 @@ static char *preparse(t_all *all, t_list **HEAD, char *input)
 	// 		myString->iter++;
 	// 	}
 	// }
-	return (myString->input);
+	return (0);
 }
 
 // static char *preparse(char *input)
@@ -84,12 +98,15 @@ static char *preparse(t_all *all, t_list **HEAD, char *input)
 
 int	parse(t_all *all, char *input)
 {
-	char		*parse_input;
 	t_list		*HEAD;
+	int			status;
 
 	HEAD = NULL;
-	preparse(all, &HEAD, input);
-	ft_lstprint(HEAD);
+	status = preparse(all, &HEAD, input);
+	if (status)
+		return 1;
+
+	// ft_lstprint(HEAD);
 	num_of_commands(all, HEAD);
 	init_cmd_struct(all);
 	fill_cmd_struct(all, HEAD);

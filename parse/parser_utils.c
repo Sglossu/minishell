@@ -30,7 +30,7 @@ void	path_pl_command(t_all *all, char *command)
 	}
 }
 
-int find_com(t_all *all)
+int find_com(t_all *all, char *command)
 {
 	int i = 0;
 
@@ -42,6 +42,11 @@ int find_com(t_all *all)
 		}
 		i++;
 	}
+	if (!access(command, 0 | 1))
+	{
+		// printf("|%s|\n", command);
+		return (1);
+	}
 	return (0);
 }
 
@@ -49,7 +54,7 @@ int is_binary(char *val, t_all *all)
 {
 	parse_path(all);
 	path_pl_command(all, val);
-	return(find_com(all));
+	return(find_com(all, val));
 }
 
 int is_buildin(char *val)

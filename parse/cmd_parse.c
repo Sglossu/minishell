@@ -93,9 +93,15 @@ char *path_com(t_all *all, char *command)
 	{
 		if (!access(all->path[i], 0 | 1))
 		{
+			// printf("|%s|\n", all->path[i]);
 			return (all->path[i]); // команда нашлась по этому пути
 		}
 		i++;
+	}
+	if (!access(command, 0 | 1))
+	{
+		// printf("|%s|\n", command);
+		return (command);
 	}
 	return (NULL);
 }
@@ -112,8 +118,8 @@ int dir_parse(t_cmd *cmd)
 		{
 			cmd->f_direct = DIR;
 			cmd->name_file = ft_strdup(tmp->next->val);
-			ft_lstremove(&cmd->arg, cmd->arg->next);
-			ft_lstremove(&cmd->arg, cmd->arg->next);
+//			ft_lstremove(&cmd->arg, cmd->arg->next);
+//			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;
@@ -122,8 +128,8 @@ int dir_parse(t_cmd *cmd)
 		{
 			cmd->f_direct = DOUB_DIR;
 			cmd->name_file = ft_strdup(tmp->next->val);
-			ft_lstremove(&cmd->arg, cmd->arg->next);
-			ft_lstremove(&cmd->arg, cmd->arg->next);
+//			ft_lstremove(&cmd->arg, cmd->arg->next);
+//			ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;
@@ -132,8 +138,8 @@ int dir_parse(t_cmd *cmd)
 		{
 			cmd->f_direct = REDIR;
 			cmd->name_file = ft_strdup(tmp->next->val);
-			ft_lstremove(&cmd->arg, cmd->arg->next);
-			ft_lstremove(&cmd->arg, cmd->arg->next);
+			// ft_lstremove(&cmd->arg, cmd->arg->next);
+			// ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;
@@ -142,8 +148,8 @@ int dir_parse(t_cmd *cmd)
 		{
 			cmd->f_direct = DOUB_REDIR;
 			cmd->name_file = ft_strdup(tmp->next->val);
-			ft_lstremove(&cmd->arg, cmd->arg->next);
-			ft_lstremove(&cmd->arg, cmd->arg->next);
+//			 ft_lstremove(&cmd->arg, cmd->arg->next);
+//			 ft_lstremove(&cmd->arg, cmd->arg->next);
 			// ft_putendl_fd(cmd->name_file,2);
 			// ft_putnbr_fd(cmd->f_direct, 2);
 			return 0;
@@ -172,7 +178,7 @@ void combo_check(t_cmd *cmd)
 				i++;
 		tmp = tmp->next;
 	}
-	if (i > 2)
+	if (i > 1)
 		cmd->combo = true;
 	else
 		cmd->combo = false;
