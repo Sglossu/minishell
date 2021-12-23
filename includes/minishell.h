@@ -37,6 +37,7 @@
 
 # define	TEXT		8
 # define	PIPE		9
+# define	COMMAND		10
 
 # define	BUILDIN		0
 # define	BINARY		1

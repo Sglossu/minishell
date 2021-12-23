@@ -65,60 +65,39 @@ static void	make_part_direct_pipe(char *input, t_list **tmp, int *i)
 // 	*i = j;
 // }
 
-
-static int check_status(char s, int status, char sym)
-{
-	// printf("|%c|<-sym, %d<-status\n", s, status);
-	if (status == 1)
-	{
-		if (s == '\''  || s == '\"')
-			return 2;
-		else if (s && s != ' ' && s != '|'
-					&& s != '<' && s != '>')
-			return 1;
-		else
-			return 0;
-	}
-	else if (status == 2)
-	{
-		if (s && s != sym)
-			return 2;
-		else if (s && s == sym)
-			return 1;
-		else
-			return 0;
-	}
-	return 1;
-}
-
-
 static void make_part_world(char *input, t_list **tmp, int *i)
 {
 	char	*str;
 	char	sym;
 	int		j;
-	int		status;
+	bool	inQuote;
 	
 	j = *i;
-	sym = '\0';
-	status = 1;
-	
-	while (status && input[j])
+	while (input[j] && input[j] != ' ' && input[j] != '>' && input[j] != '<' && input[j] != '|')
 	{
 		if (input[j] == '\'' || input[j] == '\"')
-			sym = input[j];
-		status = check_status(input[j], status, sym);
-		if (status)
-			j++;
+		{
+			inQuote = true;
+			sym = input[j++];
+			while (input[j] && inQuote)
+			{
+				if (input[j] == sym)
+					inQuote = false;
+				j++;
+			}
+			j--;
+		}
+		j++;
 	}
 
 	str = ft_substr(input, *i, j - *i);
+	// printf("|%s|\n", str);
+
 	if (ft_strlen(str) > 0)
 		ft_lstadd_back(tmp, ft_lstnew(str));
 	else
 		free(str);
 	*i = j - 1;
-
 }
 
 t_list	*make_list_with_all_word(char *input)
