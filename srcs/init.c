@@ -16,14 +16,41 @@ static	t_list	*init_lst_env_or_exp(char **buf)
 {
 	t_list	*tmp;
 	int		i;
+	bool	flag_shlvl;
+	char	*shlvl;
 
+	flag_shlvl = false;
 	tmp = NULL;
 	i = 0;
 	while (buf[i])
 	{
-		ft_lstadd_back(&tmp, ft_lstnew(ft_strdup(buf[i])));
+		if (!ft_strncmp(buf[i], "SHLVL=", 6))
+		{
+			shlvl = change_shlvl(buf[i]);
+			if (shlvl)
+				ft_lstadd_back(&tmp, ft_lstnew(shlvl));
+			else
+			{
+				g_status = errno;
+				ft_printf(2, "malloc: %s\n", strerror(errno));
+			}
+			flag_shlvl = true;
+		}
+		else
+		{
+			shlvl = ft_strdup(buf[i]);
+			if (shlvl)
+				ft_lstadd_back(&tmp, ft_lstnew(shlvl));
+			else
+			{
+				g_status = errno;
+				ft_printf(2, "malloc: %s\n", strerror(errno));
+			}
+		}
 		i++;
 	}
+	if (!flag_shlvl)
+		ft_lstadd_back(&tmp, ft_lstnew("SHLVL=1"));
 	return (tmp);
 }
 

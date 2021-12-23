@@ -94,6 +94,7 @@ char	*find_after_equals(char *str);
 char	*find_before_equals(char *str);
 void	print_params(char **buf, int count);
 int		str_is_variable(char *str);
+char	*change_shlvl(char *str_old);
 
 //srcs
 void	init(t_all *all, char **envi);
