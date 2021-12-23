@@ -48,6 +48,7 @@ typedef struct s_cmd {
 	pid_t		pid;
 	int			type;
 	char		*name_file;
+	t_list		*files;
 	int			f_direct;
 	bool		combo;
 }				t_cmd;
