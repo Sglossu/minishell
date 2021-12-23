@@ -15,17 +15,24 @@
 int	ft_dir(t_cmd *cmd, int fd_std)
 {
 	int		fd_file;
+	t_list	*tmp;
 
-	fd_file = open(cmd->name_file, O_CREAT | O_TRUNC | O_WRONLY, 0777);
-	if (fd_file == -1)
+	tmp = cmd->files;
+	while (tmp)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno)); // убрать _]
-		g_status = errno;
-		exit(errno);
+		fd_file = open(tmp->val, O_CREAT | O_TRUNC | O_WRONLY, 0777);
+		if (fd_file == -1)
+		{
+			ft_printf(STDERR_FILENO, "%s: %s\n", tmp->val, strerror(errno)); // убрать _]
+			g_status = errno;
+			exit(errno);
+		}
+		tmp = tmp->next;
 	}
+	tmp = ft_lstlast(cmd->files);
 	if (dup2(fd_file, fd_std) == -1)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno)); // убрать _]
+		ft_printf(STDERR_FILENO, "%s: %s\n", tmp->val, strerror(errno)); // убрать _]
 		g_status = errno;
 		exit(errno);
 	}
@@ -56,18 +63,25 @@ int	ft_doubledir(t_cmd *cmd, int fd_std)
 
 int	ft_redir(t_cmd *cmd, int fd_std)
 {
-	int	fd_file;
+	int		fd_file;
+	t_list	*tmp;
 
-	fd_file = open(cmd->name_file, O_RDONLY);
-	if (fd_file == -1)
+	tmp = cmd->files;
+	while (tmp)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno)); // убрать _]
-		g_status = errno;
-		return (errno);
+		fd_file = open(tmp->val, O_RDONLY);
+		if (fd_file == -1)
+		{
+			ft_printf(STDERR_FILENO, "%s: %s\n", tmp->val, strerror(errno)); // убрать _]
+			g_status = errno;
+			return (errno);
+		}
+		tmp = tmp->next;
 	}
+	tmp = ft_lstlast(cmd->files);
 	if (dup2(fd_file, fd_std) == -1)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno)); // убрать _]
+		ft_printf(STDERR_FILENO, "%s: %s\n", tmp->val, strerror(errno)); // убрать _]
 		g_status = errno;
 		exit(errno);
 	}

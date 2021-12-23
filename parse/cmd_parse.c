@@ -26,18 +26,21 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		{
 			all->cmd[i]->path_command = NULL;
 			all->cmd[i]->type = BUILDIN;
+			all->cmd[i]->files = NULL;
 			dir_parse(all->cmd[i]);
 		}
 		else if (is_binary(all->cmd[i]->arg->val, all))
 		{
 			all->cmd[i]->type = BINARY;
+			all->cmd[i]->files = NULL;
 			all->cmd[i]->path_command = path_com(all ,all->cmd[i]->arg->val); // потом когда-нибудь (никогда) добавить проверочку
 			dir_parse(all->cmd[i]);
 		}
 		// printf("coomand number - %d\n", i+1);
 		// ft_lstprint(all->cmd[i]->arg);
 		// printf("f_direct status = %d\n", all->cmd[i]->f_direct);
-		printf("name_file = %s\n", all->cmd[i]->name_file);
+		// printf("name_file = %s\n", all->cmd[i]->name_file);
+		ft_lstprint(all->cmd[i]->files);
 		// printf("path_command = %s\n", all->cmd[i]->path_command);
 		i++;		
 	}
@@ -106,6 +109,8 @@ char *path_com(t_all *all, char *command)
 	return (NULL);
 }
 
+
+
 int dir_parse(t_cmd *cmd)
 {
 	t_list		*tmp;
@@ -117,41 +122,29 @@ int dir_parse(t_cmd *cmd)
 		if (!ft_strcmp(tmp->val, ">"))
 		{
 			cmd->f_direct = DIR;
-			cmd->name_file = ft_strdup(tmp->next->val);
-//			ft_lstremove(&cmd->arg, cmd->arg->next);
-//			ft_lstremove(&cmd->arg, cmd->arg->next);
-			// ft_putendl_fd(cmd->name_file,2);
-			// ft_putnbr_fd(cmd->f_direct, 2);
+			ft_lstadd_back(&(cmd->files), tmp->next);
+			// cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, ">>"))
 		{
 			cmd->f_direct = DOUB_DIR;
-			cmd->name_file = ft_strdup(tmp->next->val);
-//			ft_lstremove(&cmd->arg, cmd->arg->next);
-//			ft_lstremove(&cmd->arg, cmd->arg->next);
-			// ft_putendl_fd(cmd->name_file,2);
-			// ft_putnbr_fd(cmd->f_direct, 2);
+			ft_lstadd_back(&(cmd->files), tmp->next);
+			// cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, "<"))
 		{
 			cmd->f_direct = REDIR;
-			cmd->name_file = ft_strdup(tmp->next->val);
-			// ft_lstremove(&cmd->arg, cmd->arg->next);
-			// ft_lstremove(&cmd->arg, cmd->arg->next);
-			// ft_putendl_fd(cmd->name_file,2);
-			// ft_putnbr_fd(cmd->f_direct, 2);
+			ft_lstadd_back(&(cmd->files), tmp->next);
+			// cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, "<<"))
 		{
 			cmd->f_direct = DOUB_REDIR;
-			cmd->name_file = ft_strdup(tmp->next->val);
-//			 ft_lstremove(&cmd->arg, cmd->arg->next);
-//			 ft_lstremove(&cmd->arg, cmd->arg->next);
-			// ft_putendl_fd(cmd->name_file,2);
-			// ft_putnbr_fd(cmd->f_direct, 2);
+			ft_lstadd_back(&(cmd->files), tmp->next);
+			// cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else
