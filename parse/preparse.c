@@ -25,6 +25,7 @@ int isDir(char *str)
 	{
 		if (str[i] != '>' && str[i] != '<')
 			return 0;
+		i++;
 	}
 	return 1;
 	
@@ -47,7 +48,7 @@ static char *ft_quote(char *str, char sym, int *i)
 	m = ft_substr(str, *i + 1, j - *i - 1);
 	f = strdup(str + j + 1);
 	res = ft_strjoin(ft_strjoin(s,m), f);
-	*i = j + 1;
+	*i = j - 2;
 	// printf("|%s|<-s\n|%s|<-m\n|%s|<-f\n",s,m,f);
 	// printf("|%s|<-RES\n", res);
 	free(str);
