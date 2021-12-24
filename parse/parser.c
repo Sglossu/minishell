@@ -88,7 +88,6 @@ static int	flag_check(t_list *tmp)
 static int	preparse(t_all *all, t_list **HEAD, char *input)
 {
 	t_list	*tmp;
-	(void) all;
 	
 	if (preparse_valid(input))
 		return 1; // error
@@ -98,7 +97,7 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 	{
 		tmp->flag = flag_check(tmp);
 		if (tmp->flag == TEXT)
-			tmp->val = ready_string(tmp);
+			tmp->val = ready_string(tmp, all);
 		// printf("|%s| |%d|\n", tmp->val, tmp->flag);
 		tmp = tmp->next;
 

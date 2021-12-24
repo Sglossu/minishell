@@ -13,6 +13,38 @@
 #include "../includes/minishell.h"
 
 
+int	isDollar(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return 1;
+		i++;
+	}
+	return 0;
+}
+
+char *ft_dollar(char *input, t_all *all)
+{
+	t_list *envObj;
+	char *res;
+	int	i;
+	int j;
+
+	i = 0;
+	while (input[i] != '$' && input[i])
+		i++;
+	j = i++;
+	while (input[j] && input[j] != '\'' && input[j] != '\"' && input[j] != '|')
+		j++;
+	
+	envObj = ft_lstfind(all->env, ft_substr(input, i, j - i));
+	res = find_after_equals(envObj->val);
+	return ft_strjoin(ft_strjoin(ft_substr(input, 0 , i), res), strdup(input + j + 1));
+}
 
 int isDir(char *str)
 {
@@ -55,7 +87,7 @@ static char *ft_quote(char *str, char sym, int *i)
 	return(res);
 }
 
-char *ready_string(t_list *tmp)
+char *ready_string(t_list *tmp, t_all *all)
 {
 	char	*str;
 	int		i;
@@ -68,6 +100,8 @@ char *ready_string(t_list *tmp)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 			str = ft_quote(str, str[i], &i);
+		if (str[i] == '$')
+			str = ft_dollar(str, all);
 		i++;
 	}
 	return (str);
