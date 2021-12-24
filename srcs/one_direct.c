@@ -14,18 +14,27 @@
 
 int	check_for_rekurs_direct(t_cmd *cmd)
 {
+	t_list	*tmp;
+
+	tmp = cmd->files;
 	combo_check(cmd);
 	if (cmd->combo)
 	{
 		if (g_status)
 			exit(g_status);
-		ft_lstremove(&cmd->arg, cmd->arg->next);
-		ft_lstremove(&cmd->arg, cmd->arg->next);
+		while (tmp)
+		{
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			tmp = tmp->next;
+		}
 		dir_parse(cmd);
 		return (1);
 	}
-	ft_lstremove(&cmd->arg, cmd->arg->next);
-	ft_lstremove(&cmd->arg, cmd->arg->next);
+	while (tmp)
+	{
+		ft_lstremove(&cmd->arg, cmd->arg->next);
+		tmp = tmp->next;
+	}
 	dir_parse(cmd);
 	return (0);
 }
@@ -81,25 +90,25 @@ int	main_function_for_one_direct(t_all *all)
 
 int	one_direct(t_all *all)
 {
-//	main_function_for_one_direct(all);
+	main_function_for_one_direct(all);
 
-	int	status;
-
-	all->cmd[all->i]->pid = fork();
-	if (all->cmd[all->i]->pid == -1)
-	{
-		g_status = errno;
-		ft_printf(2, "fork failed: %s\n", strerror(errno));
-		return (g_status);
-	}
-	if (all->cmd[all->i]->pid == 0)
-	{
-		main_function_for_one_direct(all);
-		exit(0);
-	}
-	else
-	{
-		waitpid(all->cmd[all->i]->pid, &status, 0); // выводить печать статуса если ошибка?
-	}
+//	int	status;
+//
+//	all->cmd[all->i]->pid = fork();
+//	if (all->cmd[all->i]->pid == -1)
+//	{
+//		g_status = errno;
+//		ft_printf(2, "fork failed: %s\n", strerror(errno));
+//		return (g_status);
+//	}
+//	if (all->cmd[all->i]->pid == 0)
+//	{
+//		main_function_for_one_direct(all);
+//		exit(0);
+//	}
+//	else
+//	{
+//		waitpid(all->cmd[all->i]->pid, &status, 0); // выводить печать статуса если ошибка?
+//	}
 	return (0); // что возвращать если несколько команд?
 }

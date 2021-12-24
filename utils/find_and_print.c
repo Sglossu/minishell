@@ -105,3 +105,32 @@ void	print_params(char **buf, int count)
 		j++;
 	}
 }
+
+void	print_lst(t_list *lst)
+{
+	t_list	*tmp;
+	tmp = lst;
+
+	while (tmp)
+	{
+//		ft_putendl_fd(tmp->val, STDOUT_FILENO);
+		ft_putendl_fd(tmp->val, STDERR_FILENO);
+		tmp = tmp->next;
+	}
+}
+
+void	namefiles_in_arguments(t_cmd *cmd, t_list *lst)
+{
+	t_list	*tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		if ((!ft_strcmp(tmp->val, "<")) || (!ft_strcmp(tmp->val, "<<"))
+			|| (!ft_strcmp(tmp->val, ">")) || (!ft_strcmp(tmp->val, ">>")))
+			return ;
+		ft_lstadd_back(&cmd->files, ft_lstnew(tmp->val));
+		tmp = tmp->next;
+	}
+//	print_lst(cmd->files);
+}

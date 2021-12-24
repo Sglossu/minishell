@@ -97,6 +97,8 @@ char	*find_before_equals(char *str);
 void	print_params(char **buf, int count);
 int		str_is_variable(char *str);
 char	*change_shlvl(char *str_old);
+void	namefiles_in_arguments(t_cmd *cmd, t_list *lst);
+void	print_lst(t_list *lst); // delete
 
 //srcs
 void	init(t_all *all, char **envi);
