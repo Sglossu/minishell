@@ -70,12 +70,20 @@ static int preparse_valid(char *str)
 	return 0;
 }
 
-// static int	flag_check(t_list *tmp)
-// {
-// 	char *str;
+static int	flag_check(t_list *tmp)
+{
+	char *str;
 
-// 	str = tmp->val;
-// }
+	str = ft_strdup(tmp->val);
+
+	if (!ft_strcmp(str, "|"))
+		return PIPE;
+	if (isDir(str))
+		return DIRECT;
+	return TEXT;
+
+	free(str);
+}
 
 static int	preparse(t_all *all, t_list **HEAD, char *input)
 {
@@ -88,8 +96,13 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 	tmp = *HEAD;
 	while (tmp)
 	{
-		// tmp->flag = flag_check(tmp);
+		tmp->flag = flag_check(tmp);
+		if (tmp->flag == TEXT)
+			tmp->val = ready_string(tmp);
+		// printf("|%s| |%d|\n", tmp->val, tmp->flag);
 		tmp = tmp->next;
+
+		
 	}
 	return (0);
 }
@@ -104,7 +117,7 @@ int	parse(t_all *all, char *input)
 	if (status)
 		return 1;
 
-	ft_lstprint(HEAD);
+	// ft_lstprint(HEAD);
 	num_of_commands(all, HEAD);
 	init_cmd_struct(all);
 	fill_cmd_struct(all, HEAD);

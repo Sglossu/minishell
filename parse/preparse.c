@@ -12,7 +12,25 @@
 
 #include "../includes/minishell.h"
 
-char *ft_quote(t_str *myString, char sym)
+
+
+int isDir(char *str)
+{
+	int i;
+
+	i = 0;
+	if (ft_strlen(str) > 2)
+		return 0;
+	while (str[i])
+	{
+		if (str[i] != '>' && str[i] != '<')
+			return 0;
+	}
+	return 1;
+	
+}
+
+static char *ft_quote(char *str, char sym, int *i)
 {
 	char *s;
 	char *m;
@@ -20,17 +38,36 @@ char *ft_quote(t_str *myString, char sym)
 	char *res;
 	int j;
 
-	j = myString->iter;
+	j = *i;
 
-	while (myString->input[j++])
-		if (myString->input[j] == sym)
+	while (str[j++])
+		if (str[j] == sym)
 			break;
-	s = ft_substr(myString->input, 0, myString->iter);
-	m = ft_substr(myString->input, myString->iter + 1, j - myString->iter - 1);
-	f = strdup(myString->input + j + 1);
+	s = ft_substr(str, 0, *i);
+	m = ft_substr(str, *i + 1, j - *i - 1);
+	f = strdup(str + j + 1);
 	res = ft_strjoin(ft_strjoin(s,m), f);
-	myString->iter = j - 2;
+	*i = j + 1;
 	// printf("|%s|<-s\n|%s|<-m\n|%s|<-f\n",s,m,f);
 	// printf("|%s|<-RES\n", res);
+	free(str);
 	return(res);
+}
+
+char *ready_string(t_list *tmp)
+{
+	char	*str;
+	int		i;
+
+	str = ft_strdup(tmp->val);
+	free(tmp->val);
+	i = 0;
+
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			str = ft_quote(str, str[i], &i);
+		i++;
+	}
+	return (str);
 }
