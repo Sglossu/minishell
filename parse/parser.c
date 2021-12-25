@@ -79,14 +79,14 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 int	parse(t_all *all, char *input)
 {
 	t_list		*HEAD;
-	int			status;
 
 	HEAD = NULL;
-	status = preparse(all, &HEAD, input);
-	if (status)
+	if (preparse(all, &HEAD, input))
 		return 1;
 	num_of_commands(all, HEAD);
 	init_cmd_struct(all);
-	fill_cmd_struct(all, HEAD);
+	ft_lstprint(HEAD);
+	if (fill_cmd_struct(all, HEAD))
+		return 1;
 	return 0;
 }

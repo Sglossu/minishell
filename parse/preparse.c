@@ -62,8 +62,7 @@ int isDir(char *str)
 			return 0;
 		i++;
 	}
-	return 1;
-	
+	return 1;	
 }
 
 static char *ft_quote(char *str, char sym, int *i, t_all *all)

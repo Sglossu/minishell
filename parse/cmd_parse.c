@@ -12,36 +12,49 @@
 
 #include "../includes/minishell.h"
 
+
+
 int	fill_cmd_struct(t_all *all, t_list *HEAD)
 {
 	int		i;
+	t_list	*tmp;
 	i = 0;
 
 	while (all->cmd[i])
 	{
-
 		all->cmd[i]->arg = copy_part_of_list(all, HEAD, i);
+		tmp = all->cmd[i]->arg;
 		combo_check(all->cmd[i]);
-		if (is_buildin(all->cmd[i]->arg->val))
+		if (isDir(tmp->val))
+		{
+			dir_parse(all->cmd[i]);
+			tmp = tmp->next;	
+			if (!all->cmd[i]->name_file)
+			{
+				ft_putendl_fd(": syntax error near unexpected token `newline'", STDERR_FILENO);
+				return (1);
+			}
+			else
+				tmp = tmp->next;
+		}
+		if (tmp && is_buildin(tmp->val))
 		{
 			all->cmd[i]->path_command = NULL;
 			all->cmd[i]->type = BUILDIN;
-			all->cmd[i]->files = NULL;
 			dir_parse(all->cmd[i]);
 		}
-		else if (is_binary(all->cmd[i]->arg->val, all))
+		else if (tmp && is_binary(tmp->val, all))
 		{
 			all->cmd[i]->type = BINARY;
-			all->cmd[i]->files = NULL;
-			all->cmd[i]->path_command = path_com(all ,all->cmd[i]->arg->val); // потом когда-нибудь (никогда) добавить проверочку
+			all->cmd[i]->path_command = path_com(all ,tmp->val); // потом когда-нибудь (никогда) добавить проверочку
 			dir_parse(all->cmd[i]);
 		}
-		// printf("coomand number - %d\n", i+1);
-		// ft_lstprint(all->cmd[i]->arg);
-		// printf("f_direct status = %d\n", all->cmd[i]->f_direct);
-		// printf("name_file = %s\n", all->cmd[i]->name_file);
+		printf("coomand number - %d\n", i+1);
+		ft_lstprint(tmp);
+		printf("f_direct status = %d\n", all->cmd[i]->f_direct);
+		printf("name_file = %s\n", all->cmd[i]->name_file);
 		// ft_lstprint(all->cmd[i]->files);
-		// printf("path_command = %s\n", all->cmd[i]->path_command);
+		printf("path_command = %s\n", all->cmd[i]->path_command);
 		i++;		
 	}
 	return 0;
@@ -97,25 +110,25 @@ int dir_parse(t_cmd *cmd)
 		if (!ft_strcmp(tmp->val, ">"))
 		{
 			cmd->f_direct = DIR;
-			ft_lstadd_back(&(cmd->files), tmp->next);
+			cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, ">>"))
 		{
 			cmd->f_direct = DOUB_DIR;
-			ft_lstadd_back(&(cmd->files), tmp->next);
+			cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, "<"))
 		{
 			cmd->f_direct = REDIR;
-			ft_lstadd_back(&(cmd->files), tmp->next);
+			cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, "<<"))
 		{
 			cmd->f_direct = DOUB_REDIR;
-			ft_lstadd_back(&(cmd->files), tmp->next);
+			cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else
