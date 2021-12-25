@@ -90,5 +90,3 @@ int	parse(t_all *all, char *input)
 	fill_cmd_struct(all, HEAD);
 	return 0;
 }
-
-
