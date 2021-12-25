@@ -42,6 +42,9 @@
 # define	BUILDIN		0
 # define	BINARY		1
 
+//# define	DELETE		11 перенесла в либу
+//# define	NO_DELETE	12
+
 typedef struct s_cmd {
 	t_list		*arg;
 	char		*path_command; // под это нет маллока, так как замолочится потом

@@ -20,21 +20,27 @@ int	check_for_rekurs_direct(t_cmd *cmd)
 	combo_check(cmd);
 	if (cmd->combo)
 	{
-		if (g_status)
+		if (g_status) // поменять на errno
 			exit(g_status);
+		ft_lstremove(&cmd->arg, cmd->arg->next); // удаляется редирект
 		while (tmp)
 		{
-			ft_lstremove(&cmd->arg, cmd->arg->next);
+			if (tmp->flag_delete == DELETE)
+				ft_lstremove(&cmd->arg, cmd->arg->next); // удаляются названия файлов
 			tmp = tmp->next;
 		}
+		ft_lstclear(&cmd->files, free);
 		dir_parse(cmd);
 		return (1);
 	}
+	ft_lstremove(&cmd->arg, cmd->arg->next); // удаляется редирект
 	while (tmp)
 	{
-		ft_lstremove(&cmd->arg, cmd->arg->next);
+		if (tmp->flag_delete == DELETE)
+			ft_lstremove(&cmd->arg, cmd->arg->next); // удаляются названия файлов
 		tmp = tmp->next;
 	}
+	ft_lstclear(&cmd->files, free);
 	dir_parse(cmd);
 	return (0);
 }

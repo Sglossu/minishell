@@ -129,7 +129,7 @@ void	namefiles_in_arguments(t_cmd *cmd, t_list *lst)
 		if ((!ft_strcmp(tmp->val, "<")) || (!ft_strcmp(tmp->val, "<<"))
 			|| (!ft_strcmp(tmp->val, ">")) || (!ft_strcmp(tmp->val, ">>")))
 			return ;
-		ft_lstadd_back(&cmd->files, ft_lstnew(tmp->val));
+		ft_lstadd_back(&cmd->files, ft_lstnew(ft_strdup(tmp->val))); // добавить проверку для маллок
 		tmp = tmp->next;
 	}
 //	print_lst(cmd->files);
