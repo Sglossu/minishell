@@ -111,6 +111,8 @@ int		ft_redir(t_cmd *cmd, int fd_std);
 int		ft_doubledir(t_cmd *cmd, int fd_std);
 int		ft_dir(t_cmd *cmd, int fd_std);
 int		pipe_for_two(t_all *all);
+int		what_is_direct(t_all *all);
+void	redirect_in_start(t_all *all);
 
 //main
 int		main_work(t_all *all);

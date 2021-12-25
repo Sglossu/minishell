@@ -85,10 +85,8 @@ int	parse(t_all *all, char *input)
 		return 1;
 	num_of_commands(all, HEAD);
 	init_cmd_struct(all);
-	ft_lstprint(HEAD);
+//	ft_lstprint(HEAD);
 	if (fill_cmd_struct(all, HEAD))
 		return 1;
 	return 0;
 }
-
-

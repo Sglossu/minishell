@@ -19,13 +19,19 @@ int	check_for_rekurs_direct(t_cmd *cmd)
 	{
 		if (g_status)
 			exit(g_status);
-		ft_lstremove(&cmd->arg, cmd->arg->next);
-		ft_lstremove(&cmd->arg, cmd->arg->next);
+		if (cmd->name_file && cmd->f_direct)
+		{
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+			ft_lstremove(&cmd->arg, cmd->arg->next);
+		}
 		dir_parse(cmd);
 		return (1);
 	}
-	ft_lstremove(&cmd->arg, cmd->arg->next);
-	ft_lstremove(&cmd->arg, cmd->arg->next);
+	if (cmd->name_file && cmd->f_direct)
+	{
+		ft_lstremove(&cmd->arg, cmd->arg->next);
+		ft_lstremove(&cmd->arg, cmd->arg->next);
+	}
 	dir_parse(cmd);
 	return (0);
 }
@@ -81,6 +87,7 @@ int	main_function_for_one_direct(t_all *all)
 
 int	one_direct(t_all *all)
 {
+//	redirect_in_start(all);
 //	main_function_for_one_direct(all);
 
 	int	status;
@@ -94,6 +101,7 @@ int	one_direct(t_all *all)
 	}
 	if (all->cmd[all->i]->pid == 0)
 	{
+		redirect_in_start(all);
 		main_function_for_one_direct(all);
 		exit(0);
 	}
