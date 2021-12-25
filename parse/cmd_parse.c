@@ -49,12 +49,12 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 			all->cmd[i]->path_command = path_com(all ,tmp->val); // потом когда-нибудь (никогда) добавить проверочку
 			dir_parse(all->cmd[i]);
 		}
-		printf("coomand number - %d\n", i+1);
-		ft_lstprint(tmp);
-		printf("f_direct status = %d\n", all->cmd[i]->f_direct);
-		printf("name_file = %s\n", all->cmd[i]->name_file);
+		// printf("coomand number - %d\n", i+1);
+		// ft_lstprint(tmp);
+		// printf("f_direct status = %d\n", all->cmd[i]->f_direct);
+		// printf("name_file = %s\n", all->cmd[i]->name_file);
 		// ft_lstprint(all->cmd[i]->files);
-		printf("path_command = %s\n", all->cmd[i]->path_command);
+		// printf("path_command = %s\n", all->cmd[i]->path_command);
 		i++;		
 	}
 	return 0;
