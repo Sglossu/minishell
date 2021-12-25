@@ -13,6 +13,41 @@
 #include "../includes/minishell.h"
 
 
+int	isDollar(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return 1;
+		i++;
+	}
+	return 0;
+}
+
+char *ft_dollar(char *input, t_all *all, int *i)
+{
+	t_list *envObj;
+	char *res;
+	int j;
+
+	j = *i + 1;
+	while (input[j] && input[j] != '\'' && input[j] != '\"' && input[j] != '|')
+		j++;
+	
+	res = ft_substr(input, *i + 1, j - *i);
+	printf("|%s|\n", res);
+	envObj = ft_lstfind(all->env, res);
+	if (envObj)
+		res = find_after_equals(envObj->val);
+	else
+	{
+		return NULL; // error
+	}
+	return ft_strjoin(ft_strjoin(ft_substr(input, 0 , *i), res), strdup(input + j + 1));
+}
 
 int isDir(char *str)
 {
@@ -31,13 +66,13 @@ int isDir(char *str)
 	
 }
 
-static char *ft_quote(char *str, char sym, int *i)
+static char *ft_quote(char *str, char sym, int *i, t_all *all)
 {
-	char *s;
-	char *m;
-	char *f;
-	char *res;
-	int j;
+	char	*s;
+	char	*m;
+	char	*f;
+	int		x;
+	int		j;
 
 	j = *i;
 
@@ -46,16 +81,24 @@ static char *ft_quote(char *str, char sym, int *i)
 			break;
 	s = ft_substr(str, 0, *i);
 	m = ft_substr(str, *i + 1, j - *i - 1);
+	if (sym == '\"' && isDollar(m))
+	{
+		x = 0;
+		while (m[x])
+		{
+			if (m[x] == '$')
+				m = ft_dollar(m, all, &x);
+			x++;
+		}
+	}
+		
 	f = strdup(str + j + 1);
-	res = ft_strjoin(ft_strjoin(s,m), f);
 	*i = j - 2;
-	// printf("|%s|<-s\n|%s|<-m\n|%s|<-f\n",s,m,f);
-	// printf("|%s|<-RES\n", res);
 	free(str);
-	return(res);
+	return(ft_strjoin(ft_strjoin(s,m), f));
 }
 
-char *ready_string(t_list *tmp)
+char *ready_string(t_list *tmp, t_all *all)
 {
 	char	*str;
 	int		i;
@@ -67,7 +110,9 @@ char *ready_string(t_list *tmp)
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
-			str = ft_quote(str, str[i], &i);
+			str = ft_quote(str, str[i], &i, all);
+		if (str[i] == '$')
+			str = ft_dollar(str, all, &i);
 		i++;
 	}
 	return (str);

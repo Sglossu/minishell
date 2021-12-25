@@ -88,7 +88,6 @@ static int	flag_check(t_list *tmp)
 static int	preparse(t_all *all, t_list **HEAD, char *input)
 {
 	t_list	*tmp;
-	(void) all;
 	
 	if (preparse_valid(input))
 		return 1; // error
@@ -98,7 +97,7 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 	{
 		tmp->flag = flag_check(tmp);
 		if (tmp->flag == TEXT)
-			tmp->val = ready_string(tmp);
+			tmp->val = ready_string(tmp, all);
 		// printf("|%s| |%d|\n", tmp->val, tmp->flag);
 		tmp = tmp->next;
 
@@ -117,7 +116,7 @@ int	parse(t_all *all, char *input)
 	if (status)
 		return 1;
 
-	ft_lstprint(HEAD);
+	// ft_lstprint(HEAD);
 	num_of_commands(all, HEAD);
 	init_cmd_struct(all);
 	fill_cmd_struct(all, HEAD);
