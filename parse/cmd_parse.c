@@ -86,31 +86,6 @@ int	init_cmd_struct(t_all *all)
 	return (0); 
 }
 
-char *path_com(t_all *all, char *command)
-{
-	int i = 0;
-	parse_path(all);
-	path_pl_command(all, command);
-
-	while (all->path[i])
-	{
-		if (!access(all->path[i], 0 | 1))
-		{
-			// printf("|%s|\n", all->path[i]);
-			return (all->path[i]); // команда нашлась по этому пути
-		}
-		i++;
-	}
-	if (!access(command, 0 | 1))
-	{
-		// printf("|%s|\n", command);
-		return (command);
-	}
-	return (NULL);
-}
-
-
-
 int dir_parse(t_cmd *cmd)
 {
 	t_list		*tmp;

@@ -38,7 +38,7 @@ char *ft_dollar(char *input, t_all *all, int *i)
 		j++;
 	
 	res = ft_substr(input, *i + 1, j - *i);
-	printf("|%s|\n", res);
+	// printf("|%s|\n", res);
 	envObj = ft_lstfind(all->env, res);
 	if (envObj)
 		res = find_after_equals(envObj->val);

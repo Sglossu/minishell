@@ -50,6 +50,29 @@ int find_com(t_all *all, char *command)
 	return (0);
 }
 
+char *path_com(t_all *all, char *command)
+{
+	int i = 0;
+	parse_path(all);
+	path_pl_command(all, command);
+
+	while (all->path[i])
+	{
+		if (!access(all->path[i], 0 | 1))
+		{
+			// printf("|%s|\n", all->path[i]);
+			return (all->path[i]);
+		}
+		i++;
+	}
+	if (!access(command, 0 | 1))
+	{
+		// printf("|%s|\n", command);
+		return (command);
+	}
+	return (NULL);
+}
+
 int is_binary(char *val, t_all *all)
 {
 	parse_path(all);
@@ -66,3 +89,4 @@ int is_buildin(char *val)
 	else
 		return 0;
 }
+

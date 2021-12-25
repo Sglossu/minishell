@@ -129,9 +129,6 @@ int		is_buildin(char *val);
 // {preparse}
 int		isDir(char *str);
 char	*ready_string(t_list *tmp, t_all *all);
-// char	*ft_quote(t_str *myString, char sym);
-// char	*ft_dubquoute(char *input, int *i, t_all *all);
-// char	*ft_dollar(char *input, t_all *all, int *i);
 
 // {CMD}
 void	num_of_commands(t_all *all, t_list *HEAD);
