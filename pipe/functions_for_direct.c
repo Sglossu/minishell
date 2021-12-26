@@ -15,36 +15,17 @@
 int	ft_dir(t_cmd *cmd, int fd_std)
 {
 	int		fd_file;
-	t_list	*tmp;
 
-	tmp = cmd->files;
-//	while (tmp)
-//	{
-//		fd_file = open(tmp->val, O_CREAT | O_TRUNC | O_WRONLY, 0777);
-//		if (fd_file == -1)
-//		{
-//			ft_printf(STDERR_FILENO, "%s: %s\n", tmp->val, strerror(errno));
-//			g_status = errno;
-////			exit(errno);
-//			return (errno);
-//		}
-//		if (tmp->next)
-//			close(fd_file);
-//		tmp = tmp->next;
-//	}
-//	tmp = ft_lstlast(cmd->files);
-
-	fd_file = open(tmp->val, O_CREAT | O_TRUNC | O_WRONLY, 0777);
+	fd_file = open(cmd->name_file, O_CREAT | O_TRUNC | O_WRONLY, 0777);
 	if (fd_file == -1)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", tmp->val, strerror(errno));
+		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno));
 		g_status = errno;
-//		exit(errno);
-		return (errno);
+		exit(errno);
 	}
 	if (dup2(fd_file, fd_std) == -1)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", tmp->val, strerror(errno));
+		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno));
 		g_status = errno;
 		exit(errno);
 	}
@@ -61,7 +42,7 @@ int	ft_doubledir(t_cmd *cmd, int fd_std)
 	{
 		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno));
 		g_status = errno;
-		return (errno);
+		exit (errno);
 	}
 	if (dup2(fd_file, fd_std) == -1)
 	{
@@ -75,47 +56,22 @@ int	ft_doubledir(t_cmd *cmd, int fd_std)
 
 int	ft_redir(t_cmd *cmd, int fd_std)
 {
-	int		fd_file;
-	t_list	*tmp;
+	int	fd_file;
 
-	tmp = cmd->files;
-	while (tmp)
+	fd_file = open(cmd->name_file, O_RDONLY);
+	if (fd_file == -1)
 	{
-		fd_file = open(tmp->val, O_RDONLY);
-		if (fd_file == -1)
-		{
-//			ft_printf(STDERR_FILENO, "%s: %s\n", tmp->val, strerror(errno)); // убрать _]
-//			tmp->flag_delete = NO_DELETE;
-//			g_status = errno;
-//			return (errno);
-		}
-		else
-		{
-			close(fd_file);
-			if (tmp->next) // если есть еще аргументы, пробуем их открыть
-			{
-				fd_file = open(tmp->next->val, O_RDONLY);
-				if (fd_file != -1) //то есть следующий открылся
-				{
-					tmp->flag_delete = DELETE; // тогда предыдущий можно удалять
-					close(fd_file);
-				}
-				else
-					tmp->flag_delete = NO_DELETE;
-			}
-			else
-				tmp->flag_delete = NO_DELETE;
-		}
-		tmp = tmp->next;
+		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno)); // убрать _]
+		g_status = errno;
+		exit (errno);
 	}
-	(void)fd_std;
-//	if (dup2(fd_file, fd_std) == -1)
-//	{
-//		ft_printf(STDERR_FILENO, "%s: %s\n", tmp->val, strerror(errno)); // убрать _]
-//		g_status = errno;
-//		exit(errno);
-//	}
-//	close(fd_file);
+	if (dup2(fd_file, fd_std) == -1)
+	{
+		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno)); // убрать _]
+		g_status = errno;
+		exit(errno);
+	}
+	close(fd_file);
 	return (0);
 }
 

@@ -37,7 +37,7 @@
 
 # define	TEXT		8
 # define	PIPE		9
-# define	COMMAND		10
+# define	DIRECT		10
 
 # define	BUILDIN		0
 # define	BINARY		1
@@ -47,11 +47,10 @@
 
 typedef struct s_cmd {
 	t_list		*arg;
-	char		*path_command; // под это нет маллока, так как замолочится потом
+	char		*path_command;
 	pid_t		pid;
 	int			type;
 	char		*name_file;
-	t_list		*files;
 	int			f_direct;
 	bool		combo;
 }				t_cmd;
@@ -59,10 +58,10 @@ typedef struct s_cmd {
 typedef struct s_all {
 	t_list		*env;
 	t_list		*exp;
-	char		**path; // под это нет маллока, так как замолочится потом
+	char		**path;
 	t_cmd		**cmd;
-	int			number_command; // количество команд
-	int			i; // номер вызываемой команды
+	int			number_command;
+	int			i;
 	char 		*pwd;
 	char 		*oldpwd;
 }				t_all;
@@ -76,6 +75,7 @@ typedef struct s_str {
 	int	dub_quote;
 	int	dollars;
 }				t_str;
+
 
 int	g_status;
 
@@ -116,6 +116,8 @@ int		ft_redir(t_cmd *cmd, int fd_std);
 int		ft_doubledir(t_cmd *cmd, int fd_std);
 int		ft_dir(t_cmd *cmd, int fd_std);
 int		pipe_for_two(t_all *all);
+int		what_is_direct(t_all *all);
+void	redirect_in_start(t_all *all);
 
 //main
 int		main_work(t_all *all);
@@ -132,9 +134,8 @@ int		is_buildin(char *val);
 //parse_utils
 
 // {preparse}
-char	*ft_quote(t_str *myString, char sym);
-// char	*ft_dubquoute(char *input, int *i, t_all *all);
-// char	*ft_dollar(char *input, t_all *all, int *i);
+int		isDir(char *str);
+char	*ready_string(t_list *tmp, t_all *all);
 
 // {CMD}
 void	num_of_commands(t_all *all, t_list *HEAD);

@@ -14,120 +14,81 @@
 
 //  (мои друзья)  ''  ""  \   $  |  > < >> <<  (мои друзья)
 
-static void	initMyString(t_str *str, char *input)
+static int preparse_valid(char *str)
 {
-	int i;
+	int dub_quote;
+	int quote;
+	int	i;
 
 	i = 0;
-	str->input = ft_strdup(input);
-	str->buf = NULL;
-	str->quote = 0;
-	str->ecran = 0;
-	str->dub_quote = 0;
-	str->dollars = 0;
-	str->iter = 0;
+	dub_quote = 0;
+	quote = 0;
 
-	while (input[i])
+	while (str[i])
 	{
-		if (input[i] == '\'')
-			str->quote += 1;
-		else if (input[i] == '\"')
-			str->dub_quote += 1;
-		else if (input[i] == '$')
-			str->dub_quote += 1;
-		else if (input[i] == '\\')
-			str->dub_quote += 1;
+		if (str[i] == '\'')
+			quote++;
+		if (str[i] == '\"')
+			dub_quote++;
 		i++;
 	}
+
+	if (quote || dub_quote)
+	{
+		if (quote % 2 != 0)
+			return 1;
+		if (dub_quote % 2 != 0)
+			return 1;
+	}
+	return 0;
 }
 
-static int preparse_valid(t_str *str)
+static int	flag_check(t_list *tmp)
 {
-	if (str->dub_quote % 2 != 0)
-		return 1; // ковычки не закрыты
-	if (str->dub_quote % 2 != 0)
-		return 1; // двойные ковычки не закрыты
+	char *str;
 
-	return 0; // все в порядке
+	str = ft_strdup(tmp->val);
+
+	if (!ft_strcmp(str, "|"))
+		return PIPE;
+	if (isDir(str))
+		return DIRECT;
+	return TEXT;
+
+	free(str);
 }
-
-// static int	flag_check(t_list *tmp)
-// {
-// 	char *str;
-
-// 	str = tmp->val;
-
-// }
 
 static int	preparse(t_all *all, t_list **HEAD, char *input)
 {
-	t_str	*myString;
-	int		status;
 	t_list	*tmp;
-	(void) all;
 	
-	myString = malloc(sizeof(t_str));
-	initMyString(myString, input);
-	status = preparse_valid(myString);
-	if (status)
+	if (preparse_valid(input))
 		return 1;
-
 	*HEAD = make_list_with_all_word(input);
 	tmp = *HEAD;
 	while (tmp)
 	{
-		// tmp->flag = flag_check(tmp);
+		tmp->flag = flag_check(tmp);
+		if (tmp->flag == TEXT)
+			tmp->val = ready_string(tmp, all);
 		tmp = tmp->next;
 	}
-	
-	// if (myString->quote || myString->dub_quote || myString->dollars || myString->ecran)
-	// {
-	// 	while (myString->input[myString->iter])
-	// 	{
-	// 		if (myString->input[myString->iter] == '\''
-	// 		 || myString->input[myString->iter] == '\"')
-	// 			myString->input = ft_quote(myString, myString->input[myString->iter]);
-	// 		myString->iter++;
-	// 	}
-	// }
 	return (0);
 }
-
-// static char *preparse(char *input)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	while (input[i])
-// 	{
-// 		// printf("|%d|<-- i \n", i);
-// 		if (input[i] == '\'')
-// 			input = ft_quote(input, &i);
-// 		// if (input[i] == '\"')
-// 		// 	res = ft_dubquoute(input, &i);
-// 		// if (input[i] == '$')
-// 		// 	res = ft_dollar(input, &i);
-// 		i++;
-// 	}
-// 	return (input);
-// }
 
 int	parse(t_all *all, char *input)
 {
 	t_list		*HEAD;
-	int			status;
 
 	HEAD = NULL;
-	status = preparse(all, &HEAD, input);
-	if (status)
+	if (preparse(all, &HEAD, input))
 		return 1;
-
-	// ft_lstprint(HEAD);
 	num_of_commands(all, HEAD);
+	if (!all->number_command && isDir(HEAD->val))
+		all->number_command++;
 	init_cmd_struct(all);
-	fill_cmd_struct(all, HEAD);
-	
+//	ft_lstprint(HEAD);
+	if (fill_cmd_struct(all, HEAD))
+		return 1;
 	return 0;
 }
-
-

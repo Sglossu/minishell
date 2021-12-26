@@ -12,35 +12,48 @@
 
 #include "../includes/minishell.h"
 
+
+
 int	fill_cmd_struct(t_all *all, t_list *HEAD)
 {
 	int		i;
+	t_list	*tmp;
 	i = 0;
 
 	while (all->cmd[i])
 	{
-
 		all->cmd[i]->arg = copy_part_of_list(all, HEAD, i);
+		tmp = all->cmd[i]->arg;
 		combo_check(all->cmd[i]);
-		if (is_buildin(all->cmd[i]->arg->val))
+		if (isDir(tmp->val))
+		{
+			dir_parse(all->cmd[i]);
+			tmp = tmp->next;	
+			if (!all->cmd[i]->name_file)
+			{
+				ft_putendl_fd(": syntax error near unexpected token `newline'", STDERR_FILENO);
+				return (1);
+			}
+			else
+				tmp = tmp->next;
+		}
+		if (tmp && is_buildin(tmp->val))
 		{
 			all->cmd[i]->path_command = NULL;
 			all->cmd[i]->type = BUILDIN;
-			all->cmd[i]->files = NULL;
 			dir_parse(all->cmd[i]);
 		}
-		else if (is_binary(all->cmd[i]->arg->val, all))
+		else if (tmp && is_binary(tmp->val, all))
 		{
 			all->cmd[i]->type = BINARY;
-			all->cmd[i]->files = NULL;
-			all->cmd[i]->path_command = path_com(all ,all->cmd[i]->arg->val); // потом когда-нибудь (никогда) добавить проверочку
+			all->cmd[i]->path_command = path_com(all ,tmp->val); // потом когда-нибудь (никогда) добавить проверочку
 			dir_parse(all->cmd[i]);
 		}
 		// printf("coomand number - %d\n", i+1);
-		// ft_lstprint(all->cmd[i]->arg);
+		// ft_lstprint(tmp);
 		// printf("f_direct status = %d\n", all->cmd[i]->f_direct);
 		// printf("name_file = %s\n", all->cmd[i]->name_file);
-		ft_lstprint(all->cmd[i]->files);
+		// ft_lstprint(all->cmd[i]->files);
 		// printf("path_command = %s\n", all->cmd[i]->path_command);
 		i++;		
 	}
@@ -64,7 +77,7 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 			res++;
 			pipes = 0;
 		}
-		if (!ft_strcmp(tmp->val, "|"))
+		if (!ft_strcmp(tmp->val, "|") && tmp->flag == PIPE)
 			pipes = 1;
 		tmp = tmp->next;
 	}
@@ -86,31 +99,6 @@ int	init_cmd_struct(t_all *all)
 	return (0); 
 }
 
-char *path_com(t_all *all, char *command)
-{
-	int i = 0;
-	parse_path(all);
-	path_pl_command(all, command);
-
-	while (all->path[i])
-	{
-		if (!access(all->path[i], 0 | 1))
-		{
-			// printf("|%s|\n", all->path[i]);
-			return (all->path[i]); // команда нашлась по этому пути
-		}
-		i++;
-	}
-	if (!access(command, 0 | 1))
-	{
-		// printf("|%s|\n", command);
-		return (command);
-	}
-	return (NULL);
-}
-
-
-
 int dir_parse(t_cmd *cmd)
 {
 	t_list		*tmp;
@@ -122,33 +110,25 @@ int dir_parse(t_cmd *cmd)
 		if (!ft_strcmp(tmp->val, ">"))
 		{
 			cmd->f_direct = DIR;
-			namefiles_in_arguments(cmd, tmp->next);
-//			ft_lstadd_back(&(cmd->files), tmp->next);
-			// cmd->name_file = ft_strdup(tmp->next->val);
+			cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, ">>"))
 		{
 			cmd->f_direct = DOUB_DIR;
-			namefiles_in_arguments(cmd, tmp->next);
-//			ft_lstadd_back(&(cmd->files), tmp->next);
-			// cmd->name_file = ft_strdup(tmp->next->val);
+			cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, "<"))
 		{
 			cmd->f_direct = REDIR;
-			namefiles_in_arguments(cmd, tmp->next);
-//			ft_lstadd_back(&(cmd->files), tmp->next);
-			// cmd->name_file = ft_strdup(tmp->next->val);
+			cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, "<<"))
 		{
 			cmd->f_direct = DOUB_REDIR;
-			namefiles_in_arguments(cmd, tmp->next);
-//			ft_lstadd_back(&(cmd->files), tmp->next);
-			// cmd->name_file = ft_strdup(tmp->next->val);
+			cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else
