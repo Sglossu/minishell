@@ -19,13 +19,13 @@ int	ft_dir(t_cmd *cmd, int fd_std)
 	fd_file = open(cmd->name_file, O_CREAT | O_TRUNC | O_WRONLY, 0777);
 	if (fd_file == -1)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno)); // убрать _]
+		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno));
 		g_status = errno;
 		exit(errno);
 	}
 	if (dup2(fd_file, fd_std) == -1)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno)); // убрать _]
+		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno));
 		g_status = errno;
 		exit(errno);
 	}

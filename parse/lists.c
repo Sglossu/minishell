@@ -112,7 +112,7 @@ t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command)
 
 	(void) all;
 
-	while (num_command)
+	while ((tmp) && (num_command))
 	{
 		if (tmp->flag == PIPE)
 			num_command--;

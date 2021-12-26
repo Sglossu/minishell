@@ -91,7 +91,7 @@ int	main_work(t_all *all)
 	ft_signal_in_child();
 	if (!all->cmd[0]->arg)
 		return (1); // нет команды, работаем дальше
-	redirect_in_start(all);
+//	redirect_in_start(all);
 	if (all->cmd[0]->type == BUILDIN)
 	{
 		if_buildins(all, all->cmd[0]->arg);

@@ -12,30 +12,6 @@
 
 #include "../includes/minishell.h"
 
-int	check_for_rekurs_direct(t_cmd *cmd)
-{
-	combo_check(cmd);
-	if (cmd->combo)
-	{
-		if (g_status)
-			exit(g_status);
-		if (cmd->name_file && cmd->f_direct)
-		{
-			ft_lstremove(&cmd->arg, cmd->arg->next);
-			ft_lstremove(&cmd->arg, cmd->arg->next);
-		}
-		dir_parse(cmd);
-		return (1);
-	}
-	if (cmd->name_file && cmd->f_direct)
-	{
-		ft_lstremove(&cmd->arg, cmd->arg->next);
-		ft_lstremove(&cmd->arg, cmd->arg->next);
-	}
-	dir_parse(cmd);
-	return (0);
-}
-
 int	what_is_direct(t_all *all)
 {
 	int	fd[2];
@@ -67,28 +43,62 @@ int	what_is_direct(t_all *all)
 	return (0);
 }	
 
+char	*direct_for_lstfind(t_cmd *cmd)
+{
+	char	*str;
+
+	str = NULL;
+	if (cmd->f_direct == DIR)
+		str = ft_strdup(">");
+	else if (cmd->f_direct == REDIR)
+		str = ft_strdup("<");
+	else if (cmd->f_direct == DOUB_REDIR)
+		str = ft_strdup("<<");
+	else if (cmd->f_direct == DOUB_DIR)
+		str = ft_strdup(">>");
+
+	if (!str)
+	{
+		g_status = errno;
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		return (NULL);
+	}
+	return (str);
+}
+
 int	main_function_for_one_direct(t_all *all)
 {
-	what_is_direct(all);
-	if (check_for_rekurs_direct(all->cmd[all->i]))
+	t_cmd	*tmp;
+	t_list	*tmp2_del;
+	t_list	*tmp3_del;
+	char 	*str;
+
+	tmp = all->cmd[all->i];
+	while (tmp->name_file && tmp->f_direct)
 	{
-		main_function_for_one_direct(all);
-	}
-	what_is_direct(all);
-	if (all->number_command == 1)
-	{
-		if (g_status)
-			return (g_status);
-		if (if_buildins(all, all->cmd[all->i]->arg))
-			child(all, all->i);
+		what_is_direct(all);
+		str = direct_for_lstfind(all->cmd[all->i]);
+		if (!str)
+			return (1);
+		tmp2_del = ft_lstfind(tmp->arg, str);
+		tmp3_del = tmp2_del->next;
+		ft_lstremove(&all->cmd[all->i]->arg, tmp2_del);
+		ft_lstremove(&all->cmd[all->i]->arg, tmp3_del);
+
+		free(all->cmd[all->i]->name_file);
+		all->cmd[all->i]->name_file = NULL;
+		all->cmd[all->i]->f_direct = 0;
+
+		dir_parse(all->cmd[all->i]);
 	}
 	return (0);
 }
 
 int	one_direct(t_all *all)
 {
-//	redirect_in_start(all);
+
 //	main_function_for_one_direct(all);
+//	exit (0);
 
 	int	status;
 
