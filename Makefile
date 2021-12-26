@@ -41,12 +41,8 @@ HEAD_LIB	=	./libft/libft.h
 LIB_PRINT	=	./printf/libftprintf.a
 HEAD_LIB_PRINT	=	./printf/ft_printf.h
 
-RDL_MAC		= 	-lreadline -L ~/.brew/opt/readline/lib
-<<<<<<< HEAD
-#RDL_MAC		= -lreadline -L/usr/local/opt/readline/lib
-=======
-# RDL_MAC		= -lreadline -L/usr/local/opt/readline/lib
->>>>>>> master
+# RDL_MAC		= 	-lreadline -L ~/.brew/opt/readline/lib
+RDL_MAC		= -lreadline -L/usr/local/opt/readline/lib
 
 .PHONY		:	all clean fclean re
 

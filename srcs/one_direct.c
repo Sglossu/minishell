@@ -91,6 +91,13 @@ int	main_function_for_one_direct(t_all *all)
 
 		dir_parse(all->cmd[all->i]);
 	}
+	if (all->number_command == 1)
+	{
+		if (g_status)
+			return (g_status);
+		if (if_buildins(all, all->cmd[all->i]->arg))
+			child(all, all->i);
+	}
 	return (0);
 }
 
