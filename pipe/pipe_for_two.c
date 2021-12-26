@@ -34,7 +34,7 @@ int	second_pipe(t_all *all, int fd[2])
 		close(fd[0]);
 		main_function_for_one_direct(all);
 		if (if_buildins(all, all->cmd[all->i]->arg))
-			child(all, 1);
+			child(all, all->i);
 		exit (g_status);
 	}
 	return (0);
@@ -60,8 +60,8 @@ int	first_pipe(t_all *all, int fd[2])
 		close(fd[0]);
 		close(fd[1]);
 		main_function_for_one_direct(all);
-		if (if_buildins(all, all->cmd[0]->arg))
-			child(all, 0);
+		if (if_buildins(all, all->cmd[all->i]->arg))
+			child(all, all->i);
 		exit(g_status);
 	}
 	return (0);

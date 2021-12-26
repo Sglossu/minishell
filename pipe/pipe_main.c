@@ -107,6 +107,7 @@ int	pipe_for_another(t_all *all, int com) // com - количество пайп
 int	our_pipe(t_all *all)
 {
 	ft_signal_run_pipes();
+
 	if (all->number_command == 2)
 	{
 		return (pipe_for_two(all));
@@ -117,3 +118,5 @@ int	our_pipe(t_all *all)
 	}
 	return (0);
 }
+
+// env < 5 90 | ls > 8 9

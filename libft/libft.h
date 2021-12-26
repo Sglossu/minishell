@@ -19,12 +19,17 @@
 # include <stdlib.h>
 # include <ctype.h>
 # include <string.h>
+# include "stdbool.h"
 # include "gnl/get_next_line.h"
+
+# define	DELETE		11
+# define	NO_DELETE	12
 
 typedef struct s_list
 {
 	char			*val;
 	int				flag;
+	int 			flag_delete;
 	struct s_list	*next;
 }				t_list;
 

@@ -74,7 +74,7 @@ int	main_function_for_one_direct(t_all *all)
 	char 	*str;
 
 	tmp = all->cmd[all->i];
-	while (tmp->name_file && tmp->f_direct)
+	while (tmp->name_file && tmp->f_direct != NONE)
 	{
 		what_is_direct(all);
 		str = direct_for_lstfind(all->cmd[all->i]);
@@ -87,10 +87,19 @@ int	main_function_for_one_direct(t_all *all)
 
 		free(all->cmd[all->i]->name_file);
 		all->cmd[all->i]->name_file = NULL;
-		all->cmd[all->i]->f_direct = 0;
+		all->cmd[all->i]->f_direct = NONE;
 
 		dir_parse(all->cmd[all->i]);
 	}
+	if (all->number_command == 1)
+	{
+		if (if_buildins(all, all->cmd[all->i]->arg))
+			child(all, all->i);
+		if (g_status)
+			return (g_status);
+	}
+	if (g_status)
+		return (g_status);
 	return (0);
 }
 
@@ -111,7 +120,6 @@ int	one_direct(t_all *all)
 	}
 	if (all->cmd[all->i]->pid == 0)
 	{
-		redirect_in_start(all);
 		main_function_for_one_direct(all);
 		exit(0);
 	}

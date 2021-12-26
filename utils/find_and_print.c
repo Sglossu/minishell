@@ -105,3 +105,16 @@ void	print_params(char **buf, int count)
 		j++;
 	}
 }
+
+void	print_lst(t_list *lst)
+{
+	t_list	*tmp;
+	tmp = lst;
+
+	while (tmp)
+	{
+//		ft_putendl_fd(tmp->val, STDOUT_FILENO);
+		ft_putendl_fd(tmp->val, STDERR_FILENO);
+		tmp = tmp->next;
+	}
+}

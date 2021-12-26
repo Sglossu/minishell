@@ -42,6 +42,9 @@
 # define	BUILDIN		0
 # define	BINARY		1
 
+//# define	DELETE		11 перенесла в либу
+//# define	NO_DELETE	12
+
 typedef struct s_cmd {
 	t_list		*arg;
 	char		*path_command;
@@ -81,7 +84,7 @@ void	path_print(t_all *all); // потом удалить
 //buidins
 int		ft_pwd(t_all *all);
 int		ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg);
-void	ft_env(t_list *lst);
+void	ft_env(t_list *arg, t_list *lst);
 void	ft_unset(t_list **env, t_list *exp, t_list *arg);
 int		ft_export(t_all *all, t_list *arg);
 void	new_copy_env(t_all *all);
@@ -97,6 +100,8 @@ char	*find_before_equals(char *str);
 void	print_params(char **buf, int count);
 int		str_is_variable(char *str);
 char	*change_shlvl(char *str_old);
+void	namefiles_in_arguments(t_cmd *cmd, t_list *lst);
+void	print_lst(t_list *lst); // delete
 
 //srcs
 void	init(t_all *all, char **envi);

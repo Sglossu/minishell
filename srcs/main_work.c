@@ -22,7 +22,7 @@ int	if_buildins(t_all *all, t_list *arg)
 	else if (!ft_strcmp(arg->val, "echo"))
 		ft_echo(arg);
 	else if (!ft_strcmp(arg->val, "env"))
-		ft_env(all->env);
+		ft_env(arg, all->env);
 	else if (!ft_strcmp(arg->val, "exit"))
 		g_status = ft_exit(arg);
 	else if (!ft_strcmp(arg->val, "export"))
@@ -74,24 +74,12 @@ static	int	binary(t_all *all)
 	return (0);
 }
 
-void	redirect_in_start(t_all *all)
-{
-	if (all->cmd[all->i]->name_file && all->cmd[all->i]->f_direct)
-	{
-		what_is_direct(all);
-		ft_lstremove(&all->cmd[all->i]->arg, all->cmd[all->i]->arg->next); // del direct
-		ft_lstremove(&all->cmd[all->i]->arg, all->cmd[all->i]->arg->next); // del name file
-		all->cmd[all->i]->name_file = NULL;
-		all->cmd[all->i]->f_direct = 0;
-	}
-}
 
 int	main_work(t_all *all)
 {
 	ft_signal_in_child();
 	if (!all->cmd[0]->arg)
 		return (1); // нет команды, работаем дальше
-//	redirect_in_start(all);
 	if (all->cmd[0]->type == BUILDIN)
 	{
 		if_buildins(all, all->cmd[0]->arg);

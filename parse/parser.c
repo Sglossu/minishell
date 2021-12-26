@@ -80,11 +80,12 @@ int	parse(t_all *all, char *input)
 {
 	t_list		*HEAD;
 
+	all->i = 0;
 	HEAD = NULL;
 	if (preparse(all, &HEAD, input))
 		return 1;
 	num_of_commands(all, HEAD);
-	if (!all->number_command && isDir(HEAD->val))
+	if (!all->number_command && HEAD && isDir(HEAD->val))
 		all->number_command++;
 	init_cmd_struct(all);
 //	ft_lstprint(HEAD);
