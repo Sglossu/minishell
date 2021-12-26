@@ -12,8 +12,14 @@
 
 #include "../includes/minishell.h"
 
-void	ft_env(t_list *lst)
+void	ft_env(t_list *arg, t_list *lst)
 {
+	if (arg->next)
+	{
+		g_status = 127;
+		ft_printf(2, "env: %s: No such file or directory\n", arg->next->val);
+		return ;
+	}
 	while (lst)
 	{
 		if (ft_strchr(lst->val, '='))

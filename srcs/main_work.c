@@ -22,7 +22,7 @@ int	if_buildins(t_all *all, t_list *arg)
 	else if (!ft_strcmp(arg->val, "echo"))
 		ft_echo(arg);
 	else if (!ft_strcmp(arg->val, "env"))
-		ft_env(all->env);
+		ft_env(arg, all->env);
 	else if (!ft_strcmp(arg->val, "exit"))
 		g_status = ft_exit(arg);
 	else if (!ft_strcmp(arg->val, "export"))
