@@ -114,6 +114,13 @@ int	pipe_for_another(t_all *all, int com) // com - количество пайп
 	i = 0;
 	if (fork_and_close(all, com, fd, i))
 	{
+		i = 0;
+		while (i <= com)
+		{
+			free(fd[i]);
+			i++;
+		}
+		free(fd);
 		ft_signal_main();
 		return (g_status);
 	}
@@ -122,6 +129,13 @@ int	pipe_for_another(t_all *all, int com) // com - количество пайп
 		waitpid(all->cmd[i]->pid, &g_status, 0);
 		i++;
 	}
+	i = 0;
+	while (i <= com)
+	{
+		free(fd[i]);
+		i++;
+	}
+	free(fd);
 	ft_signal_main();
 	return (0);
 }

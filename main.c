@@ -22,6 +22,7 @@ int	main(int argc, char **argv, char **envi)
 
 	g_status = 0;
 	all = malloc(sizeof(t_all));
+	rl_outstream = stderr;
 	if (!all)
 		return (1); //error
 	init(all, envi);
@@ -30,7 +31,12 @@ int	main(int argc, char **argv, char **envi)
 		ft_signal_main();
 		input = readline(MINISHELL);
 		if (!input)
-			input = ft_strdup("exit");
+		{
+//			 ft_putendl_fd("exit\n", 2);
+			 exit(g_status);
+//			input = ft_strdup("exit");
+		}
+
 		rl_bind_key('\t', rl_complete);
         add_history(input);
 		parse(all, input);
