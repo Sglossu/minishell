@@ -83,6 +83,8 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 	all->number_command = res;
 }
 
+// cat < 8 | cat < 1 | ls | wc
+
 int	init_cmd_struct(t_all *all)
 {
 	int		i;
