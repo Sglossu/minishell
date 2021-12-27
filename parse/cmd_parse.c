@@ -83,6 +83,8 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 	all->number_command = res;
 }
 
+// cat < 8 | cat < 1 | ls | wc
+
 int	init_cmd_struct(t_all *all)
 {
 	int		i;
@@ -109,25 +111,29 @@ int dir_parse(t_cmd *cmd)
 		if (!ft_strcmp(tmp->val, ">"))
 		{
 			cmd->f_direct = DIR;
-			cmd->name_file = ft_strdup(tmp->next->val);
+			if (tmp->next)
+				cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, ">>"))
 		{
 			cmd->f_direct = DOUB_DIR;
-			cmd->name_file = ft_strdup(tmp->next->val);
+			if (tmp->next)
+				cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, "<"))
 		{
 			cmd->f_direct = REDIR;
-			cmd->name_file = ft_strdup(tmp->next->val);
+			if (tmp->next)
+				cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, "<<"))
 		{
 			cmd->f_direct = DOUB_REDIR;
-			cmd->name_file = ft_strdup(tmp->next->val);
+			if (tmp->next)
+				cmd->name_file = ft_strdup(tmp->next->val);
 			return 0;
 		}
 		else

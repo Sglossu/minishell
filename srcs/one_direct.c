@@ -30,6 +30,13 @@ int	what_is_direct(t_all *all)
 	else if (all->cmd[all->i]->f_direct == DOUB_REDIR)
 	{
 		ft_doubleredir(all->cmd[all->i], STDIN_FILENO, fd[1]);
+		if (all->count_doub_redir > 1)
+		{
+			all->count_doub_redir--;
+			close(fd[0]);
+			close(fd[1]);
+			return (0);
+		}
 		if (dup2(fd[0], STDIN_FILENO) == -1)
 		{
 			close(fd[0]);
@@ -66,6 +73,20 @@ char	*direct_for_lstfind(t_cmd *cmd)
 	return (str);
 }
 
+static	void	how_much_doub_redir(t_all *all)
+{
+	t_list	*tmp;
+
+	all->count_doub_redir = 0;
+	tmp = all->cmd[all->i]->arg;
+	while (tmp)
+	{
+		if (!ft_strcmp((tmp->val), "<<"))
+			all->count_doub_redir++;
+		tmp = tmp->next;
+	}
+}
+
 int	main_function_for_one_direct(t_all *all)
 {
 	t_cmd	*tmp;
@@ -73,6 +94,7 @@ int	main_function_for_one_direct(t_all *all)
 	t_list	*tmp3_del;
 	char 	*str;
 
+	how_much_doub_redir(all);
 	tmp = all->cmd[all->i];
 	while (tmp->name_file && tmp->f_direct != NONE)
 	{
@@ -91,6 +113,8 @@ int	main_function_for_one_direct(t_all *all)
 
 		dir_parse(all->cmd[all->i]);
 	}
+	if (!all->cmd[all->i]->arg)
+		return (g_status);
 	if (all->number_command == 1)
 	{
 		if (if_buildins(all, all->cmd[all->i]->arg))

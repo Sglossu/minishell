@@ -24,7 +24,7 @@ static char	*home(t_list **env)
 	tmp = ft_lstfind((*env), "HOME");
 	if (!tmp)
 	{
-		ft_putendl_fd("cd: HOME not set", STDOUT_FILENO);
+		ft_putendl_fd("cd: HOME not set", STDERR_FILENO);
 		g_status = 1;
 	}
 	else
@@ -32,7 +32,7 @@ static char	*home(t_list **env)
 		str = find_after_equals(tmp->val);
 		if (!str) // нет =
 		{
-			ft_putendl_fd("cd: HOME not set", STDOUT_FILENO);
+			ft_putendl_fd("cd: HOME not set", STDERR_FILENO);
 			g_status = 1;
 		}
 		else
@@ -80,6 +80,8 @@ void	remember_pwd(t_all *all)
 	{
 		free(all->oldpwd);
 		all->oldpwd = ft_strdup(pwd);
+		if (!all->oldpwd)
+			return ; // todo error
 	}
 	free(pwd);
 }

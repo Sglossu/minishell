@@ -89,11 +89,11 @@ int	ft_exit(t_list *arg)
 	arg = arg->next;
 	if (!arg)
 	{
-		ft_putendl_fd("exit", STDOUT_FILENO);
+		ft_putendl_fd("exit", STDERR_FILENO);
 		g_status = 0;
 		exit (g_status);
 	}
-	ft_putendl_fd("exit", STDOUT_FILENO);
+	ft_putendl_fd("exit", STDERR_FILENO);
 	if (ft_strisdigit(arg->val)) // return 1 - есть буква
 	{
 		ft_printf(2, "exit: %s: numeric argument required\n", arg->val);

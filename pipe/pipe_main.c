@@ -12,9 +12,10 @@
 
 #include "../includes/minishell.h"
 
-void	child_for_pipe(t_all *all, int com, int num_com, int fd[com][2])
+void	child_for_pipe(t_all *all, int com, int num_com, int **fd)
 {
 	int	i;
+	(void)com;
 
 	i = 0;
 	if (num_com == 0)
@@ -40,7 +41,7 @@ void	child_for_pipe(t_all *all, int com, int num_com, int fd[com][2])
 	exit(g_status);
 }
 
-int	fork_and_close(t_all *all, int com, int fd[com][2], int i)
+int	fork_and_close(t_all *all, int com, int **fd, int i)
 {
 	int	iserror;
 
@@ -70,20 +71,45 @@ int	fork_and_close(t_all *all, int com, int fd[com][2], int i)
 		close(fd[i][1]);
 		i++;
 	}
+	ft_signal_main();
 	return (iserror);
 }
 
 int	pipe_for_another(t_all *all, int com) // com - количество пайпов
 {
-	int		fd[com][2];
+	int		**fd;
 	int		i;
 
+	fd = malloc(sizeof(int *) * com * 3);
+	if (!fd)
+	{
+		g_status = errno;
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		ft_signal_main();
+		return (g_status);
+	}
+	fd[com] = NULL;
+	i = 0;
+	while(i < com)
+	{
+		fd[i] = (int *)malloc(sizeof (int));
+		if (!fd[i])
+		{
+			g_status = errno;
+			ft_putendl_fd(strerror(errno), STDERR_FILENO);
+			ft_signal_main();
+			return (g_status);
+		}
+		i++;
+	}
+	fd[i] = 0;
 	i = 0;
 	while (i < com)
 	{
 		if (pipe(fd[i]) == -1)
 		{
 			ft_putendl_fd(strerror(errno), STDERR_FILENO);
+			ft_signal_main();
 			g_status = errno;
 			return (errno);
 		}
@@ -92,6 +118,13 @@ int	pipe_for_another(t_all *all, int com) // com - количество пайп
 	i = 0;
 	if (fork_and_close(all, com, fd, i))
 	{
+		i = 0;
+		while (i <= com)
+		{
+			free(fd[i]);
+			i++;
+		}
+		free(fd);
 		ft_signal_main();
 		return (g_status);
 	}
@@ -100,6 +133,13 @@ int	pipe_for_another(t_all *all, int com) // com - количество пайп
 		waitpid(all->cmd[i]->pid, &g_status, 0);
 		i++;
 	}
+	i = 0;
+	while (i <= com)
+	{
+		free(fd[i]);
+		i++;
+	}
+	free(fd);
 	ft_signal_main();
 	return (0);
 }
