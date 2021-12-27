@@ -25,7 +25,7 @@ int	ft_dir(t_cmd *cmd, int fd_std)
 	}
 	if (dup2(fd_file, fd_std) == -1)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno));
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		g_status = errno;
 		exit(errno);
 	}
@@ -46,7 +46,7 @@ int	ft_doubledir(t_cmd *cmd, int fd_std)
 	}
 	if (dup2(fd_file, fd_std) == -1)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno)); // убрать _]
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		g_status = errno;
 		exit (errno);
 	}
@@ -61,13 +61,13 @@ int	ft_redir(t_cmd *cmd, int fd_std)
 	fd_file = open(cmd->name_file, O_RDONLY);
 	if (fd_file == -1)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno)); // убрать _]
+		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno));
 		g_status = errno;
 		exit (errno);
 	}
 	if (dup2(fd_file, fd_std) == -1)
 	{
-		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno)); // убрать _]
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		g_status = errno;
 		exit(errno);
 	}

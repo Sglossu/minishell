@@ -33,7 +33,6 @@ char	*str_arg_in_quote(char *str)
 	{
 		g_status = errno;
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		return (NULL);
 	}
 	free(str1);
 	free(str2);
@@ -45,7 +44,7 @@ char	*str_arg_in_quote(char *str)
 void	new_copy_env(t_all *all)
 {
 	t_list	*tmp;
-	char 	*tmp_str;
+	char	*tmp_str;
 
 	if (all->exp)
 		ft_lstclear(&all->exp, free);
