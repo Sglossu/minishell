@@ -61,6 +61,7 @@ typedef struct s_all {
 	int			i;
 	char		*pwd;
 	char		*oldpwd;
+	int 		count_doub_redir;
 }				t_all;
 
 typedef struct s_str {
@@ -76,6 +77,7 @@ typedef struct s_str {
 int	g_status;
 
 void	path_print(t_all *all); // потом удалить
+
 
 //buidins
 int		ft_pwd(t_all *all);
@@ -96,7 +98,6 @@ char	*find_before_equals(char *str);
 void	print_params(char **buf, int count);
 int		str_is_variable(char *str);
 char	*change_shlvl(char *str_old);
-void	namefiles_in_arguments(t_cmd *cmd, t_list *lst);
 void	print_lst(t_list *lst); // delete
 
 //srcs

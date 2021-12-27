@@ -71,6 +71,7 @@ int	fork_and_close(t_all *all, int com, int **fd, int i)
 		close(fd[i][1]);
 		i++;
 	}
+	ft_signal_main();
 	return (iserror);
 }
 
@@ -84,6 +85,7 @@ int	pipe_for_another(t_all *all, int com) // com - количество пайп
 	{
 		g_status = errno;
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		ft_signal_main();
 		return (g_status);
 	}
 	fd[com] = NULL;
@@ -95,6 +97,7 @@ int	pipe_for_another(t_all *all, int com) // com - количество пайп
 		{
 			g_status = errno;
 			ft_putendl_fd(strerror(errno), STDERR_FILENO);
+			ft_signal_main();
 			return (g_status);
 		}
 		i++;
@@ -106,6 +109,7 @@ int	pipe_for_another(t_all *all, int com) // com - количество пайп
 		if (pipe(fd[i]) == -1)
 		{
 			ft_putendl_fd(strerror(errno), STDERR_FILENO);
+			ft_signal_main();
 			g_status = errno;
 			return (errno);
 		}

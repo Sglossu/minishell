@@ -103,6 +103,7 @@ char *ready_string(t_list *tmp, t_all *all)
 	int		i;
 
 	str = ft_strdup(tmp->val);
+	// if (!str)
 	free(tmp->val);
 	i = 0;
 
