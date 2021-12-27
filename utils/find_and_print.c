@@ -15,12 +15,12 @@
 char	*find_after_equals(char *str)
 {
 	bool	equals;
-	int 	i;
+	int		i;
 
 	i = 0;
 	equals = false;
 	if (!str)
-		return (NULL); // в cd этот вариант обрабатывается раньше, от туда сюда точно не зайдет, но оставлю на будущее на всякий
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == '=')
@@ -40,25 +40,21 @@ char	*find_before_equals(char *str)
 {
 	int		i;
 	char	*dst;
-	int 	j;
+	int		j;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	if (!ft_strchr(str, '='))
-		return NULL;
-	while (str[i])
+		return (NULL);
+	while (str[++i])
 	{
 		if (str[i] == '=')
-			break;
-		i++;
+			break ;
 	}
 	i++;
 	dst = (char *)malloc(sizeof(char) * (i + 1));
 	if (!dst)
-	{
-//		error// todo
-		return NULL;
-	}
+		return (error_return_null());
 	while (i > 0)
 	{
 		dst[j] = str[j];
@@ -71,13 +67,13 @@ char	*find_before_equals(char *str)
 
 int	str_is_variable(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (!ft_isalpha(str[i]) && str[i] != '_') // 0 - нет буквы
+	if (!ft_isalpha(str[i]) && str[i] != '_')
 		return (1);
 	i++;
-	while(str[i] && str[i] != '=')
+	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (1);
@@ -109,11 +105,10 @@ void	print_params(char **buf, int count)
 void	print_lst(t_list *lst)
 {
 	t_list	*tmp;
-	tmp = lst;
 
+	tmp = lst;
 	while (tmp)
 	{
-//		ft_putendl_fd(tmp->val, STDOUT_FILENO);
 		ft_putendl_fd(tmp->val, STDERR_FILENO);
 		tmp = tmp->next;
 	}

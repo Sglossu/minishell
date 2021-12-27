@@ -12,6 +12,23 @@
 
 #include "../includes/minishell.h"
 
+static	void	error_malloc(void)
+{
+	g_status = errno;
+	ft_printf(2, "malloc: %s\n", strerror(errno));
+}
+
+static	void	add_if_not_shlvl(char **buf, int i, t_list **tmp)
+{
+	char	*shlvl;
+
+	shlvl = ft_strdup(buf[i]);
+	if (shlvl)
+		ft_lstadd_back(tmp, ft_lstnew(shlvl));
+	else
+		error_malloc();
+}
+
 static	t_list	*init_lst_env_or_exp(char **buf)
 {
 	t_list	*tmp;
@@ -21,8 +38,8 @@ static	t_list	*init_lst_env_or_exp(char **buf)
 
 	flag_shlvl = false;
 	tmp = NULL;
-	i = 0;
-	while (buf[i])
+	i = -1;
+	while (buf[++i])
 	{
 		if (!ft_strncmp(buf[i], "SHLVL=", 6))
 		{
@@ -30,24 +47,11 @@ static	t_list	*init_lst_env_or_exp(char **buf)
 			if (shlvl)
 				ft_lstadd_back(&tmp, ft_lstnew(shlvl));
 			else
-			{
-				g_status = errno;
-				ft_printf(2, "malloc: %s\n", strerror(errno));
-			}
+				error_malloc();
 			flag_shlvl = true;
 		}
 		else
-		{
-			shlvl = ft_strdup(buf[i]);
-			if (shlvl)
-				ft_lstadd_back(&tmp, ft_lstnew(shlvl));
-			else
-			{
-				g_status = errno;
-				ft_printf(2, "malloc: %s\n", strerror(errno));
-			}
-		}
-		i++;
+			add_if_not_shlvl(buf, i, &tmp);
 	}
 	if (!flag_shlvl)
 		ft_lstadd_back(&tmp, ft_lstnew("SHLVL=1"));
