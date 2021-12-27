@@ -35,21 +35,33 @@ char *ft_dollar(char *input, t_all *all, int *i)
 	int j;
 
 	j = *i + 1;
-	while (input[j] && input[j] != '\'' && input[j] != '\"' && input[j] != '|')
+	while (input[j] && input[j] != '\'' && input[j] != '\"' && input[j] != '|' && input[j] != '\\')
 		j++;
-	
-	res = ft_substr(input, *i + 1, j - *i);
-	// printf("|%s|\n", res);
-	envObj = ft_lstfind(all->env, res);
+	tmp = ft_substr(input, *i + 1, j - *i);
+	envObj = ft_lstfind(all->env, tmp);
+	free(tmp);
 	if (envObj)
-		res = find_after_equals(envObj->val);
+		tmp = find_after_equals(envObj->val);
 	else
 	{
 		return NULL; // error
 	}
-	tmp = ft_strjoin(ft_strjoin(ft_substr(input, 0 , *i), res), strdup(input + j + 1));
+	res = ft_strjoin(ft_strjoin(ft_substr(input, 0 , *i), tmp), strdup(input + j + 1));
 	free(input);
-	return tmp;
+	return res;
+}
+
+char *ft_ecran(char *input, t_all *all, int *i)
+{
+	int	j;
+	char *tmp;
+	char *res;
+
+	j = *i;
+
+
+	free(input);
+	return res;
 }
 
 int isDir(char *str)
@@ -99,6 +111,7 @@ static char *ft_quote(char *str, char sym, int *i, t_all *all)
 	free(str);
 	return(ft_strjoin(ft_strjoin(s,m), f));
 }
+
 
 char *ready_string(t_list *tmp, t_all *all)
 {
