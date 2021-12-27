@@ -25,7 +25,7 @@ int	second_pipe(t_all *all, int fd[2])
 	if (all->cmd[1]->pid == 0)
 	{
 		ft_signal_in_child();
-		if (dup2(fd[0], STDIN_FILENO) == -1) // теперь stdin это как fd[0]
+		if (dup2(fd[0], STDIN_FILENO) == -1)
 		{
 			g_status = errno;
 			exit(errno);
@@ -33,7 +33,7 @@ int	second_pipe(t_all *all, int fd[2])
 		close(fd[1]);
 		close(fd[0]);
 		main_function_for_one_direct(all);
-		if (if_buildins(all, all->cmd[all->i]->arg))
+		if (all->cmd[all->i]->arg && if_buildins(all, all->cmd[all->i]->arg))
 			child(all, all->i);
 		exit (g_status);
 	}
@@ -52,7 +52,7 @@ int	first_pipe(t_all *all, int fd[2])
 	if (all->cmd[0]->pid == 0)
 	{
 		ft_signal_in_child();
-		if (dup2(fd[1], STDOUT_FILENO) == -1) // делает stdout (вывод) копией fd[1], теперь stdout это как fd[1]
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
 		{
 			g_status = errno;
 			exit(errno);
@@ -60,7 +60,7 @@ int	first_pipe(t_all *all, int fd[2])
 		close(fd[0]);
 		close(fd[1]);
 		main_function_for_one_direct(all);
-		if (if_buildins(all, all->cmd[all->i]->arg))
+		if (all->cmd[all->i]->arg && if_buildins(all, all->cmd[all->i]->arg))
 			child(all, all->i);
 		exit(g_status);
 	}

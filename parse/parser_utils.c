@@ -56,7 +56,7 @@ char *path_com(t_all *all, char *command)
 	parse_path(all);
 	path_pl_command(all, command);
 
-	while (all->path[i])
+	while (all->path && all->path[i])
 	{
 		if (!access(all->path[i], 0 | 1))
 		{

@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	child_for_pipe(t_all *all, int com, int num_com, int fd[com][2])
+void	child_for_pipe(t_all *all, int num_com, int **fd)
 {
 	int	i;
 
@@ -21,7 +21,7 @@ void	child_for_pipe(t_all *all, int com, int num_com, int fd[com][2])
 		dup2(fd[num_com][1], STDOUT_FILENO); // первая команда
 	else if (num_com == all->number_command - 1)
 		dup2(fd[num_com - 1][0], STDIN_FILENO); // последняя
-	else // пока это num_com = 1 // номер команды
+	else
 	{
 		dup2(fd[num_com - 1][0], STDIN_FILENO);
 		dup2(fd[num_com][1], STDOUT_FILENO);
@@ -35,88 +35,52 @@ void	child_for_pipe(t_all *all, int com, int num_com, int fd[com][2])
 		close(fd[i][1]);
 		i++;
 	}
-	if (if_buildins(all, all->cmd[num_com]->arg))
+	if (all->cmd[num_com]->arg && if_buildins(all, all->cmd[num_com]->arg))
 		child(all, num_com);
 	exit(g_status);
 }
 
-int	fork_and_close(t_all *all, int com, int fd[com][2], int i)
+static	void	error_fork(void)
 {
-	int	iserror;
+	ft_printf(2, "fork failed: %s\n", strerror(errno));
+	g_status = errno;
+}
 
-	iserror = 0;
+int	fork_and_close(t_all *all, int com, int **fd, int i)
+{
+	g_status = 0;
 	while (i < com + 1)
 	{
 		all->cmd[i]->pid = fork();
 		if (all->cmd[i]->pid < 0)
 		{
-			ft_printf(2, "fork failed: %s\n", strerror(errno));
-			g_status = errno;
-			iserror = 1;
+			error_fork();
 			break ;
 		}
 		if (all->cmd[i]->pid == 0)
 		{
 			ft_signal_in_child();
-			child_for_pipe(all, com, i, fd); // i - номер дочернего процесса, т. е. номер команды
+			child_for_pipe(all, i, fd); // i - номер команды
 			exit (g_status);
 		}
 		i++;
 	}
-	i = 0;
-	while (i < com)
+	i = -1;
+	while (++i < com)
 	{
 		close(fd[i][0]);
 		close(fd[i][1]);
-		i++;
-	}
-	return (iserror);
-}
-
-int	pipe_for_another(t_all *all, int com) // com - количество пайпов
-{
-	int		fd[com][2];
-	int		i;
-
-	i = 0;
-	while (i < com)
-	{
-		if (pipe(fd[i]) == -1)
-		{
-			ft_putendl_fd(strerror(errno), STDERR_FILENO);
-			g_status = errno;
-			return (errno);
-		}
-		i++;
-	}
-	i = 0;
-	if (fork_and_close(all, com, fd, i))
-	{
-		ft_signal_main();
-		return (g_status);
-	}
-	while (i < com + 1)
-	{
-		waitpid(all->cmd[i]->pid, &g_status, 0);
-		i++;
 	}
 	ft_signal_main();
-	return (0);
+	return (g_status);
 }
 
 int	our_pipe(t_all *all)
 {
 	ft_signal_run_pipes();
-
 	if (all->number_command == 2)
 	{
 		return (pipe_for_two(all));
 	}
-	else
-	{
-		return (pipe_for_another(all, all->number_command - 1));
-	}
-	return (0);
+	return (pipe_for_another(all, all->number_command - 1));
 }
-
-// env < 5 90 | ls > 8 9

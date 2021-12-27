@@ -16,7 +16,7 @@ int	if_buildins(t_all *all, t_list *arg)
 {
 	if (!ft_strcmp(arg->val, "cd"))
 	{
-		if (!ft_cd(all, &all->env, all->exp, arg))
+		if (!ft_cd(all, arg))
 			remember_pwd(all);
 	}
 	else if (!ft_strcmp(arg->val, "echo"))
@@ -33,7 +33,7 @@ int	if_buildins(t_all *all, t_list *arg)
 			remember_pwd(all);
 	}
 	else if (!ft_strcmp(arg->val, "unset"))
-		ft_unset(&all->env, all->exp, arg);
+		ft_unset(&all->env, arg);
 	else
 		return (1);
 	return (0);

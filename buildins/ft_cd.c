@@ -10,10 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//
-// Created by Shasta Glossu on 11/16/21.
-//
-
 #include "../includes/minishell.h"
 
 static char	*home(t_list **env)
@@ -24,7 +20,7 @@ static char	*home(t_list **env)
 	tmp = ft_lstfind((*env), "HOME");
 	if (!tmp)
 	{
-		ft_putendl_fd("cd: HOME not set", STDOUT_FILENO);
+		ft_putendl_fd("cd: HOME not set", STDERR_FILENO);
 		g_status = 1;
 	}
 	else
@@ -32,7 +28,7 @@ static char	*home(t_list **env)
 		str = find_after_equals(tmp->val);
 		if (!str) // нет =
 		{
-			ft_putendl_fd("cd: HOME not set", STDOUT_FILENO);
+			ft_putendl_fd("cd: HOME not set", STDERR_FILENO);
 			g_status = 1;
 		}
 		else
@@ -48,27 +44,17 @@ static void	change_pwd_oldpwd(t_all *all, t_list **env, char **oldpwd)
 
 	pwd = getcwd(NULL, 1024);
 	if (!pwd)
-	{
-
-		g_status = errno;
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		return ;
-	}
+		return (error_return_nothing());
 	tmp = ft_lstfind(*env, "PWD");
 	if (!tmp)
-//		ft_lstadd_back(env, ft_lstnew(ft_strjoin("PWD=", pwd)));
 		all->pwd = ft_strdup(pwd);
 	else
 		tmp->val = ft_strjoin("PWD=", pwd);
 	tmp = ft_lstfind(*env, "OLDPWD");
 	if (!tmp)
-	{
 		ft_lstadd_back(env, ft_lstnew(ft_strjoin("OLDPWD=", *oldpwd)));
-	}
 	else
-	{
 		tmp->val = ft_strjoin("OLDPWD=", *oldpwd);
-	}
 }
 
 void	remember_pwd(t_all *all)
@@ -80,30 +66,27 @@ void	remember_pwd(t_all *all)
 	{
 		free(all->oldpwd);
 		all->oldpwd = ft_strdup(pwd);
+		if (!all->oldpwd)
+			return (error_return_nothing());
 	}
 	free(pwd);
 }
 
-int	ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg)
+int	ft_cd(t_all *all, t_list *arg)
 {
 	char	*str;
 	char	*oldpwd;
-	(void)exp;
 
 	remember_pwd(all);
 	if (!arg->next || (arg->next && !ft_strcmp(arg->next->val, "~")))
-		str = home(env);
+		str = home(&all->env);
 	else
 		str = ft_strdup(arg->next->val);
 	if (!str)
 		return (g_status); // error - уже напечатана
 	oldpwd = getcwd(NULL, 1024);
 	if (!oldpwd)
-	{
 		oldpwd = ft_strdup(all->oldpwd);
-//		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-//		return (errno);
-	}
 	if (str && chdir(str) == -1)
 	{
 		chdir(all->oldpwd);
@@ -114,6 +97,6 @@ int	ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg)
 		}
 	}
 	else
-		change_pwd_oldpwd(all, env, &oldpwd);
+		change_pwd_oldpwd(all, &all->env, &oldpwd);
 	return (g_status);
 }

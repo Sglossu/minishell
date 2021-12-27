@@ -23,10 +23,6 @@ int	ft_pwd(t_all *all)
 		free(pwd);
 		return (0);
 	}
-	else
-	{
-		ft_putendl_fd(all->oldpwd, STDOUT_FILENO);
-		return (1);
-	}
-	return (0);
+	ft_putendl_fd(all->oldpwd, STDOUT_FILENO);
+	return (1);
 }

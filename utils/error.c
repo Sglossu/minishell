@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 22:26:02 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/16 22:26:04 by sglossu          ###   ########.fr       */
+/*   Created: 2021/12/27 13:00:50 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/27 13:00:52 by sglossu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-t_list	*ft_lstnew(void *val)
+char	*error_return_NULL()
 {
-	t_list	*new_elem;
+	g_status = errno;
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	return (NULL);
+}
 
-	new_elem = malloc(sizeof(t_list));
-	if (!new_elem)
-		return (NULL);
-	new_elem->val = val;
-	new_elem->next = NULL;
-	return (new_elem);
+void	error_return_nothing()
+{
+	g_status = errno;
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	return ;
+}
+
+int	error_return_int()
+{
+	g_status = errno;
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	return (g_status);
 }

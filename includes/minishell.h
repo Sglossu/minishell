@@ -29,21 +29,18 @@
 
 # define MINISHELL	"\033[32mMinishell$ \033[0m"
 
-# define 	DIR			3
-# define	REDIR		4
-# define	DOUB_DIR	5
-# define 	DOUB_REDIR	6
-# define 	NONE		7
+# define    DIR			3
+# define    REDIR		4
+# define    DOUB_DIR	5
+# define    DOUB_REDIR	6
+# define    NONE		7
 
-# define	TEXT		8
-# define	PIPE		9
-# define	DIRECT		10
+# define    TEXT		8
+# define    PIPE		9
+# define    DIRECT		10
 
-# define	BUILDIN		0
-# define	BINARY		1
-
-//# define	DELETE		11 перенесла в либу
-//# define	NO_DELETE	12
+# define    BUILDIN		0
+# define    BINARY		1
 
 typedef struct s_cmd {
 	t_list		*arg;
@@ -62,20 +59,20 @@ typedef struct s_all {
 	t_cmd		**cmd;
 	int			number_command;
 	int			i;
-	char 		*pwd;
-	char 		*oldpwd;
+	char		*pwd;
+	char		*oldpwd;
+	int			count_doub_redir;
 }				t_all;
 
 typedef struct s_str {
-	char *input;
-	char *buf;
-	int iter;
-	int	quote;
-	int	ecran;
-	int	dub_quote;
-	int	dollars;
+	char	*input;
+	char	*buf;
+	int		iter;
+	int		quote;
+	int		ecran;
+	int		dub_quote;
+	int		dollars;
 }				t_str;
-
 
 int	g_status;
 
@@ -83,9 +80,9 @@ void	path_print(t_all *all); // потом удалить
 
 //buidins
 int		ft_pwd(t_all *all);
-int		ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg);
+int		ft_cd(t_all *all, t_list *arg);
 void	ft_env(t_list *arg, t_list *lst);
-void	ft_unset(t_list **env, t_list *exp, t_list *arg);
+void	ft_unset(t_list **env, t_list *arg);
 int		ft_export(t_all *all, t_list *arg);
 void	new_copy_env(t_all *all);
 char	*str_arg_in_quote(char *str);
@@ -100,8 +97,10 @@ char	*find_before_equals(char *str);
 void	print_params(char **buf, int count);
 int		str_is_variable(char *str);
 char	*change_shlvl(char *str_old);
-void	namefiles_in_arguments(t_cmd *cmd, t_list *lst);
 void	print_lst(t_list *lst); // delete
+void	error_return_nothing(void);
+char	*error_return_NULL(void);
+int		error_return_int(void);
 
 //srcs
 void	init(t_all *all, char **envi);
@@ -116,6 +115,8 @@ int		ft_redir(t_cmd *cmd, int fd_std);
 int		ft_doubledir(t_cmd *cmd, int fd_std);
 int		ft_dir(t_cmd *cmd, int fd_std);
 int		pipe_for_two(t_all *all);
+int		pipe_for_another(t_all *all, int com);
+int		fork_and_close(t_all *all, int com, int **fd, int i);
 int		what_is_direct(t_all *all);
 void	redirect_in_start(t_all *all);
 
