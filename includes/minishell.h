@@ -61,7 +61,7 @@ typedef struct s_all {
 	int			i;
 	char		*pwd;
 	char		*oldpwd;
-	int 		count_doub_redir;
+	int			count_doub_redir;
 }				t_all;
 
 typedef struct s_str {
@@ -78,12 +78,11 @@ int	g_status;
 
 void	path_print(t_all *all); // потом удалить
 
-
 //buidins
 int		ft_pwd(t_all *all);
-int		ft_cd(t_all *all, t_list **env, t_list *exp, t_list *arg);
+int		ft_cd(t_all *all, t_list *arg);
 void	ft_env(t_list *arg, t_list *lst);
-void	ft_unset(t_list **env, t_list *exp, t_list *arg);
+void	ft_unset(t_list **env, t_list *arg);
 int		ft_export(t_all *all, t_list *arg);
 void	new_copy_env(t_all *all);
 char	*str_arg_in_quote(char *str);
@@ -99,6 +98,9 @@ void	print_params(char **buf, int count);
 int		str_is_variable(char *str);
 char	*change_shlvl(char *str_old);
 void	print_lst(t_list *lst); // delete
+void	error_return_nothing(void);
+char	*error_return_NULL(void);
+int		error_return_int(void);
 
 //srcs
 void	init(t_all *all, char **envi);
@@ -113,6 +115,8 @@ int		ft_redir(t_cmd *cmd, int fd_std);
 int		ft_doubledir(t_cmd *cmd, int fd_std);
 int		ft_dir(t_cmd *cmd, int fd_std);
 int		pipe_for_two(t_all *all);
+int		pipe_for_another(t_all *all, int com);
+int		fork_and_close(t_all *all, int com, int **fd, int i);
 int		what_is_direct(t_all *all);
 void	redirect_in_start(t_all *all);
 

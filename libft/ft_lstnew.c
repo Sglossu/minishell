@@ -20,7 +20,6 @@ t_list	*ft_lstnew(void *val)
 	if (!new_elem)
 		return (NULL);
 	new_elem->val = val;
-	new_elem->flag_delete = DELETE;
 	new_elem->next = NULL;
 	return (new_elem);
 }
