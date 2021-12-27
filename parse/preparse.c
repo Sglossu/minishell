@@ -31,6 +31,7 @@ char *ft_dollar(char *input, t_all *all, int *i)
 {
 	t_list *envObj;
 	char *res;
+	char *tmp;
 	int j;
 
 	j = *i + 1;
@@ -46,7 +47,9 @@ char *ft_dollar(char *input, t_all *all, int *i)
 	{
 		return NULL; // error
 	}
-	return ft_strjoin(ft_strjoin(ft_substr(input, 0 , *i), res), strdup(input + j + 1));
+	tmp = ft_strjoin(ft_strjoin(ft_substr(input, 0 , *i), res), strdup(input + j + 1));
+	free(input);
+	return tmp;
 }
 
 int isDir(char *str)
@@ -112,6 +115,8 @@ char *ready_string(t_list *tmp, t_all *all)
 			str = ft_quote(str, str[i], &i, all);
 		if (str[i] == '$')
 			str = ft_dollar(str, all, &i);
+		if (str[i] == '\\')
+			str = ft_ecran(str, all, &i);
 		i++;
 	}
 	return (str);
