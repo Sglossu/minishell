@@ -12,15 +12,19 @@
 
 #include "../includes/minishell.h"
 
+static	int	close_fd(int fd_0, int fd_1)
+{
+	close(fd_0);
+	close(fd_1);
+	return (0);
+}
+
 int	what_is_direct(t_all *all)
 {
 	int	fd[2];
 
 	if (pipe(fd) == -1)
-	{
-		g_status = errno;
-		return (g_status);
-	}
+		error_return_int();
 	if (all->cmd[all->i]->f_direct == DIR)
 		ft_dir(all->cmd[all->i], STDOUT_FILENO);
 	else if (all->cmd[all->i]->f_direct == DOUB_DIR)
@@ -33,21 +37,15 @@ int	what_is_direct(t_all *all)
 		if (all->count_doub_redir > 1)
 		{
 			all->count_doub_redir--;
-			close(fd[0]);
-			close(fd[1]);
-			return (0);
+			return (close_fd(fd[0], fd[1]));
 		}
 		if (dup2(fd[0], STDIN_FILENO) == -1)
 		{
-			close(fd[0]);
-			close(fd[1]);
-			g_status = errno;
-			return (errno);
+			close_fd(fd[0], fd[1]);
+			error_return_int();
 		}
 	}
-	close(fd[0]);
-	close(fd[1]);
-	return (0);
+	return (close_fd(fd[0], fd[1]));
 }	
 
 char	*direct_for_lstfind(t_cmd *cmd)
@@ -63,7 +61,6 @@ char	*direct_for_lstfind(t_cmd *cmd)
 		str = ft_strdup("<<");
 	else if (cmd->f_direct == DOUB_DIR)
 		str = ft_strdup(">>");
-
 	if (!str)
 	{
 		g_status = errno;
@@ -73,68 +70,10 @@ char	*direct_for_lstfind(t_cmd *cmd)
 	return (str);
 }
 
-static	void	how_much_doub_redir(t_all *all)
-{
-	t_list	*tmp;
-
-	all->count_doub_redir = 0;
-	tmp = all->cmd[all->i]->arg;
-	while (tmp)
-	{
-		if (!ft_strcmp((tmp->val), "<<"))
-			all->count_doub_redir++;
-		tmp = tmp->next;
-	}
-}
-
-int	main_function_for_one_direct(t_all *all)
-{
-	t_cmd	*tmp;
-	t_list	*tmp2_del;
-	t_list	*tmp3_del;
-	char 	*str;
-
-	how_much_doub_redir(all);
-	tmp = all->cmd[all->i];
-	while (tmp->name_file && tmp->f_direct != NONE)
-	{
-		what_is_direct(all);
-		str = direct_for_lstfind(all->cmd[all->i]);
-		if (!str)
-			return (1);
-		tmp2_del = ft_lstfind(tmp->arg, str);
-		tmp3_del = tmp2_del->next;
-		ft_lstremove(&all->cmd[all->i]->arg, tmp2_del);
-		ft_lstremove(&all->cmd[all->i]->arg, tmp3_del);
-
-		free(all->cmd[all->i]->name_file);
-		all->cmd[all->i]->name_file = NULL;
-		all->cmd[all->i]->f_direct = NONE;
-
-		dir_parse(all->cmd[all->i]);
-	}
-	if (!all->cmd[all->i]->arg)
-		return (g_status);
-	if (all->number_command == 1)
-	{
-		if (if_buildins(all, all->cmd[all->i]->arg))
-			child(all, all->i);
-		if (g_status)
-			return (g_status);
-	}
-	if (g_status)
-		return (g_status);
-	return (0);
-}
-
 int	one_direct(t_all *all)
 {
-
 //	main_function_for_one_direct(all);
 //	exit (0);
-
-	int	status;
-
 	all->cmd[all->i]->pid = fork();
 	if (all->cmd[all->i]->pid == -1)
 	{
@@ -149,7 +88,7 @@ int	one_direct(t_all *all)
 	}
 	else
 	{
-		waitpid(all->cmd[all->i]->pid, &status, 0); // выводить печать статуса если ошибка?
+		waitpid(all->cmd[all->i]->pid, &g_status, 0); // выводить печать статуса если ошибка?
 	}
 	return (0); // что возвращать если несколько команд?
 }
