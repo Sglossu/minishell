@@ -46,9 +46,8 @@ static int preparse_valid(char *str)
 static int	flag_check(t_list *tmp)
 {
 	char	*str;
-	int		i;
 
-	i = 0;
+
 	str = ft_strdup(tmp->val);
 	if (!ft_strcmp(str, "|"))
 		return PIPE;
@@ -85,11 +84,11 @@ int	parse(t_all *all, char *input)
 	HEAD = NULL;
 	if (preparse(all, &HEAD, input))
 		return 1;
+	ft_lstprint(HEAD);
 	num_of_commands(all, HEAD);
 	if (!all->number_command && HEAD && isDir(HEAD->val))
 		all->number_command++;
 	init_cmd_struct(all);
-//	ft_lstprint(HEAD);
 	if (fill_cmd_struct(all, HEAD))
 		return 1;
 	return 0;
