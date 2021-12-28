@@ -38,6 +38,8 @@ int	main(int argc, char **argv, char **envi)
 		}
 
 		rl_bind_key('\t', rl_complete);
+		if (!ft_strcmp(input, ""))
+			continue;
         add_history(input);
 		parse(all, input);
 		if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
@@ -47,7 +49,7 @@ int	main(int argc, char **argv, char **envi)
 		else if (all->number_command > 1)
 			our_pipe(all);
 		free(input);
-		// ft_free(all);
+		ft_free(all);
 	}
 	return (g_status);
 }

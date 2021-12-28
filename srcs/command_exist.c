@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static	void	loop_for_while(t_all *all, t_list *tmp)
+void	loop_for_while(t_all *all, t_list *tmp)
 {
 	int		i;
 	char	*str;
@@ -49,11 +49,7 @@ int	parse_path(t_all *all)
 	}
 	all->path = ft_split(find_after_equals(tmp->val), ':');
 	if (!all->path)
-	{
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		g_status = errno;
-		return (g_status); // проблема с маллок
-	}
+		return (error_return_int());
 	loop_for_while(all, tmp);
 	return (0);
 }
