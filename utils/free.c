@@ -23,7 +23,7 @@ int	ft_free(t_all *all)
 		i++;
 	}
 	free(all->cmd);
-	all->cmd = NULL; // тестовый вариант
+	all->cmd = NULL;
 	all->number_command = 0;
 	all->i = 0;
 	return (0);

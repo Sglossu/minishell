@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   change_shlvl.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/27 20:11:30 by sglossu           #+#    #+#             */
+/*   Updated: 2021/12/27 20:11:43 by sglossu          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	*change_shlvl(char *str_old)
 {
 	char	*str_new;
-	int 	shlvl;
+	int		shlvl;
 	char	*nb_str;
 
 	shlvl = ft_atoi(str_old + 6);
-	if (!ft_isdigit(str_old[6]) && str_old[6] != '-') // 1 - есть цифра
+	if (!ft_isdigit(str_old[6]) && str_old[6] != '-')
 		str_new = ft_strdup("SHLVL=1");
 	else if (shlvl == 0)
 		str_new = ft_strdup("SHLVL=1");

@@ -74,7 +74,6 @@ static	int	binary(t_all *all)
 	return (0);
 }
 
-
 int	main_work(t_all *all)
 {
 	ft_signal_in_child();
