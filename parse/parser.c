@@ -45,10 +45,11 @@ static int preparse_valid(char *str)
 
 static int	flag_check(t_list *tmp)
 {
-	char *str;
+	char	*str;
+	int		i;
 
+	i = 0;
 	str = ft_strdup(tmp->val);
-
 	if (!ft_strcmp(str, "|"))
 		return PIPE;
 	if (isDir(str))
