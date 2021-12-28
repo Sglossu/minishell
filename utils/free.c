@@ -12,21 +12,42 @@
 
 #include "../includes/minishell.h"
 
+void	free_path(t_all *all)
+{
+	int i;
+
+	i = -1;
+	while (all->path && all->path[++i])
+		free(all->path[i]);
+	free(all->path);
+	all->path = NULL;
+}
+
+void	free_cmd(t_cmd *cmd)
+{
+	ft_lstclear(&cmd->arg, free);
+	if (cmd->path_command)
+	{
+		free(cmd->path_command);
+		cmd->path_command = NULL;
+	}
+	if (cmd->name_file)
+	{
+		free(cmd->name_file);
+		cmd->name_file = NULL;
+	}
+}
+
 int	ft_free(t_all *all)
 {
 	int	i;
 
 	i = -1;
 	while (all->cmd[++i])
-		free(all->cmd[i]);
-	free(all->cmd);
-	all->cmd = NULL;
-
-	i = -1;
-	while (all->path[++i])
-		free(all->path[i]);
-	free(all->path);
-	all->path = NULL;
+		free_cmd(all->cmd[i]);
+//	free(all->cmd);
+//	all->cmd = NULL;
+//	free_path(all);
 
 	all->number_command = 0;
 	all->i = 0;
