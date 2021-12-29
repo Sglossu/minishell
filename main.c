@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:31:56 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/29 15:43:17 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 16:34:08 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	main(int argc, char **argv, char **envi)
 			one_direct(all);
 		else if (all->number_command > 1)
 			our_pipe(all);
+		free(input);
+		ft_free(all);
 	}
 	return (g_status);
 }

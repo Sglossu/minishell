@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:17:03 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/29 13:13:00 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 16:01:23 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ void	free_cmd(t_cmd *cmd)
 		free(cmd->path_command);
 		cmd->path_command = NULL;
 	}
-//	if (cmd->name_file)
-//	{
-//		free(cmd->name_file);
-//		cmd->name_file = NULL;
-//	}
 }
 
 int	ft_free(t_all *all)
@@ -48,9 +43,9 @@ int	ft_free(t_all *all)
 	i = -1;
 	while (++i < all->number_command)
 		free_cmd(all->cmd[i]);
-	// free(all->cmd);
-	// all->cmd = NULL;
+	free(all->cmd);
 	// free_path(all);
+	all->cmd = NULL;
 	all->number_command = 0;
 	all->path = NULL;
 	all->i = 0;
