@@ -47,6 +47,7 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		{
 			all->cmd[i]->type = BINARY;
 			all->cmd[i]->path_command = path_com(all ,tmp->val); // потом когда-нибудь (никогда) добавить проверочку
+//			free_path(all);
 			dir_parse(all->cmd[i]);
 		}
 //		 printf("coomand number - %d\n", i+1);
@@ -67,7 +68,7 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 
 	res = 0;
 	pipes = 1;
-	parse_path(all);
+//	parse_path(all); зачем, если ты делаешь это потом?
 	tmp = HEAD;
 	while (tmp)
 	{

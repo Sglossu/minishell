@@ -16,6 +16,7 @@ char	*find_after_equals(char *str)
 {
 	bool	equals;
 	int		i;
+	char	*str_find;
 
 	i = 0;
 	equals = false;
@@ -32,7 +33,12 @@ char	*find_after_equals(char *str)
 		i++;
 	}
 	if (equals)
-		return (ft_substr(str, i, ft_strlen(str) - i));
+	{
+		str_find = ft_substr(str, i, ft_strlen(str) - i);
+		if (!str_find)
+			return (error_return_null());
+		return (str_find);
+	}
 	return (NULL);
 }
 

@@ -155,6 +155,8 @@ char	*ft_ecran(char *input, int *i);
 
 //free
 int		ft_free(t_all *all);
+void	free_path(t_all *all);
+void	free_cmd(t_cmd *cmd);
 
 //signal
 void	ft_signal_in_child(void);

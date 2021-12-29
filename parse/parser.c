@@ -89,6 +89,10 @@ int	parse(t_all *all, char *input)
 	init_cmd_struct(all);
 //	ft_lstprint(HEAD);
 	if (fill_cmd_struct(all, HEAD))
+	{
+//		free_path(all);
 		return 1;
+	}
+//	free_path(all);
 	return 0;
 }

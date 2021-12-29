@@ -53,8 +53,8 @@ int find_com(t_all *all, char *command)
 char *path_com(t_all *all, char *command)
 {
 	int i = 0;
-	parse_path(all);
-	path_pl_command(all, command);
+//	parse_path(all); зачем второй раз?
+//	path_pl_command(all, command);
 
 	while (all->path && all->path[i])
 	{
