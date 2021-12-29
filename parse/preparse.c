@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/27 14:58:00 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 14:33:42 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,40 @@ int	isEcran(char *str)
 
 char *ft_dollar(char *input, t_all *all, int *i)
 {
-	t_list *envObj;
-	char *res;
-	char *tmp;
-	int j;
+	t_list	*envObj;
+	char	*res;
+	char	*tmp;
+	char	*change;
+	int		j;
 
 	j = *i + 1;
 	while (input[j] && input[j] != '\'' && input[j] != '\"' && input[j] != '|' && input[j] != '\\')
 		j++;
 	tmp = ft_substr(input, *i + 1, j - *i);
-	envObj = ft_lstfind(all->env, tmp);
-	free(tmp);
-	if (envObj)
-		tmp = find_after_equals(envObj->val);
+	if (!tmp)
+		return (error_return_null());
+	if (!ft_strcmp(tmp, "?"))
+	{
+		change = ft_itoa(g_status);
+		if (!change)
+			return(error_return_null());
+	}
 	else
 	{
-		return NULL; // error
+		envObj = ft_lstfind(all->env, tmp);
+		free(tmp);
+		if (envObj)
+			change = find_after_equals(envObj->val);
+		else
+		{
+			change = ft_strdup("");
+			if (!change)
+				return (error_return_null());
+		}
 	}
-	res = ft_strjoin(ft_strjoin(ft_substr(input, 0 , *i), tmp), strdup(input + j + 1));
+	res = ft_strjoin(ft_strjoin(ft_substr(input, 0 , *i), change), ft_strdup(input + j + 1));
 	free(input);
+	free(change);
 	return res;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_exist.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:18:19 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/14 18:18:26 by sglossu          ###   ########.fr       */
+/*   Updated: 2021/12/29 14:14:18 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,15 @@ int	parse_path(t_all *all)
 {
 	t_list	*tmp;
 	char 	*str;
+	int		i;
 
+	i = -1;
+	if (all->path)
+	{
+		while (all->path[++i])
+			free(all->path[i]);
+		all->path = NULL;
+	}
 	tmp = ft_lstfind(all->env, "PATH");
 	if (!tmp)
 	{

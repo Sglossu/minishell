@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/14 18:15:27 by sglossu          ###   ########.fr       */
+/*   Updated: 2021/12/29 14:05:25 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 
 	res = 0;
 	pipes = 1;
-//	parse_path(all); зачем, если ты делаешь это потом?
 	tmp = HEAD;
 	while (tmp)
 	{
@@ -95,6 +94,11 @@ int	init_cmd_struct(t_all *all)
 	while(i < all->number_command)
 	{
 		all->cmd[i] = malloc(sizeof(t_cmd));
+		all->cmd[i]->arg = NULL;
+		all->cmd[i]->path_command = NULL;
+		all->cmd[i]->name_file = NULL;
+		all->cmd[i]->f_direct = 0;
+		all->cmd[i]->combo = false; 
 		i++;
 	}
 	all->cmd[i] = NULL;

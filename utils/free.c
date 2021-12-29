@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:17:03 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/14 18:17:05 by sglossu          ###   ########.fr       */
+/*   Updated: 2021/12/29 13:13:00 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,9 @@ int	ft_free(t_all *all)
 	i = -1;
 	while (all->cmd[++i])
 		free_cmd(all->cmd[i]);
-//	free(all->cmd);
-//	all->cmd = NULL;
-//	free_path(all);
-
+	// free(all->cmd);
+	// all->cmd = NULL;
+	// free_path(all);
 	all->number_command = 0;
 	all->i = 0;
 	return (0);

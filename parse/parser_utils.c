@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:53 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/14 18:15:55 by sglossu          ###   ########.fr       */
+/*   Updated: 2021/12/29 14:06:45 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,11 @@ char *path_com(t_all *all, char *command)
 
 int is_binary(char *val, t_all *all)
 {
+	int	res;
 	parse_path(all);
 	path_pl_command(all, val);
-	return(find_com(all, val));
+	res = find_com(all, val);
+	return(res);
 }
 
 int is_buildin(char *val)
