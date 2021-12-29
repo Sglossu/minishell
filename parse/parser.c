@@ -14,34 +14,41 @@
 
 //  (мои друзья)  ''  ""  \   $  |  > < >> <<  (мои друзья)
 
-static int preparse_valid(char *str)
-{
-	int dub_quote;
-	int quote;
-	int	i;
+// static int preparse_valid(char *str)
+// {
+// 	int dub_quote;
+// 	int quote;
+// 	int	i;
 
-	i = 0;
-	dub_quote = 0;
-	quote = 0;
+// 	i = 0;
+// 	dub_quote = 0;
+// 	quote = 0;
 
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			quote++;
-		if (str[i] == '\"')
-			dub_quote++;
-		i++;
-	}
-
-	if (quote || dub_quote)
-	{
-		if (quote % 2 != 0)
-			return 1;
-		if (dub_quote % 2 != 0)
-			return 1;
-	}
-	return 0;
-}
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '\'')
+// 		{
+// 			quote++;
+// 			if (str[i-1] == '\\')
+// 				quote--;
+// 		}
+// 		if (str[i] == '\"')
+// 		{
+// 			dub_quote++;
+// 			if (str[i-1] == '\\')
+// 				quote--;
+// 		}
+// 		i++;
+// 	}
+// 	if (quote || dub_quote)
+// 	{
+// 		if (quote % 2 != 0)
+// 			return 1;
+// 		if (dub_quote % 2 != 0)
+// 			return 1;
+// 	}
+// 	return 0;
+// }
 
 static int	flag_check(t_list *tmp)
 {
@@ -62,8 +69,8 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 {
 	t_list	*tmp;
 	
-	if (preparse_valid(input))
-		return 1;
+	// if (preparse_valid(input))
+	// 	return 1;
 	*HEAD = make_list_with_all_word(input);
 	tmp = *HEAD;
 	while (tmp)

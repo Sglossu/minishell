@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.20)
 project(minishell C)
 
 set(CMAKE_C_STANDARD 99)
@@ -13,7 +13,8 @@ FILE(GLOB SRC
         "srcs/*.c"
         "pipe/*.c"
         "parse/*.c"
-        "signal/*.c")
+        "signal/*.c"
+        "redirect/*.c")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall")
 add_executable(minishell ${SRC})
