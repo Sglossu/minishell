@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/29 15:36:52 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 15:40:00 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ int	parse(t_all *all, char *input)
 	init_cmd_struct(all);
 	if (fill_cmd_struct(all, HEAD))
 		res = 1;
-	ft_lstclear(&HEAD, free);
+	
 	return res;
 }
