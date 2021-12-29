@@ -63,23 +63,25 @@ int	main(int argc, char **argv, char **envi)
 		ft_signal_main();
 		input = readline(MINISHELL);
 		if (!input)
+		{
+			//			 ft_putendl_fd("exit\n", 2);
 			exit(g_status);
+			//			input = ft_strdup("exit");
+		}
+
 		rl_bind_key('\t', rl_complete);
 		if (!ft_strcmp(input, ""))
-			continue ;
+			continue;
 		add_history(input);
 		parse(all, input);
-//		continue;
 		if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
 			main_work(all);
 		else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)
 			one_direct(all);
 		else if (all->number_command > 1)
 			our_pipe(all);
-		// free(input);
-		// ft_free(all);
-		// show_path(all);
-		// ft_bshawn_free(all, input);
+		 free(input);
+		 ft_free(all);
 	}
 	return (g_status);
 }

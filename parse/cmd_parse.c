@@ -112,7 +112,6 @@ int	init_cmd_struct(t_all *all)
 		all->cmd[i]->path_command = NULL;
 		all->cmd[i]->name_file = NULL;
 		all->cmd[i]->f_direct = 0;
-		all->cmd[i]->combo = false; 
 		i++;
 	}
 	all->cmd[i] = NULL;
@@ -132,6 +131,8 @@ int dir_parse(t_cmd *cmd)
 			cmd->f_direct = DIR;
 			if (tmp->next)
 				cmd->name_file = ft_strdup(tmp->next->val);
+			if (!cmd->name_file)
+				return (error_return_int());
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, ">>"))
@@ -139,6 +140,8 @@ int dir_parse(t_cmd *cmd)
 			cmd->f_direct = DOUB_DIR;
 			if (tmp->next)
 				cmd->name_file = ft_strdup(tmp->next->val);
+			if (!cmd->name_file)
+				return (error_return_int());
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, "<"))
@@ -146,6 +149,8 @@ int dir_parse(t_cmd *cmd)
 			cmd->f_direct = REDIR;
 			if (tmp->next)
 				cmd->name_file = ft_strdup(tmp->next->val);
+			if (!cmd->name_file)
+				return (error_return_int());
 			return 0;
 		}
 		else if (!ft_strcmp(tmp->val, "<<"))
@@ -153,6 +158,8 @@ int dir_parse(t_cmd *cmd)
 			cmd->f_direct = DOUB_REDIR;
 			if (tmp->next)
 				cmd->name_file = ft_strdup(tmp->next->val);
+			if (!cmd->name_file)
+				return (error_return_int());
 			return 0;
 		}
 		else

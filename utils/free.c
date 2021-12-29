@@ -34,11 +34,6 @@ void	free_cmd(t_cmd *cmd)
 		free(cmd->path_command);
 		cmd->path_command = NULL;
 	}
-//	if (cmd->name_file)
-//	{
-//		free(cmd->name_file);
-//		cmd->name_file = NULL;
-//	}
 }
 
 int	ft_free(t_all *all)
