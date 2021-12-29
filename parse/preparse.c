@@ -27,6 +27,20 @@ int	isDollar(char *str)
 	return 0;
 }
 
+int	isEcran(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\\')
+			return 1;
+		i++;
+	}
+	return 0;
+}
+
 char *ft_dollar(char *input, t_all *all, int *i)
 {
 	t_list *envObj;
@@ -104,6 +118,16 @@ static char *ft_quote(char *str, t_all *all, int *i, char sym)
 		{
 			if (m[x] == '$')
 				m = ft_dollar(m, all, &x);
+			x++;
+		}
+	}
+	if (sym =='\"' && isEcran(m))
+	{
+		x = 0;
+		while (m[x])
+		{
+			if (m[x] == '\\')
+				m = ft_ecran(m, &x);
 			x++;
 		}
 	}

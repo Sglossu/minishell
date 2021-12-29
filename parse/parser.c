@@ -71,6 +71,8 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 		tmp->flag = flag_check(tmp);
 		if (tmp->flag == TEXT)
 			tmp->val = ready_string(tmp, all);
+		if (ft_strlen(tmp->val) == 0)
+			ft_lstremove(HEAD, tmp);
 		tmp = tmp->next;
 	}
 	return (0);
