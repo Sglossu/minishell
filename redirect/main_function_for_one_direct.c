@@ -34,6 +34,7 @@ int	execute_and_delete_redir(t_all *all)
 	char	*str;
 
 	tmp = all->cmd[all->i];
+	dir_parse(all->cmd[all->i]);
 	while (tmp->name_file && tmp->f_direct != NONE)
 	{
 		what_is_direct(all);
