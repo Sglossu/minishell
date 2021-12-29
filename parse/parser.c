@@ -6,49 +6,13 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/17 00:44:11 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 14:50:56 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 //  (мои друзья)  ''  ""  \   $  |  > < >> <<  (мои друзья)
-
-// static int preparse_valid(char *str)
-// {
-// 	int dub_quote;
-// 	int quote;
-// 	int	i;
-
-// 	i = 0;
-// 	dub_quote = 0;
-// 	quote = 0;
-
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '\'')
-// 		{
-// 			quote++;
-// 			if (str[i-1] == '\\')
-// 				quote--;
-// 		}
-// 		if (str[i] == '\"')
-// 		{
-// 			dub_quote++;
-// 			if (str[i-1] == '\\')
-// 				quote--;
-// 		}
-// 		i++;
-// 	}
-// 	if (quote || dub_quote)
-// 	{
-// 		if (quote % 2 != 0)
-// 			return 1;
-// 		if (dub_quote % 2 != 0)
-// 			return 1;
-// 	}
-// 	return 0;
-// }
 
 static int	flag_check(t_list *tmp)
 {
@@ -92,7 +56,6 @@ int	parse(t_all *all, char *input)
 	HEAD = NULL;
 	if (preparse(all, &HEAD, input))
 		return 1;
-	// ft_lstprint(HEAD);
 	num_of_commands(all, HEAD);
 	if (!all->number_command && HEAD && isDir(HEAD->val))
 		all->number_command++;

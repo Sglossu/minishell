@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/29 14:05:25 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 15:13:19 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		else if (tmp && is_binary(tmp->val, all))
 		{
 			all->cmd[i]->type = BINARY;
-			all->cmd[i]->path_command = path_com(all ,tmp->val); // потом когда-нибудь (никогда) добавить проверочку
+			all->cmd[i]->path_command = path_com(all ,tmp->val);
 //			free_path(all);
 			dir_parse(all->cmd[i]);
 		}
@@ -65,8 +65,10 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 	int		res;
 	t_list	*tmp;
 	int		pipes;
+	int		num;
 
 	res = 0;
+	num = 1;
 	pipes = 1;
 	tmp = HEAD;
 	while (tmp)
@@ -76,9 +78,18 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 			res++;
 			pipes = 0;
 		}
+		else if (num == 1)
+		{
+			ft_printf(STDERR_FILENO, "minishell: %s: command not found\n", tmp->val);
+			g_status = 127;
+		}
 		if (!ft_strcmp(tmp->val, "|") && tmp->flag == PIPE)
+		{
 			pipes = 1;
+			num = 1;
+		}
 		tmp = tmp->next;
+		num++;
 	}
 	all->number_command = res;
 }
