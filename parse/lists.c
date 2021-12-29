@@ -75,7 +75,7 @@ static void make_part_world(char *input, t_list **tmp, int *i)
 		j++;
 	}
 	str = ft_substr(input, *i, j - *i);
-	printf("|%s| < --- WORD\n", str);
+	// printf("|%s| < --- WORD\n", str);
 	if (ft_strlen(str) > 0)
 		ft_lstadd_back(tmp, ft_lstnew(str));
 	else

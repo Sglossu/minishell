@@ -86,7 +86,7 @@ int	parse(t_all *all, char *input)
 	HEAD = NULL;
 	if (preparse(all, &HEAD, input))
 		return 1;
-	ft_lstprint(HEAD);
+	// ft_lstprint(HEAD);
 	num_of_commands(all, HEAD);
 	if (!all->number_command && HEAD && isDir(HEAD->val))
 		all->number_command++;
