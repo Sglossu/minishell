@@ -14,41 +14,48 @@
 
 //  (мои друзья)  ''  ""  \   $  |  > < >> <<  (мои друзья)
 
-static int preparse_valid(char *str)
-{
-	int dub_quote;
-	int quote;
-	int	i;
+// static int preparse_valid(char *str)
+// {
+// 	int dub_quote;
+// 	int quote;
+// 	int	i;
 
-	i = 0;
-	dub_quote = 0;
-	quote = 0;
+// 	i = 0;
+// 	dub_quote = 0;
+// 	quote = 0;
 
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			quote++;
-		if (str[i] == '\"')
-			dub_quote++;
-		i++;
-	}
-
-	if (quote || dub_quote)
-	{
-		if (quote % 2 != 0)
-			return 1;
-		if (dub_quote % 2 != 0)
-			return 1;
-	}
-	return 0;
-}
+// 	while (str[i])
+// 	{
+// 		if (str[i] == '\'')
+// 		{
+// 			quote++;
+// 			if (str[i-1] == '\\')
+// 				quote--;
+// 		}
+// 		if (str[i] == '\"')
+// 		{
+// 			dub_quote++;
+// 			if (str[i-1] == '\\')
+// 				quote--;
+// 		}
+// 		i++;
+// 	}
+// 	if (quote || dub_quote)
+// 	{
+// 		if (quote % 2 != 0)
+// 			return 1;
+// 		if (dub_quote % 2 != 0)
+// 			return 1;
+// 	}
+// 	return 0;
+// }
 
 static int	flag_check(t_list *tmp)
 {
-	char *str;
+	char	*str;
+
 
 	str = ft_strdup(tmp->val);
-
 	if (!ft_strcmp(str, "|"))
 		return PIPE;
 	if (isDir(str))
@@ -62,8 +69,8 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 {
 	t_list	*tmp;
 	
-	if (preparse_valid(input))
-		return 1;
+	// if (preparse_valid(input))
+	// 	return 1;
 	*HEAD = make_list_with_all_word(input);
 	tmp = *HEAD;
 	while (tmp)
@@ -71,6 +78,8 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 		tmp->flag = flag_check(tmp);
 		if (tmp->flag == TEXT)
 			tmp->val = ready_string(tmp, all);
+		if (ft_strlen(tmp->val) == 0)
+			ft_lstremove(HEAD, tmp);
 		tmp = tmp->next;
 	}
 	return (0);
@@ -84,11 +93,11 @@ int	parse(t_all *all, char *input)
 	HEAD = NULL;
 	if (preparse(all, &HEAD, input))
 		return 1;
+	// ft_lstprint(HEAD);
 	num_of_commands(all, HEAD);
 	if (!all->number_command && HEAD && isDir(HEAD->val))
 		all->number_command++;
 	init_cmd_struct(all);
-//	ft_lstprint(HEAD);
 	if (fill_cmd_struct(all, HEAD))
 	{
 //		free_path(all);
