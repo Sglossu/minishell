@@ -33,7 +33,10 @@ char	*change_shlvl(char *str_old)
 		if (!nb_str)
 			return (NULL);
 		else
+		{
 			str_new = ft_strjoin("SHLVL=", nb_str);
+			free(nb_str);
+		}
 	}
 	if (!str_new)
 		return (NULL);

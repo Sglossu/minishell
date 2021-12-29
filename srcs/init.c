@@ -12,13 +12,13 @@
 
 #include "../includes/minishell.h"
 
-static	void	error_malloc(void)
+void	error_malloc(void)
 {
 	g_status = errno;
 	ft_printf(2, "malloc: %s\n", strerror(errno));
 }
 
-static	void	add_if_not_shlvl(char **buf, int i, t_list **tmp)
+void	add_if_not_shlvl(char **buf, int i, t_list **tmp)
 {
 	char	*shlvl;
 
@@ -72,6 +72,7 @@ void	init(t_all *all, char **envi)
 {
 	all->env = init_lst_env_or_exp(envi);
 	all->exp = NULL;
+	all->path = NULL;
 	init_pwd(all);
 	all->i = 0;
 }

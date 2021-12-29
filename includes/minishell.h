@@ -154,6 +154,8 @@ void	ft_lstprint(t_list *HEAD);
 
 //free
 int		ft_free(t_all *all);
+void	free_path(t_all *all);
+void	free_cmd(t_cmd *cmd);
 
 //signal
 void	ft_signal_in_child(void);
