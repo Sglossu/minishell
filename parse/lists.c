@@ -55,7 +55,8 @@ static void make_part_world(char *input, t_list **tmp, int *i)
 	bool	inQuote;
 	
 	j = *i;
-	while (input[j] && input[j] != ' ' && input[j] != '>' && input[j] != '<' && input[j] != '|')
+	while (input[j] && input[j] != ' ' && input[j] != '>' 
+		&& input[j] != '<' && input[j] != '|')
 	{
 		if (input[j] == '\'' || input[j] == '\"')
 		{
@@ -69,12 +70,12 @@ static void make_part_world(char *input, t_list **tmp, int *i)
 			}
 			j--;
 		}
+		if (input[j] == '\\')
+			j++;
 		j++;
 	}
-
 	str = ft_substr(input, *i, j - *i);
-	// printf("|%s|\n", str);
-
+	// printf("|%s| < --- WORD\n", str);
 	if (ft_strlen(str) > 0)
 		ft_lstadd_back(tmp, ft_lstnew(str));
 	else

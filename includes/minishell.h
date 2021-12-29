@@ -99,7 +99,7 @@ int		str_is_variable(char *str);
 char	*change_shlvl(char *str_old);
 void	print_lst(t_list *lst); // delete
 void	error_return_nothing(void);
-char	*error_return_NULL(void);
+char	*error_return_null(void);
 int		error_return_int(void);
 
 //srcs
@@ -118,7 +118,8 @@ int		pipe_for_two(t_all *all);
 int		pipe_for_another(t_all *all, int com);
 int		fork_and_close(t_all *all, int com, int **fd, int i);
 int		what_is_direct(t_all *all);
-void	redirect_in_start(t_all *all);
+void	how_much_doub_redir(t_all *all);
+char	*direct_for_lstfind(t_cmd *cmd);
 
 //main
 int		main_work(t_all *all);
@@ -150,9 +151,12 @@ void	combo_check(t_cmd *cmd);
 t_list	*make_list_with_all_word(char *input);
 t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command);
 void	ft_lstprint(t_list *HEAD);
+char	*ft_ecran(char *input, int *i);
 
 //free
 int		ft_free(t_all *all);
+void	free_path(t_all *all);
+void	free_cmd(t_cmd *cmd);
 
 //signal
 void	ft_signal_in_child(void);

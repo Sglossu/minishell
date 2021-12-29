@@ -12,13 +12,13 @@
 
 #include "../includes/minishell.h"
 
-static	void	loop_for_while(t_all *all, t_list *tmp)
+void	loop_for_while(t_all *all, t_list *tmp)
 {
 	int		i;
 	char	*str;
 
-	i = 0;
-	while (all->path[i])
+	i = -1;
+	while (all->path[++i])
 	{
 		if (all->path[i][0] == '~')
 		{
@@ -33,13 +33,13 @@ static	void	loop_for_while(t_all *all, t_list *tmp)
 			else
 				all->path[i] = NULL;
 		}
-		i++;
 	}
 }
 
 int	parse_path(t_all *all)
 {
 	t_list	*tmp;
+	char 	*str;
 
 	tmp = ft_lstfind(all->env, "PATH");
 	if (!tmp)
@@ -47,13 +47,13 @@ int	parse_path(t_all *all)
 		all->path = NULL;
 		return (1); // нет PATH
 	}
-	all->path = ft_split(find_after_equals(tmp->val), ':');
+	str = find_after_equals(tmp->val); // no leaks
+	if (!str)
+		return (1);
+	all->path = ft_split(str, ':');
+	free(str);
 	if (!all->path)
-	{
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		g_status = errno;
-		return (g_status); // проблема с маллок
-	}
+		return (error_return_int());
 	loop_for_while(all, tmp);
 	return (0);
 }
