@@ -49,7 +49,6 @@ typedef struct s_cmd {
 	int			type;
 	char		*name_file;
 	int			f_direct;
-	bool		combo;
 }				t_cmd;
 
 typedef struct s_all {

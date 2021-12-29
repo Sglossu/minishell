@@ -85,15 +85,13 @@ int	parse(t_all *all, char *input)
 	if (preparse(all, &HEAD, input))
 		return 1;
 	num_of_commands(all, HEAD);
+
 	if (!all->number_command && HEAD && isDir(HEAD->val))
 		all->number_command++;
 	init_cmd_struct(all);
 //	ft_lstprint(HEAD);
+
 	if (fill_cmd_struct(all, HEAD))
-	{
-//		free_path(all);
 		return 1;
-	}
-//	free_path(all);
 	return 0;
 }

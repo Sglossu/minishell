@@ -30,7 +30,7 @@ void	path_pl_command(t_all *all, char *command)
 	}
 }
 
-int find_com(t_all *all, char *command)
+int  find_com(t_all *all, char *command)
 {
 	int i = 0;
 
@@ -53,6 +53,7 @@ int find_com(t_all *all, char *command)
 char *path_com(t_all *all, char *command)
 {
 	int i = 0;
+	char	*str = NULL;
 //	parse_path(all); зачем второй раз?
 //	path_pl_command(all, command);
 
@@ -61,20 +62,27 @@ char *path_com(t_all *all, char *command)
 		if (!access(all->path[i], 0 | 1))
 		{
 			// printf("|%s|\n", all->path[i]);
-			return (all->path[i]);
+			str = ft_strdup(all->path[i]);
+			if (!str)
+				return (error_return_null());
+			return (str);
 		}
 		i++;
 	}
 	if (!access(command, 0 | 1))
 	{
 		// printf("|%s|\n", command);
-		return (command);
+		str = ft_strdup(command);
+		if (!str)
+			return (error_return_null());
+		return (str);
 	}
 	return (NULL);
 }
 
 int is_binary(char *val, t_all *all)
 {
+	free_path(all); // это оставить
 	parse_path(all);
 	path_pl_command(all, val);
 	return(find_com(all, val));

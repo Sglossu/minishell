@@ -12,19 +12,19 @@
 
 #include "../includes/minishell.h"
 
-
-
 int	fill_cmd_struct(t_all *all, t_list *HEAD)
 {
 	int		i;
 	t_list	*tmp;
 	i = 0;
 
-	while (all->cmd[i])
+	// echo 1 | cat -e |cat -e|cat -e|cat -e|cat -e
+	free_path(all); // это оставить
+	while (i < all->number_command)
 	{
+		free_path(all); // это оставить
 		all->cmd[i]->arg = copy_part_of_list(all, HEAD, i);
 		tmp = all->cmd[i]->arg;
-		combo_check(all->cmd[i]);
 		if (isDir(tmp->val))
 		{
 			dir_parse(all->cmd[i]);
@@ -45,10 +45,13 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		}
 		else if (tmp && is_binary(tmp->val, all))
 		{
+
 			all->cmd[i]->type = BINARY;
 			all->cmd[i]->path_command = path_com(all ,tmp->val); // потом когда-нибудь (никогда) добавить проверочку
-//			free_path(all);
+			if (!all->cmd[i]->path_command)
+				return (error_return_int());
 			dir_parse(all->cmd[i]);
+			free_path(all); // это оставить
 		}
 //		 printf("coomand number - %d\n", i+1);
 //		 ft_lstprint(tmp);
@@ -79,6 +82,7 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 		}
 		if (!ft_strcmp(tmp->val, "|") && tmp->flag == PIPE)
 			pipes = 1;
+		free_path(all);
 		tmp = tmp->next;
 	}
 	all->number_command = res;
@@ -145,24 +149,4 @@ int dir_parse(t_cmd *cmd)
 		tmp = tmp->next;
 	}
 	return 1;
-}
-
-void combo_check(t_cmd *cmd)
-{
-	int		i;
-	t_list	*tmp;
-
-	i = 0;
-	tmp = cmd->arg;
-	while (tmp)
-	{
-		if ((!ft_strcmp(tmp->val, "<")) || (!ft_strcmp(tmp->val, "<<"))
-				|| (!ft_strcmp(tmp->val, ">")) || (!ft_strcmp(tmp->val, ">>")))
-				i++;
-		tmp = tmp->next;
-	}
-	if (i > 1)
-		cmd->combo = true;
-	else
-		cmd->combo = false;
 }
