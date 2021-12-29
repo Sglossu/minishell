@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/16 21:35:59 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 14:33:42 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,73 @@ int	isDollar(char *str)
 	return 0;
 }
 
+int	isEcran(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\\')
+			return 1;
+		i++;
+	}
+	return 0;
+}
+
 char *ft_dollar(char *input, t_all *all, int *i)
 {
-	t_list *envObj;
-	char *res;
-	int j;
+	t_list	*envObj;
+	char	*res;
+	char	*tmp;
+	char	*change;
+	int		j;
 
 	j = *i + 1;
-	while (input[j] && input[j] != '\'' && input[j] != '\"' && input[j] != '|')
+	while (input[j] && input[j] != '\'' && input[j] != '\"' && input[j] != '|' && input[j] != '\\')
 		j++;
-	
-	res = ft_substr(input, *i + 1, j - *i);
-	// printf("|%s|\n", res);
-	envObj = ft_lstfind(all->env, res);
-	if (envObj)
-		res = find_after_equals(envObj->val);
+	tmp = ft_substr(input, *i + 1, j - *i);
+	if (!tmp)
+		return (error_return_null());
+	if (!ft_strcmp(tmp, "?"))
+	{
+		change = ft_itoa(g_status);
+		if (!change)
+			return(error_return_null());
+	}
 	else
 	{
-		return NULL; // error
+		envObj = ft_lstfind(all->env, tmp);
+		free(tmp);
+		if (envObj)
+			change = find_after_equals(envObj->val);
+		else
+		{
+			change = ft_strdup("");
+			if (!change)
+				return (error_return_null());
+		}
 	}
-	return ft_strjoin(ft_strjoin(ft_substr(input, 0 , *i), res), strdup(input + j + 1));
+	res = ft_strjoin(ft_strjoin(ft_substr(input, 0 , *i), change), ft_strdup(input + j + 1));
+	free(input);
+	free(change);
+	return res;
+}
+
+char *ft_ecran(char *input, int *i)
+{
+	char *res;
+	char *tmp;
+	char *tmp2;
+
+	tmp = ft_substr(input, 0, *i);
+	tmp2 = ft_substr(input, *i+1, ft_strlen(input) - *i);
+	res = ft_strjoin(tmp, tmp2);
+
+	free(tmp);
+	free(tmp2);
+	free(input);
+	return res;
 }
 
 int isDir(char *str)
@@ -65,7 +112,7 @@ int isDir(char *str)
 	return 1;	
 }
 
-static char *ft_quote(char *str, char sym, int *i, t_all *all)
+static char *ft_quote(char *str, t_all *all, int *i, char sym)
 {
 	char	*s;
 	char	*m;
@@ -74,7 +121,6 @@ static char *ft_quote(char *str, char sym, int *i, t_all *all)
 	int		j;
 
 	j = *i;
-
 	while (str[j++])
 		if (str[j] == sym)
 			break;
@@ -90,12 +136,26 @@ static char *ft_quote(char *str, char sym, int *i, t_all *all)
 			x++;
 		}
 	}
-		
+	if (sym =='\"' && isEcran(m))
+	{
+		x = 0;
+		while (m[x])
+		{
+			if (m[x] == '\\')
+				m = ft_ecran(m, &x);
+			x++;
+		}
+	}
 	f = strdup(str + j + 1);
 	*i = j - 2;
 	free(str);
-	return(ft_strjoin(ft_strjoin(s,m), f));
+	str = ft_strjoin(ft_strjoin(s,m), f);
+	free(s);
+	free(m);
+	free(f);
+	return(str);
 }
+
 
 char *ready_string(t_list *tmp, t_all *all)
 {
@@ -110,9 +170,11 @@ char *ready_string(t_list *tmp, t_all *all)
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
-			str = ft_quote(str, str[i], &i, all);
+			str = ft_quote(str, all, &i, str[i]);
 		if (str[i] == '$')
 			str = ft_dollar(str, all, &i);
+		if (str[i] == '\\')
+			str = ft_ecran(str, &i);
 		i++;
 	}
 	return (str);

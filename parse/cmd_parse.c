@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/14 18:15:27 by sglossu          ###   ########.fr       */
+/*   Updated: 2021/12/29 15:13:19 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 	int		i;
 	t_list	*tmp;
 	i = 0;
-
-	// echo 1 | cat -e |cat -e|cat -e|cat -e|cat -e
+  
 	free_path(all); // это оставить
 	while (i < all->number_command)
 	{
@@ -47,14 +46,14 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		{
 
 			all->cmd[i]->type = BINARY;
-			all->cmd[i]->path_command = path_com(all ,tmp->val); // потом когда-нибудь (никогда) добавить проверочку
+			all->cmd[i]->path_command = path_com(all ,tmp->val);
 			if (!all->cmd[i]->path_command)
 				return (error_return_int());
 			dir_parse(all->cmd[i]);
 			free_path(all); // это оставить
 		}
-//		 printf("coomand number - %d\n", i+1);
-//		 ft_lstprint(tmp);
+		//  printf("coomand number - %d\n", i+1);
+		//  ft_lstprint(tmp);
 //		 printf("f_direct status = %d\n", all->cmd[i]->f_direct);
 //		 printf("name_file = %s\n", all->cmd[i]->name_file);
 //		 printf("path_command = %s\n", all->cmd[i]->path_command);
@@ -68,10 +67,11 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 	int		res;
 	t_list	*tmp;
 	int		pipes;
+	int		num;
 
 	res = 0;
+	num = 1;
 	pipes = 1;
-//	parse_path(all); зачем, если ты делаешь это потом?
 	tmp = HEAD;
 	while (tmp)
 	{
@@ -80,13 +80,21 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 			res++;
 			pipes = 0;
 		}
+		else if (num == 1)
+		{
+			ft_printf(STDERR_FILENO, "minishell: %s: command not found\n", tmp->val);
+			g_status = 127;
+		}
 		if (!ft_strcmp(tmp->val, "|") && tmp->flag == PIPE)
+		{
 			pipes = 1;
-		free_path(all); // оставь
+			num = 1;
+		}
+    free_path(all); // оставь
 		tmp = tmp->next;
+		num++;
 	}
 	all->number_command = res;
-//	all->number_command = 1;
 }
 
 // cat < 8 | cat < 1 | ls | wc
@@ -100,6 +108,11 @@ int	init_cmd_struct(t_all *all)
 	while(i < all->number_command)
 	{
 		all->cmd[i] = malloc(sizeof(t_cmd));
+		all->cmd[i]->arg = NULL;
+		all->cmd[i]->path_command = NULL;
+		all->cmd[i]->name_file = NULL;
+		all->cmd[i]->f_direct = 0;
+		all->cmd[i]->combo = false; 
 		i++;
 	}
 	all->cmd[i] = NULL;
