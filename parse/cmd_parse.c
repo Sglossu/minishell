@@ -50,8 +50,8 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 //			free_path(all);
 			dir_parse(all->cmd[i]);
 		}
-//		 printf("coomand number - %d\n", i+1);
-//		 ft_lstprint(tmp);
+		//  printf("coomand number - %d\n", i+1);
+		//  ft_lstprint(tmp);
 //		 printf("f_direct status = %d\n", all->cmd[i]->f_direct);
 //		 printf("name_file = %s\n", all->cmd[i]->name_file);
 //		 printf("path_command = %s\n", all->cmd[i]->path_command);
