@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/29 16:41:30 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 19:46:26 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,12 @@ static int	flag_check(t_list *tmp)
 {
 	char	*str;
 
-	str = ft_strdup(tmp->val);
+	str = tmp->val;
 	if (!ft_strcmp(str, "|"))
 		return PIPE;
 	if (isDir(str))
 		return DIRECT;
 	return TEXT;
-
-	free(str);
 }
 
 static int	preparse(t_all *all, t_list **HEAD, char *input)
@@ -58,7 +56,6 @@ int	parse(t_all *all, char *input)
 	HEAD = NULL;
 	if (preparse(all, &HEAD, input))
 		return 1;
-
 	num_of_commands(all, HEAD);
 	if (!all->number_command && HEAD && isDir(HEAD->val))
 		all->number_command++;
