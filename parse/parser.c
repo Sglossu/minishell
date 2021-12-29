@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/29 14:50:56 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 15:36:52 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 int	parse(t_all *all, char *input)
 {
 	t_list		*HEAD;
+	int			res;
 
 	all->i = 0;
+	res = 0;
 	HEAD = NULL;
 	if (preparse(all, &HEAD, input))
 		return 1;
@@ -62,6 +64,7 @@ int	parse(t_all *all, char *input)
 		all->number_command++;
 	init_cmd_struct(all);
 	if (fill_cmd_struct(all, HEAD))
-		return 1;
-	return 0;
+		res = 1;
+	ft_lstclear(&HEAD, free);
+	return res;
 }

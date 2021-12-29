@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/29 15:13:19 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 15:29:18 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int	init_cmd_struct(t_all *all)
 		all->cmd[i]->path_command = NULL;
 		all->cmd[i]->name_file = NULL;
 		all->cmd[i]->f_direct = 0;
-		all->cmd[i]->combo = false; 
 		i++;
 	}
 	all->cmd[i] = NULL;
