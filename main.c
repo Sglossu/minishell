@@ -42,6 +42,7 @@ int	main(int argc, char **argv, char **envi)
 			continue;
         add_history(input);
 		parse(all, input);
+//		continue;
 		if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
 			main_work(all);
 		else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)

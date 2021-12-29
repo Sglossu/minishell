@@ -82,10 +82,11 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 		}
 		if (!ft_strcmp(tmp->val, "|") && tmp->flag == PIPE)
 			pipes = 1;
-		free_path(all);
+		free_path(all); // оставь
 		tmp = tmp->next;
 	}
 	all->number_command = res;
+//	all->number_command = 1;
 }
 
 // cat < 8 | cat < 1 | ls | wc
