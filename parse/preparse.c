@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/29 16:08:25 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 20:33:00 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ char *ft_dollar(char *input, t_all *all, int *i)
 	int		j;
 
 	j = *i + 1;
-	while (input[j] && input[j] != '\'' && input[j] != '\"' && input[j] != '|' && input[j] != '\\')
+	while (input[j] && ft_isalpha(input[j]))
 		j++;
-	tmp = ft_substr(input, *i + 1, j - *i);
+	tmp = ft_substr(input, *i + 1, j - *i - 1);
 	if (!tmp)
 		return (error_return_null());
 	if (!ft_strcmp(tmp, "?"))
@@ -75,6 +75,7 @@ char *ft_dollar(char *input, t_all *all, int *i)
 		}
 	}
 	res = ft_strjoin(ft_strjoin(ft_substr(input, 0 , *i), change), ft_strdup(input + j + 1));
+	*i = *i - ft_strlen(change);
 	free(input);
 	free(change);
 	return res;

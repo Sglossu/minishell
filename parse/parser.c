@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/29 19:46:26 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 20:13:09 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	parse(t_all *all, char *input)
 	HEAD = NULL;
 	if (preparse(all, &HEAD, input))
 		return 1;
+	ft_lstprint(HEAD);
 	num_of_commands(all, HEAD);
 	if (!all->number_command && HEAD && isDir(HEAD->val))
 		all->number_command++;
