@@ -50,6 +50,7 @@ typedef struct s_cmd {
 	char		*name_file;
 	int			f_direct;
 	int			status;
+	bool		flag_redirect;
 }				t_cmd;
 
 typedef struct s_all {

@@ -67,12 +67,15 @@ int	ft_redir(t_cmd *cmd, int fd_std)
 //		ft_printf(2, "errno %d\n", errno);
 		exit (errno);
 	}
-	if (dup2(fd_file, fd_std) == -1)
+	if (!cmd->flag_redirect)
 	{
-		close(fd_file);
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		g_status = errno;
-		exit (errno);
+		if (dup2(fd_file, fd_std) == -1 && cmd->flag_redirect)
+		{
+			close(fd_file);
+			ft_putendl_fd(strerror(errno), STDERR_FILENO);
+			g_status = errno;
+			exit (errno);
+		}
 	}
 	close(fd_file);
 	return (0);

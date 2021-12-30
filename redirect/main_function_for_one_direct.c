@@ -21,7 +21,10 @@ void	how_much_doub_redir(t_all *all)
 	while (tmp)
 	{
 		if (!ft_strcmp((tmp->val), "<<"))
+		{
 			all->count_doub_redir++;
+			all->cmd[all->i]->flag_redirect = true;
+		}
 		tmp = tmp->next;
 	}
 }
