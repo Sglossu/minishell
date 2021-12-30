@@ -74,3 +74,18 @@ char	**from_lst_to_buf(int argc, t_list *lst, char c)
 	}
 	return (argv);
 }
+
+void	remember_pwd(t_all *all)
+{
+	char	*pwd;
+
+	pwd = getcwd(NULL, 1024);
+	if (pwd)
+	{
+		free(all->oldpwd);
+		all->oldpwd = ft_strdup(pwd);
+		if (!all->oldpwd)
+			return (error_return_nothing());
+	}
+	free(pwd);
+}

@@ -18,9 +18,9 @@ void	child_for_pipe(t_all *all, int num_com, int **fd)
 
 	i = 0;
 	if (num_com == 0)
-		dup2(fd[num_com][1], STDOUT_FILENO); // первая команда
+		dup2(fd[num_com][1], STDOUT_FILENO);
 	else if (num_com == all->number_command - 1)
-		dup2(fd[num_com - 1][0], STDIN_FILENO); // последняя
+		dup2(fd[num_com - 1][0], STDIN_FILENO);
 	else
 	{
 		dup2(fd[num_com - 1][0], STDIN_FILENO);
@@ -60,7 +60,7 @@ int	fork_and_close(t_all *all, int com, int **fd, int i)
 		if (all->cmd[i]->pid == 0)
 		{
 			ft_signal_in_child();
-			child_for_pipe(all, i, fd); // i - номер команды
+			child_for_pipe(all, i, fd);
 			exit (g_status);
 		}
 		i++;

@@ -65,16 +65,6 @@ typedef struct s_all {
 	int			count_doub_redir;
 }				t_all;
 
-typedef struct s_str {
-	char	*input;
-	char	*buf;
-	int		iter;
-	int		quote;
-	int		ecran;
-	int		dub_quote;
-	int		dollars;
-}				t_str;
-
 int	g_status;
 
 void	path_print(t_all *all); // потом удалить
@@ -98,7 +88,6 @@ char	*find_before_equals(char *str);
 void	print_params(char **buf, int count);
 int		str_is_variable(char *str);
 char	*change_shlvl(char *str_old);
-void	print_lst(t_list *lst); // delete
 void	error_return_nothing(void);
 char	*error_return_null(void);
 int		error_return_int(void);
@@ -122,7 +111,6 @@ int		what_is_direct(t_all *all);
 void	how_much_doub_redir(t_all *all);
 char	*direct_for_lstfind(t_cmd *cmd);
 int		execute_and_delete_redir(t_all *all);
-void	execute_double_redir(t_all *all);
 void	how_much_doub_redir(t_all *all);
 void	if_doub_redir(t_cmd *cmd);
 
@@ -138,21 +126,18 @@ int		parse_path(t_all *all);
 int		is_binary(char *val, t_all *all);
 int		is_buildin(char *val);
 
-//parse_utils
-
-// {preparse}
+// preparse
 int		isDir(char *str);
 char	*ready_string(t_list *tmp, t_all *all);
 
-// {CMD}
+// cmd
 void	num_of_commands(t_all *all, t_list *HEAD);
 int		init_cmd_struct(t_all *all);
 int		fill_cmd_struct(t_all *all, t_list *HEAD);
 char	*path_com(t_all *all, char *command);
 int		dir_parse(t_cmd *cmd);
-void	combo_check(t_cmd *cmd);
 
-// {LISTS}
+// lists
 t_list	*make_list_with_all_word(char *input);
 t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command);
 void	ft_lstprint(t_list *HEAD);
