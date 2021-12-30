@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/30 05:02:22 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/30 05:23:08 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char *get_var_from_path(t_all *all, char *name)
 	return res;
 }
 
-char *join_parts(char *input, char *change, int i)
+char *join_parts(char *input, char *change, int i, int *len)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -120,6 +120,7 @@ char *ft_dollar(char *input, t_all *all, int *i)
 	char	*res;
 	char	*name;
 	char	*change;
+	int		len;
 
 	name = get_name(input, *i);
 	if (!ft_strcmp(name, "?"))
@@ -130,7 +131,7 @@ char *ft_dollar(char *input, t_all *all, int *i)
 	}
 	else
 		change = get_var_from_path(all, name);
-	res = join_parts(input, change, *i);
+	res = join_parts(input, change, *i, &len);
 	if (name)
 		free(name);
 	if (input)
