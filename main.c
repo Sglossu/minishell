@@ -6,44 +6,11 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:31:56 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/29 14:28:27 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/29 19:45:47 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-
-void ft_bshawn_free(t_all *all, char *input)
-{
-	// t_list	*tmp;
-	int		i;
-	int		x;
-
-	x = 0;
-	i = 0;
-	
-	while (all->cmd[x])
-	{
-		ft_lstclear(&all->cmd[x]->arg, free);
-		if (all->cmd[x]->path_command)
-			free(all->cmd[x]->path_command);
-		x++;
-	}
-	all->cmd = NULL;
-
-	free(input);
-}
-
-
-void show_path(t_all *all)
-{
-	int	i=0;
-
-	if (all->path)
-	{
-		while (all->path[i++])
-			printf("|%s|>PATH\n", all->path[i]);
-	}
-}
 
 int	main(int argc, char **argv, char **envi)
 {
@@ -80,7 +47,6 @@ int	main(int argc, char **argv, char **envi)
 			one_direct(all);
 		else if (all->number_command > 1)
 			our_pipe(all);
-//		ft_printf(2, "g_status: %d\n", g_status);
 		free(input);
 		ft_free(all);
 	}
