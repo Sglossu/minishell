@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/30 05:23:08 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/30 07:18:54 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char *get_var_from_path(t_all *all, char *name)
 	return res;
 }
 
-char *join_parts(char *input, char *change, int i, int *len)
+char *join_parts(char *input, char *change, int i)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -115,6 +115,31 @@ char *join_parts(char *input, char *change, int i, int *len)
 	return res;
 }
 
+int	ft_len(char *name, char *change)
+{
+	int res;
+	int	len_name;
+	int	len_change;
+
+	len_name =	(int)ft_strlen(name);
+	len_change = (int)ft_strlen(change);
+	res = 0;
+	if (!ft_strcmp(change, ""))
+	{
+		res = -1;
+		return res;
+	}
+	if (len_name > len_change)
+	{
+		res = len_name - len_change;
+	}
+	else  if (len_change > len_name)
+	{
+		res = len_change - len_name;
+	}
+	return res;
+}
+
 char *ft_dollar(char *input, t_all *all, int *i)
 {	
 	char	*res;
@@ -131,7 +156,9 @@ char *ft_dollar(char *input, t_all *all, int *i)
 	}
 	else
 		change = get_var_from_path(all, name);
-	res = join_parts(input, change, *i, &len);
+	res = join_parts(input, change, *i);
+	len = ft_len(name, change);
+	*i += len;
 	if (name)
 		free(name);
 	if (input)
@@ -221,7 +248,10 @@ char *ready_string(t_list *tmp, t_all *all)
 			if (str[i] == '\'' || str[i] == '\"')
 				str = ft_quote(str, all, &i, str[i]);
 			if (str[i] == '$')
+			{
 				str = ft_dollar(str, all, &i);
+//				printf("|%s|\n", str + i);
+			}
 			if (str[i] == '\\')
 				str = ft_ecran(str, &i);
 			i++;
