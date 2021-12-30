@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/30 04:59:43 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/30 05:02:22 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ char *ft_ecran(char *input, int *i)
 	res = ft_strjoin(tmp, tmp2);
 	if (!res)
 		return(error_return_null());
-
 	free(tmp);
 	free(tmp2);
 	free(input);
