@@ -88,7 +88,14 @@ int	one_direct(t_all *all)
 	}
 	else
 	{
-		waitpid(all->cmd[all->i]->pid, &g_status, 0); // выводить печать статуса если ошибка?
+		waitpid(all->cmd[all->i]->pid, &all->cmd[all->i]->status, 0);
+		g_status = WEXITSTATUS(all->cmd[all->i]->status);
+		if (!g_status && WIFSIGNALED(all->cmd[all->i]->status))
+		{
+			if (all->cmd[all->i]->status == 2 || all->cmd[all->i]->status == 3)
+				ft_putendl_fd("", 2);
+			g_status = 128 + WTERMSIG(all->cmd[all->i]->status);
+		}
 	}
-	return (0); // что возвращать если несколько команд?
+	return (0);
 }

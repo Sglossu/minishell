@@ -21,12 +21,32 @@ void	how_much_doub_redir(t_all *all)
 	while (tmp)
 	{
 		if (!ft_strcmp((tmp->val), "<<"))
+		{
 			all->count_doub_redir++;
+//			all->cmd[all->i]->flag_redirect = true;
+		}
 		tmp = tmp->next;
 	}
 }
 
-static	int	execute_and_delete_redir(t_all *all)
+void	if_doub_redir(t_cmd *cmd)
+{
+	t_list	*tmp;
+
+
+	tmp = cmd->arg;
+	while (tmp)
+	{
+		if (!ft_strcmp((tmp->val), "<<"))
+		{
+//			all->count_doub_redir++;
+			cmd->flag_redirect = true;
+		}
+		tmp = tmp->next;
+	}
+}
+
+int	execute_and_delete_redir(t_all *all)
 {
 	t_cmd	*tmp;
 	t_list	*tmp2_del;
@@ -34,12 +54,13 @@ static	int	execute_and_delete_redir(t_all *all)
 	char	*str;
 
 	tmp = all->cmd[all->i];
+	dir_parse(all->cmd[all->i]);
 	while (tmp->name_file && tmp->f_direct != NONE)
 	{
 		what_is_direct(all);
 		str = direct_for_lstfind(all->cmd[all->i]);
 		if (!str)
-			return (1);
+			return (error_return_int());
 		tmp2_del = ft_lstfind(tmp->arg, str);
 		tmp3_del = tmp2_del->next;
 		ft_lstremove(&all->cmd[all->i]->arg, tmp2_del);
@@ -55,6 +76,8 @@ static	int	execute_and_delete_redir(t_all *all)
 int	main_function_for_one_direct(t_all *all)
 {
 	how_much_doub_redir(all);
+//	if (all->count_doub_redir)
+//		execute_double_redir(all);
 	if (execute_and_delete_redir(all))
 		return (1);
 	if (!all->cmd[all->i]->arg)

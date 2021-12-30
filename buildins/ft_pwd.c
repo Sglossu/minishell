@@ -21,8 +21,10 @@ int	ft_pwd(t_all *all)
 	{
 		ft_putendl_fd(pwd, STDOUT_FILENO);
 		free(pwd);
+		g_status = 0;
 		return (0);
 	}
 	ft_putendl_fd(all->oldpwd, STDOUT_FILENO);
+	g_status = 0;
 	return (1);
 }

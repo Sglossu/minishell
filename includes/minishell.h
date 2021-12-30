@@ -49,6 +49,8 @@ typedef struct s_cmd {
 	int			type;
 	char		*name_file;
 	int			f_direct;
+	int			status;
+	bool		flag_redirect;
 }				t_cmd;
 
 typedef struct s_all {
@@ -119,6 +121,10 @@ int		fork_and_close(t_all *all, int com, int **fd, int i);
 int		what_is_direct(t_all *all);
 void	how_much_doub_redir(t_all *all);
 char	*direct_for_lstfind(t_cmd *cmd);
+int		execute_and_delete_redir(t_all *all);
+void	execute_double_redir(t_all *all);
+void	how_much_doub_redir(t_all *all);
+void	if_doub_redir(t_cmd *cmd);
 
 //main
 int		main_work(t_all *all);

@@ -40,10 +40,11 @@ static	void	if_arg_exist(t_all *all, char *str)
 	free(find_b_e);
 }
 
-static	void	error_in_variable(t_list *arg)
+static	int	error_in_variable(t_list *arg)
 {
 	ft_printf(2, "export: `%s': not a valid identifier\n", arg->val);
 	g_status = 1;
+	return (g_status);
 }
 
 int	ft_export(t_all *all, t_list *arg)
@@ -58,7 +59,7 @@ int	ft_export(t_all *all, t_list *arg)
 	while (arg)
 	{
 		if (str_is_variable(arg->val))
-			error_in_variable(arg);
+			return(error_in_variable(arg));
 		else if (!ft_lstfind(all->env, arg->val))
 			if_arg_exist(all, arg->val);
 		arg = arg->next;
@@ -72,5 +73,6 @@ int	ft_export(t_all *all, t_list *arg)
 			return (error_return_int());
 		print_params(buf, count);
 	}
-	return (0);
+	g_status = 0;
+	return (g_status);
 }

@@ -47,6 +47,7 @@ void	child(t_all *all, int all_i)
 	arg = from_lst_to_buf \
 	(ft_lstsize(all->cmd[all_i]->arg), all->cmd[all_i]->arg, '\0');
 	env = from_lst_to_buf(ft_lstsize(all->env), all->env, '\0');
+//	ft_printf(2, "g_status in execve: %d\n", g_status);
 	if (execve(all->cmd[all_i]->path_command, arg, env) == -1)
 	{
 		g_status = errno;
@@ -70,7 +71,16 @@ static	int	binary(t_all *all)
 		exit (g_status);
 	}
 	else
-		waitpid(all->cmd[0]->pid, &g_status, 0);
+	{
+		waitpid(all->cmd[all->i]->pid, &all->cmd[all->i]->status, 0);
+		g_status = WEXITSTATUS(all->cmd[all->i]->status);
+		if (!g_status && WIFSIGNALED(all->cmd[all->i]->status))
+		{
+			if (all->cmd[all->i]->status == 2 || all->cmd[all->i]->status == 3)
+				ft_putendl_fd("", 2);
+			g_status = 128 + WTERMSIG(all->cmd[all->i]->status);
+		}
+	}
 	return (0);
 }
 

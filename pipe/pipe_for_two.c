@@ -82,8 +82,22 @@ int	pipe_for_two(t_all *all)
 		return (1);
 	close(fd[0]);
 	close(fd[1]);
-	waitpid(all->cmd[0]->pid, &g_status, 0);
-	waitpid(all->cmd[1]->pid, &g_status, 0);
+	all->i = -1;
+	while (++all->i < 2)
+	{
+		waitpid(all->cmd[all->i]->pid, &all->cmd[all->i]->status, 0);
+		g_status = WEXITSTATUS(all->cmd[all->i]->status);
+		if (!g_status && WIFSIGNALED(all->cmd[all->i]->status))
+		{
+			if (all->cmd[all->i]->status == 2 || all->cmd[all->i]->status == 3)
+				ft_putendl_fd("", 2);
+			g_status = 128 + WTERMSIG(all->cmd[all->i]->status);
+		}
+	}
+//	ft_printf(2, "g_status: %d\n", g_status);
+//	waitpid(all->cmd[1]->pid, &g_status, 0);
+//	ft_printf(2, "g_status: %d\n", g_status);
+
 	ft_signal_main();
 	return (0);
 }

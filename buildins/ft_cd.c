@@ -98,5 +98,6 @@ int	ft_cd(t_all *all, t_list *arg)
 	}
 	else
 		change_pwd_oldpwd(all, &all->env, &oldpwd);
+	g_status = 0;
 	return (g_status);
 }
