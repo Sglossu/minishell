@@ -77,8 +77,18 @@ int	pipe_for_another(t_all *all, int com) // com - количество пайп
 		ft_signal_main();
 		return (g_status);
 	}
-	while (++i < com + 1)
-		waitpid(all->cmd[i]->pid, &g_status, 0);
+	all->i = -1;
+	while (++all->i < com + 1)
+	{
+		waitpid(all->cmd[all->i]->pid, &all->cmd[all->i]->status, 0);
+		g_status = WEXITSTATUS(all->cmd[all->i]->status);
+		if (!g_status && WIFSIGNALED(all->cmd[all->i]->status))
+		{
+			if (all->cmd[all->i]->status == 2 || all->cmd[all->i]->status == 3)
+				ft_putendl_fd("", 2);
+			g_status = 128 + WTERMSIG(all->cmd[all->i]->status);
+		}
+	}
 	i = -1;
 	while (++i <= com)
 		free(fd[i]);

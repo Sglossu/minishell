@@ -46,6 +46,7 @@ int	ft_doubledir(t_cmd *cmd, int fd_std)
 	}
 	if (dup2(fd_file, fd_std) == -1)
 	{
+		close(fd_file);
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		g_status = errno;
 		exit (errno);
@@ -63,13 +64,15 @@ int	ft_redir(t_cmd *cmd, int fd_std)
 	{
 		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno));
 		g_status = errno;
+//		ft_printf(2, "errno %d\n", errno);
 		exit (errno);
 	}
 	if (dup2(fd_file, fd_std) == -1)
 	{
+		close(fd_file);
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		g_status = errno;
-		exit(errno);
+		exit (errno);
 	}
 	close(fd_file);
 	return (0);

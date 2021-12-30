@@ -72,5 +72,6 @@ int	ft_export(t_all *all, t_list *arg)
 			return (error_return_int());
 		print_params(buf, count);
 	}
-	return (0);
+	g_status = 0;
+	return (g_status);
 }

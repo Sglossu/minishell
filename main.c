@@ -80,8 +80,9 @@ int	main(int argc, char **argv, char **envi)
 			one_direct(all);
 		else if (all->number_command > 1)
 			our_pipe(all);
-		 free(input);
-		 ft_free(all);
+//		ft_printf(2, "g_status: %d\n", g_status);
+		free(input);
+		ft_free(all);
 	}
 	return (g_status);
 }

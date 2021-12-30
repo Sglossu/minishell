@@ -24,4 +24,5 @@ void	ft_unset(t_list **env, t_list *arg)
 			ft_lstremove(env, tmp);
 		arg = arg->next;
 	}
+	g_status = 0;
 }

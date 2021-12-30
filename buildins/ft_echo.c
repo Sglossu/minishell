@@ -43,10 +43,6 @@ int	ft_echo(t_list *arg)
 	}
 	while (arg)
 	{
-//		if (!ft_strcmp((arg->val), "$?"))
-//			ft_putnbr_fd(g_status, STDOUT_FILENO);
-//		else
-//			ft_putstr_fd(arg->val, STDOUT_FILENO);
 		ft_putstr_fd(arg->val, STDOUT_FILENO);
 		if (arg->next)
 			ft_putchar_fd(' ', STDOUT_FILENO);
@@ -54,5 +50,6 @@ int	ft_echo(t_list *arg)
 	}
 	if (line_break)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	return (0);
+	g_status = 0;
+	return (g_status);
 }

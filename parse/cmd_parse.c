@@ -40,12 +40,14 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		{
 			all->cmd[i]->path_command = NULL;
 			all->cmd[i]->type = BUILDIN;
+			all->cmd[i]->status = 0;
 			dir_parse(all->cmd[i]);
 		}
 		else if (tmp && is_binary(tmp->val, all))
 		{
 
 			all->cmd[i]->type = BINARY;
+			all->cmd[i]->status = 0;
 			all->cmd[i]->path_command = path_com(all ,tmp->val);
 			if (!all->cmd[i]->path_command)
 				return (error_return_int());
