@@ -123,6 +123,8 @@ void	how_much_doub_redir(t_all *all);
 char	*direct_for_lstfind(t_cmd *cmd);
 int		execute_and_delete_redir(t_all *all);
 void	execute_double_redir(t_all *all);
+void	how_much_doub_redir(t_all *all);
+void	if_doub_redir(t_cmd *cmd);
 
 //main
 int		main_work(t_all *all);

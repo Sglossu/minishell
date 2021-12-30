@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static int	problems(char *str, int minus)
+int	problems(char *str, int minus)
 {
 	int	len;
 
@@ -36,7 +36,7 @@ static int	problems(char *str, int minus)
 	return (0);
 }
 
-static long long	ft_atoi_overflow(char *str)
+long long	ft_atoi_overflow(char *str)
 {
 	int			i;
 	long long	minus;
@@ -65,7 +65,7 @@ static long long	ft_atoi_overflow(char *str)
 	return (nb * minus);
 }
 
-static int	work_with_arg(char *str)
+int	work_with_arg(char *str)
 {
 	long long	status_exit;
 
@@ -77,11 +77,21 @@ static int	work_with_arg(char *str)
 		exit (255);
 	}
 	status_exit = ft_atoi_long(str);
-	if (status_exit > 0)
-		return ((int)status_exit % 256);
-	else if (status_exit % 256 != 0)
-		return ((int)(status_exit % 256 + 256));
-	return (0);
+
+	g_status = WEXITSTATUS(status_exit);
+	if (!g_status && WIFSIGNALED(status_exit))
+	{
+		if (status_exit == 2 ||status_exit == 3)
+			ft_putendl_fd("", 2);
+		g_status = 128 + WTERMSIG(status_exit);
+	}
+	return(g_status);
+
+//	if (status_exit > 0)
+//		return ((int)status_exit % 256);
+//	else if (status_exit % 256 != 0)
+//		return ((int)(status_exit % 256 + 256));
+//	return (0);
 }
 
 int	ft_exit(t_list *arg)
@@ -101,8 +111,8 @@ int	ft_exit(t_list *arg)
 	}
 	if (arg->next)
 	{
-		ft_putendl_fd("exit: too many arguments\n", 2);
-		return (255);
+		ft_putendl_fd("exit: too many arguments", 2);
+		return (1);
 	}
 	exit (work_with_arg(arg->val));
 }

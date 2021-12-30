@@ -12,31 +12,6 @@
 
 #include "../includes/minishell.h"
 
-void	ft_lstremove2(t_list **lst, t_list *elem)
-{
-	t_list	*tmp;
-	t_list	*tmp2;
-
-	tmp = *lst;
-	if (tmp == elem)
-	{
-		*lst = (*lst)->next;
-		ft_lstdelone(tmp, free);
-		return ;
-	}
-	while (tmp && tmp->next)
-	{
-		if (tmp->next == elem)
-		{
-			tmp2 = tmp->next->next;
-			ft_lstdelone(tmp->next, free);
-			tmp->next = tmp2;
-			return ;
-		}
-		tmp = tmp->next;
-	}
-}
-
 void	execute_double_redir(t_all *all)
 {
 	t_list	*tmp;
@@ -61,8 +36,8 @@ void	execute_double_redir(t_all *all)
 				return (error_return_nothing());
 			tmp2_del = ft_lstfind(tmp, str);
 			tmp3_del = tmp2_del->next; // сделать if
-			ft_lstremove2(&all->cmd[all->i]->arg, tmp2_del);
-			ft_lstremove2(&all->cmd[all->i]->arg, tmp3_del);
+			ft_lstremove(&all->cmd[all->i]->arg, tmp2_del);
+			ft_lstremove(&all->cmd[all->i]->arg, tmp3_del);
 			free(all->cmd[all->i]->name_file);
 			all->cmd[all->i]->name_file = NULL;
 			all->cmd[all->i]->f_direct = NONE;
