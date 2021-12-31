@@ -63,8 +63,18 @@ char *get_name(char *input, int i)
 
 	name = NULL;
 	j = i + 1;
-	while (input[j] && ft_isalpha(input[j]))
+
+	if (input[j] == '?')
+	{
 		j++;
+	}
+	else
+	{
+		while (input[j] && ft_isalpha(input[j]))
+		{
+			j++;
+		}
+	}
 	name = ft_substr(input, i + 1, j - i - 1);
 	if (!name)
 		return (error_return_null());
@@ -96,8 +106,17 @@ char *join_parts(char *input, char *change, int i)
 	int		j;
 
 	j = i + 1;
-	while (input[j] && ft_isalnum(input[j]))
+	if (input[j] == '?')
+	{
 		j++;
+	}
+	else
+	{
+		while (input[j] && ft_isalnum(input[j]))
+		{
+			j++;
+		}
+	}
 	tmp = ft_substr(input, 0 , i);
 	if (!tmp)
 		return(error_return_null());
