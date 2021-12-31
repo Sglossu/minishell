@@ -108,7 +108,7 @@ char *join_parts(char *input, char *change, int i)
 	if (!tmp)
 		return(error_return_null());
 	res = ft_strjoin(tmp, tmp2);
-	if (!tmp)
+	if (!res)
 		return(error_return_null());
 	free (tmp);
 	free (tmp2);
