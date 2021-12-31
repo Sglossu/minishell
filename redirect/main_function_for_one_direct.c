@@ -21,10 +21,7 @@ void	how_much_doub_redir(t_all *all)
 	while (tmp)
 	{
 		if (!ft_strcmp((tmp->val), "<<"))
-		{
 			all->count_doub_redir++;
-//			all->cmd[all->i]->flag_redirect = true;
-		}
 		tmp = tmp->next;
 	}
 }
@@ -33,15 +30,11 @@ void	if_doub_redir(t_cmd *cmd)
 {
 	t_list	*tmp;
 
-
 	tmp = cmd->arg;
 	while (tmp)
 	{
 		if (!ft_strcmp((tmp->val), "<<"))
-		{
-//			all->count_doub_redir++;
 			cmd->flag_redirect = true;
-		}
 		tmp = tmp->next;
 	}
 }
@@ -76,8 +69,6 @@ int	execute_and_delete_redir(t_all *all)
 int	main_function_for_one_direct(t_all *all)
 {
 	how_much_doub_redir(all);
-//	if (all->count_doub_redir)
-//		execute_double_redir(all);
 	if (execute_and_delete_redir(all))
 		return (1);
 	if (!all->cmd[all->i]->arg)

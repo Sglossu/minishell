@@ -27,7 +27,6 @@ int	main(int argc, char **argv, char **envi)
 	init(all, envi);
 	while (1)
 	{
-		// ft_printf(2, "g_status: %d\n", g_status);
 		ft_signal_main();
 		input = readline(MINISHELL);
 		if (!input)
