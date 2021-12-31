@@ -63,12 +63,7 @@ char *get_name(char *input, int i)
 
 	name = NULL;
 	j = i + 1;
-	if (input[j] == '?')
-	{
-		name = ft_substr(input, i + 1, j - i);
-		return name;
-	}
-	while (input[j] && ft_isalnum(input[j]))
+	while (input[j] && ft_isalpha(input[j]))
 		j++;
 	name = ft_substr(input, i + 1, j - i - 1);
 	if (!name)
@@ -93,23 +88,27 @@ char *get_var_from_path(t_all *all, char *name)
 	return res;
 }
 
-char *join_parts(char *input, char *change, char *name, int i)
+char *join_parts(char *input, char *change, int i)
 {
 	char	*tmp;
 	char	*tmp2;
 	char	*res;
+	int		j;
 
+	j = i + 1;
+	while (input[j] && ft_isalpha(input[j]))
+		j++;
 	tmp = ft_substr(input, 0 , i);
 	if (!tmp)
 		return(error_return_null());
-	tmp2 = ft_strdup(input + ft_strlen(name));
+	tmp2 = ft_strdup(input + j);
 	if (!tmp2)
 		return(error_return_null());
 	tmp = ft_strjoin_gnl(tmp, change);
 	if (!tmp)
 		return(error_return_null());
 	res = ft_strjoin(tmp, tmp2);
-	if (!res)
+	if (!tmp)
 		return(error_return_null());
 	free (tmp);
 	free (tmp2);
@@ -157,7 +156,7 @@ char *ft_dollar(char *input, t_all *all, int *i)
 	}
 	else
 		change = get_var_from_path(all, name);
-	res = join_parts(input, change, name, *i);
+	res = join_parts(input, change, *i);
 	len = ft_len(name, change);
 	*i += len;
 	if (name)
