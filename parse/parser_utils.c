@@ -14,10 +14,11 @@
 
 void	path_pl_command(t_all *all, char *command)
 {
-	int 	i = 0;
-	char 	*str1;
-	char 	*str2;
+	int		i;
+	char	*str1;
+	char	*str2;
 
+	i = 0;
 	while (all->path && all->path[i])
 	{
 		str1 = ft_strdup(all->path[i]);
@@ -30,10 +31,11 @@ void	path_pl_command(t_all *all, char *command)
 	}
 }
 
-int  find_com(t_all *all, char *command)
+int	find_com(t_all *all, char *command)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (all->path && all->path[i])
 	{
 		if (!access(all->path[i], 0 | 1))
@@ -44,24 +46,22 @@ int  find_com(t_all *all, char *command)
 	}
 	if (!access(command, 0 | 1))
 	{
-		// printf("|%s|\n", command);
 		return (1);
 	}
 	return (0);
 }
 
-char *path_com(t_all *all, char *command)
+char	*path_com(t_all *all, char *command)
 {
-	int i = 0;
-	char	*str = NULL;
-//	parse_path(all); зачем второй раз?
-//	path_pl_command(all, command);
+	int		i;
+	char	*str;
 
+	str = NULL;
+	i = 0;
 	while (all->path && all->path[i])
 	{
 		if (!access(all->path[i], 0 | 1))
 		{
-			// printf("|%s|\n", all->path[i]);
 			str = ft_strdup(all->path[i]);
 			if (!str)
 				return (error_return_null());
@@ -71,7 +71,6 @@ char *path_com(t_all *all, char *command)
 	}
 	if (!access(command, 0 | 1))
 	{
-		// printf("|%s|\n", command);
 		str = ft_strdup(command);
 		if (!str)
 			return (error_return_null());
@@ -80,23 +79,24 @@ char *path_com(t_all *all, char *command)
 	return (NULL);
 }
 
-int is_binary(char *val, t_all *all)
+int	is_binary(char *val, t_all *all)
 {
-	free_path(all); // это оставить
 	int	res;
+
+	free_path(all);
 	parse_path(all);
 	path_pl_command(all, val);
 	res = find_com(all, val);
-	return(res);
+	return (res);
 }
 
-int is_buildin(char *val)
+int	is_buildin(char *val)
 {
-	if ((!ft_strcmp(val, "cd")) || (!ft_strcmp(val, "pwd")) || (!ft_strcmp(val, "echo"))
-			|| (!ft_strcmp(val, "export")) || (!ft_strcmp(val, "unset"))
-				|| (!ft_strcmp(val, "env")) || (!ft_strcmp(val, "exit")))
-		return 1;
+	if ((!ft_strcmp(val, "cd")) || (!ft_strcmp(val, "pwd"))
+		|| (!ft_strcmp(val, "echo"))
+		|| (!ft_strcmp(val, "export")) || (!ft_strcmp(val, "unset"))
+		|| (!ft_strcmp(val, "env")) || (!ft_strcmp(val, "exit")))
+		return (1);
 	else
-		return 0;
+		return (0);
 }
-

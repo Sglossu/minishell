@@ -128,20 +128,20 @@ int		is_binary(char *val, t_all *all);
 int		is_buildin(char *val);
 
 // preparse
-int		isDir(char *str);
+int		is_dir(char *str);
 char	*ready_string(t_list *tmp, t_all *all, int *flag);
 
 // cmd
-int		num_of_commands(t_all *all, t_list *HEAD);
+int		num_of_commands(t_all *all, t_list *head);
 int		init_cmd_struct(t_all *all);
-int		fill_cmd_struct(t_all *all, t_list *HEAD);
+int		fill_cmd_struct(t_all *all, t_list *head);
 char	*path_com(t_all *all, char *command);
 int		dir_parse(t_cmd *cmd);
 
 // lists
 t_list	*make_list_with_all_word(char *input);
-t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command);
-void	ft_lstprint(t_list *HEAD);
+t_list	*copy_part_of_list(t_all *all, t_list *head, int num_command);
+void	ft_lstprint(t_list *head);
 char	*ft_ecran(char *input, int *i);
 
 //free

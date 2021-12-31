@@ -24,13 +24,14 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		free_path(all);
 		all->cmd[i]->arg = copy_part_of_list(all, HEAD, i);
 		tmp = all->cmd[i]->arg;
-		if (isDir(tmp->val))
+		if (is_dir(tmp->val))
 		{
 			dir_parse(all->cmd[i]);
 			tmp = tmp->next;
 			if (!all->cmd[i]->name_file)
 			{
-				ft_putendl_fd(": syntax error near unexpected token `newline'", STDERR_FILENO);
+				ft_putendl_fd(": syntax error near unexpected token `newline'",
+					STDERR_FILENO);
 				return (1);
 			}
 			else
@@ -82,7 +83,8 @@ int	num_of_commands(t_all *all, t_list *HEAD)
 		}
 		else if (num == 1)
 		{
-			ft_printf(STDERR_FILENO, "minishell: %s: command not found\n", tmp->val);
+			ft_printf(STDERR_FILENO,
+				"minishell: %s: command not found\n", tmp->val);
 			g_status = 127;
 			flag = 1;
 		}
@@ -98,7 +100,6 @@ int	num_of_commands(t_all *all, t_list *HEAD)
 	all->number_command = res;
 	return (flag);
 }
-// cat < 8 | cat < 1 | ls | wc
 
 int	init_cmd_struct(t_all *all)
 {

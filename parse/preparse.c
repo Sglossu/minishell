@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	isDollar(char *str)
+int	is_dollar(char *str)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	isDollar(char *str)
 	return (0);
 }
 
-int isDir(char *str)
+int	is_dir(char *str)
 {
 	int	i;
 
@@ -42,7 +42,7 @@ int isDir(char *str)
 	return (1);
 }
 
-int	isEcran(char *str)
+int	is_ecran(char *str)
 {
 	int	i;
 
@@ -82,12 +82,12 @@ char	*get_name(char *input, int i)
 
 char	*get_var_from_path(t_all *all, char *name)
 {
-	t_list	*envObj;
+	t_list	*env_obj;
 	char	*res;
 
-	envObj = ft_lstfind(all->env, name);
-	if (envObj)
-		res = find_after_equals(envObj->val);
+	env_obj = ft_lstfind(all->env, name);
+	if (env_obj)
+		res = find_after_equals(env_obj->val);
 	else
 	{
 		res = ft_strdup("");
@@ -212,7 +212,7 @@ static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 			break ;
 	s = ft_substr(str, 0, *i);
 	m = ft_substr(str, *i + 1, j - *i - 1);
-	if (sym == '\"' && isDollar(m) && ft_strlen(m) > 1)
+	if (sym == '\"' && is_dollar(m) && ft_strlen(m) > 1)
 	{
 		while (m[x])
 		{
@@ -221,7 +221,7 @@ static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 			x++;
 		}
 	}
-	if (sym == '\"' && isEcran(m))
+	if (sym == '\"' && is_ecran(m))
 	{
 		x = 0;
 		while (m[x])

@@ -52,7 +52,7 @@ static void	make_part_world(char *input, t_list **tmp, int *i)
 	char	*str;
 	char	sym;
 	int		j;
-	bool	inQuote;
+	bool	in_quote;
 
 	j = *i;
 	while (input[j] && input[j] != ' ' && input[j] != '>'
@@ -60,12 +60,12 @@ static void	make_part_world(char *input, t_list **tmp, int *i)
 	{
 		if (input[j] == '\'' || input[j] == '\"')
 		{
-			inQuote = true;
+			in_quote = true;
 			sym = input[j++];
-			while (input[j] && inQuote)
+			while (input[j] && in_quote)
 			{
 				if (input[j] == sym)
-					inQuote = false;
+					in_quote = false;
 				j++;
 			}
 			j--;
