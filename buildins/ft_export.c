@@ -44,12 +44,7 @@ void    if_arg_exist(t_all *all, char *str)
     free(find_b_e);
 }
 
-int    error_in_variable(t_list *arg)
-{
-    ft_printf(2, "export: `%s': not a valid identifier\n", arg->val);
-    g_status = 1;
-	return (g_status);
-}
+
 
 int    ft_export(t_all *all, t_list *arg)
 {
@@ -63,7 +58,7 @@ int    ft_export(t_all *all, t_list *arg)
     while (tmp)
     {
         if (str_is_variable(tmp->val))
-            return (error_in_variable(tmp));
+            return (g_status);
 		if_arg_exist(all, tmp->val);
         tmp = tmp->next;
     }
