@@ -90,20 +90,13 @@ int	str_is_variable(char *str)
 
 void	print_params(char **buf, int count)
 {
-	int		i;
 	int		j;
 
 	j = 0;
 	while (j < count)
 	{
-		i = 0;
 		write(STDOUT_FILENO, "declare -x ", 11);
-		while (buf[j][i] != 0)
-		{
-			write(1, &buf[j][i], 1);
-			i++;
-		}
-		write(1, "\n", 1);
+		ft_putendl_fd(buf[j], STDOUT_FILENO);
 		j++;
 	}
 }

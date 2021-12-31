@@ -91,6 +91,7 @@ char	*change_shlvl(char *str_old);
 void	error_return_nothing(void);
 char	*error_return_null(void);
 int		error_return_int(void);
+void	free_buf(char **buf);
 
 //srcs
 void	init(t_all *all, char **envi);
