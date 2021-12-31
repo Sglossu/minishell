@@ -63,7 +63,12 @@ char *get_name(char *input, int i)
 
 	name = NULL;
 	j = i + 1;
-	while (input[j] && ft_isalpha(input[j]))
+	if (input[j] == '?')
+	{
+		name = ft_substr(input, i + 1, j - i);
+		return name;
+	}
+	while (input[j] && ft_isalnum(input[j]))
 		j++;
 	name = ft_substr(input, i + 1, j - i - 1);
 	if (!name)
@@ -88,27 +93,23 @@ char *get_var_from_path(t_all *all, char *name)
 	return res;
 }
 
-char *join_parts(char *input, char *change, int i)
+char *join_parts(char *input, char *change, char *name, int i)
 {
 	char	*tmp;
 	char	*tmp2;
 	char	*res;
-	int		j;
 
-	j = i + 1;
-	while (input[j] && ft_isalpha(input[j]))
-		j++;
 	tmp = ft_substr(input, 0 , i);
 	if (!tmp)
 		return(error_return_null());
-	tmp2 = ft_strdup(input + j);
+	tmp2 = ft_strdup(input + ft_strlen(name));
 	if (!tmp2)
 		return(error_return_null());
 	tmp = ft_strjoin_gnl(tmp, change);
 	if (!tmp)
 		return(error_return_null());
 	res = ft_strjoin(tmp, tmp2);
-	if (!tmp)
+	if (!res)
 		return(error_return_null());
 	free (tmp);
 	free (tmp2);
@@ -156,7 +157,7 @@ char *ft_dollar(char *input, t_all *all, int *i)
 	}
 	else
 		change = get_var_from_path(all, name);
-	res = join_parts(input, change, *i);
+	res = join_parts(input, change, name, *i);
 	len = ft_len(name, change);
 	*i += len;
 	if (name)
@@ -198,14 +199,14 @@ static char *ft_quote(char *str, t_all *all, int *i, char sym)
 	int		j;
 
 	j = *i;
+	x = 0;
 	while (str[j++])
 		if (str[j] == sym)
 			break;
 	s = ft_substr(str, 0, *i);
 	m = ft_substr(str, *i + 1, j - *i - 1);
-	if (sym == '\"' && isDollar(m))
+	if (sym == '\"' && isDollar(m) && ft_strlen(m) > 1)
 	{
-		x = 0;
 		while (m[x])
 		{
 			if (m[x] == '$')
@@ -224,7 +225,8 @@ static char *ft_quote(char *str, t_all *all, int *i, char sym)
 		}
 	}
 	f = strdup(str + j + 1);
-	*i = j - 2;
+	if (x == 0)
+		*i = j - 1;
 	free(str);
 	str = ft_strjoin(ft_strjoin(s,m), f);
 	free(s);
@@ -242,20 +244,17 @@ char *ready_string(t_list *tmp, t_all *all)
 	i = 0;
 	if (str)
 	{
-		free(tmp->val);
 		while (str[i])
 		{
 			if (str[i] == '\'' || str[i] == '\"')
 				str = ft_quote(str, all, &i, str[i]);
 			if (str[i] == '$')
-			{
 				str = ft_dollar(str, all, &i);
-//				printf("|%s|\n", str + i);
-			}
 			if (str[i] == '\\')
 				str = ft_ecran(str, &i);
 			i++;
 		}
 	}
+	free(tmp->val);
 	return (str);
 }
