@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:33 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/14 18:15:35 by sglossu          ###   ########.fr       */
+/*   Updated: 2021/12/31 17:38:12 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	ft_lstprint(t_list *HEAD)
-{
-	t_list	*tmp;
-	int		count;
-
-	tmp = HEAD;
-	count = 1;
-	while (tmp)
-	{
-		printf("|%s| - arg %d\n", tmp->val, count);
-		count++;
-		tmp = tmp->next;
-	}
-}
 
 static void	make_part_direct_pipe(char *input, t_list **tmp, int *i)
 {
@@ -47,14 +32,11 @@ static void	make_part_direct_pipe(char *input, t_list **tmp, int *i)
 		ft_lstadd_back(tmp, ft_lstnew(ft_strdup("<")));
 }
 
-static void	make_part_world(char *input, t_list **tmp, int *i)
+static int	logic_of_part_world(char *input, int j)
 {
-	char	*str;
-	char	sym;
-	int		j;
 	bool	in_quote;
+	char	sym;
 
-	j = *i;
 	while (input[j] && input[j] != ' ' && input[j] != '>'
 		&& input[j] != '<' && input[j] != '|')
 	{
@@ -74,6 +56,16 @@ static void	make_part_world(char *input, t_list **tmp, int *i)
 			j++;
 		j++;
 	}
+	return (j);
+}
+
+static void	make_part_world(char *input, t_list **tmp, int *i)
+{
+	char	*str;
+	int		j;
+
+	j = *i;
+	j = logic_of_part_world(input, j);
 	str = ft_substr(input, *i, j - *i);
 	if (ft_strlen(str) > 0)
 		ft_lstadd_back(tmp, ft_lstnew(str));

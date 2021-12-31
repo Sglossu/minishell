@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:31:56 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/29 19:45:47 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/31 17:29:54 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,13 @@ int	main(int argc, char **argv, char **envi)
 		input = readline(MINISHELL);
 		if (!input)
 		{
-			//			 ft_putendl_fd("exit\n", 2);
+			// ft_putendl_fd("exit\n", 2);
 			exit(g_status);
-			//			input = ft_strdup("exit");
+			// input = ft_strdup("exit");
 		}
-
 		rl_bind_key('\t', rl_complete);
 		if (!ft_strcmp(input, ""))
-			continue;
+			continue ;
 		add_history(input);
 		if (!parse(all, input))
 		{
