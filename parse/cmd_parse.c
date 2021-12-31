@@ -16,18 +16,18 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 {
 	int		i;
 	t_list	*tmp;
+
 	i = 0;
-  
-	free_path(all); // это оставить
+	free_path(all);
 	while (i < all->number_command)
 	{
-		free_path(all); // это оставить
+		free_path(all);
 		all->cmd[i]->arg = copy_part_of_list(all, HEAD, i);
 		tmp = all->cmd[i]->arg;
 		if (isDir(tmp->val))
 		{
 			dir_parse(all->cmd[i]);
-			tmp = tmp->next;	
+			tmp = tmp->next;
 			if (!all->cmd[i]->name_file)
 			{
 				ft_putendl_fd(": syntax error near unexpected token `newline'", STDERR_FILENO);
@@ -46,27 +46,21 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		}
 		else if (tmp && is_binary(tmp->val, all))
 		{
-
 			all->cmd[i]->type = BINARY;
 			all->cmd[i]->status = 0;
 			all->cmd[i]->flag_redirect = false;
-			all->cmd[i]->path_command = path_com(all ,tmp->val);
+			all->cmd[i]->path_command = path_com(all, tmp->val);
 			if (!all->cmd[i]->path_command)
 				return (error_return_int());
 			dir_parse(all->cmd[i]);
-			free_path(all); // это оставить
+			free_path(all);
 		}
-		//  printf("coomand number - %d\n", i+1);
-		//  ft_lstprint(tmp);
-//		 printf("f_direct status = %d\n", all->cmd[i]->f_direct);
-//		 printf("name_file = %s\n", all->cmd[i]->name_file);
-//		 printf("path_command = %s\n", all->cmd[i]->path_command);
-		i++;		
+		i++;
 	}
-	return 0;
+	return (0);
 }
 
-int		num_of_commands(t_all *all, t_list *HEAD)
+int	num_of_commands(t_all *all, t_list *HEAD)
 {
 	int		res;
 	t_list	*tmp;
@@ -97,14 +91,13 @@ int		num_of_commands(t_all *all, t_list *HEAD)
 			pipes = 1;
 			num = 0;
 		}
-    free_path(all); // оставь
+		free_path(all);
 		tmp = tmp->next;
 		num++;
 	}
 	all->number_command = res;
-	return flag;
+	return (flag);
 }
-
 // cat < 8 | cat < 1 | ls | wc
 
 int	init_cmd_struct(t_all *all)
@@ -113,7 +106,7 @@ int	init_cmd_struct(t_all *all)
 
 	i = 0;
 	all->cmd = malloc(sizeof(t_cmd *) * (all->number_command + 1));
-	while(i < all->number_command)
+	while (i < all->number_command)
 	{
 		all->cmd[i] = malloc(sizeof(t_cmd));
 		all->cmd[i]->arg = NULL;
@@ -123,15 +116,14 @@ int	init_cmd_struct(t_all *all)
 		i++;
 	}
 	all->cmd[i] = NULL;
-	return (0); 
+	return (0);
 }
 
-int dir_parse(t_cmd *cmd)
+int	dir_parse(t_cmd *cmd)
 {
 	t_list		*tmp;
 
 	tmp = cmd->arg;
-
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->val, ">"))
@@ -141,7 +133,7 @@ int dir_parse(t_cmd *cmd)
 				cmd->name_file = ft_strdup(tmp->next->val);
 			if (!cmd->name_file)
 				return (error_return_int());
-			return 0;
+			return (0);
 		}
 		else if (!ft_strcmp(tmp->val, ">>"))
 		{
@@ -150,7 +142,7 @@ int dir_parse(t_cmd *cmd)
 				cmd->name_file = ft_strdup(tmp->next->val);
 			if (!cmd->name_file)
 				return (error_return_int());
-			return 0;
+			return (0);
 		}
 		else if (!ft_strcmp(tmp->val, "<"))
 		{
@@ -159,7 +151,7 @@ int dir_parse(t_cmd *cmd)
 				cmd->name_file = ft_strdup(tmp->next->val);
 			if (!cmd->name_file)
 				return (error_return_int());
-			return 0;
+			return (0);
 		}
 		else if (!ft_strcmp(tmp->val, "<<"))
 		{
@@ -168,7 +160,7 @@ int dir_parse(t_cmd *cmd)
 				cmd->name_file = ft_strdup(tmp->next->val);
 			if (!cmd->name_file)
 				return (error_return_int());
-			return 0;
+			return (0);
 		}
 		else
 		{
@@ -177,5 +169,5 @@ int dir_parse(t_cmd *cmd)
 		}
 		tmp = tmp->next;
 	}
-	return 1;
+	return (1);
 }

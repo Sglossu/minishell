@@ -13,17 +13,16 @@
 #include "../includes/minishell.h"
 
 //  (мои друзья)  ''  ""  \   $  |  > < >> <<  (мои друзья)
-
 static int	flag_check(t_list *tmp)
 {
 	char	*str;
 
 	str = tmp->val;
 	if (!ft_strcmp(str, "|"))
-		return PIPE;
+		return (PIPE);
 	if (isDir(str))
-		return DIRECT;
-	return TEXT;
+		return (DIRECT);
+	return (TEXT);
 }
 
 static int	preparse(t_all *all, t_list **HEAD, char *input)
@@ -32,8 +31,6 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 	int		flag;
 
 	flag = 0;
-	// if (preparse_valid(input))
-	// 	return 1;
 	*HEAD = make_list_with_all_word(input);
 	tmp = *HEAD;
 	while (tmp)
@@ -60,8 +57,7 @@ int	parse(t_all *all, char *input)
 	flag = 0;
 	HEAD = NULL;
 	if (preparse(all, &HEAD, input))
-		return 1;
-//	ft_lstprint(HEAD);
+		return (1);
 	flag = num_of_commands(all, HEAD);
 	if (flag == 0)
 	{
@@ -74,5 +70,5 @@ int	parse(t_all *all, char *input)
 	}
 	else
 		res = 1;
-	return res;
+	return (res);
 }

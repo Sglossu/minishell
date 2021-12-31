@@ -31,12 +31,12 @@ static void	make_part_direct_pipe(char *input, t_list **tmp, int *i)
 {
 	if (input[*i] == '|')
 		ft_lstadd_back(tmp, ft_lstnew(ft_strdup("|")));
-	else if (input[*i] == '>' && input[*i+1] == '>')
+	else if (input[*i] == '>' && input[*i + 1] == '>')
 	{
 		ft_lstadd_back(tmp, ft_lstnew(ft_strdup(">>")));
 		*i += 1;
 	}
-	else if (input[*i] == '<' && input[*i+1] == '<')
+	else if (input[*i] == '<' && input[*i + 1] == '<')
 	{
 		ft_lstadd_back(tmp, ft_lstnew(ft_strdup("<<")));
 		*i += 1;
@@ -47,15 +47,15 @@ static void	make_part_direct_pipe(char *input, t_list **tmp, int *i)
 		ft_lstadd_back(tmp, ft_lstnew(ft_strdup("<")));
 }
 
-static void make_part_world(char *input, t_list **tmp, int *i)
+static void	make_part_world(char *input, t_list **tmp, int *i)
 {
 	char	*str;
 	char	sym;
 	int		j;
 	bool	inQuote;
-	
+
 	j = *i;
-	while (input[j] && input[j] != ' ' && input[j] != '>' 
+	while (input[j] && input[j] != ' ' && input[j] != '>'
 		&& input[j] != '<' && input[j] != '|')
 	{
 		if (input[j] == '\'' || input[j] == '\"')
@@ -75,7 +75,6 @@ static void make_part_world(char *input, t_list **tmp, int *i)
 		j++;
 	}
 	str = ft_substr(input, *i, j - *i);
-	// printf("|%s| < --- WORD\n", str);
 	if (ft_strlen(str) > 0)
 		ft_lstadd_back(tmp, ft_lstnew(str));
 	else
@@ -90,7 +89,7 @@ t_list	*make_list_with_all_word(char *input)
 
 	i = 0;
 	tmp = NULL;
-	while(input[i])
+	while (input[i])
 	{
 		if (input[i] != ' ')
 		{
@@ -101,18 +100,17 @@ t_list	*make_list_with_all_word(char *input)
 		}
 		i++;
 	}
-	return(tmp);
+	return (tmp);
 }
 
 t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command)
 {
 	t_list	*tmp;
 	t_list	*res;
+
 	tmp = HEAD;
 	res = NULL;
-
 	(void) all;
-
 	while ((tmp) && (num_command))
 	{
 		if (tmp->flag == PIPE)
@@ -124,5 +122,5 @@ t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command)
 		ft_lstadd_back(&res, ft_lstnew(ft_strdup(tmp->val)));
 		tmp = tmp->next;
 	}
-	return(res);
+	return (res);
 }

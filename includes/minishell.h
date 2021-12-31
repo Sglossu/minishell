@@ -129,7 +129,7 @@ int		is_buildin(char *val);
 
 // preparse
 int		isDir(char *str);
-char *ready_string(t_list *tmp, t_all *all, int *flag);
+char	*ready_string(t_list *tmp, t_all *all, int *flag);
 
 // cmd
 int		num_of_commands(t_all *all, t_list *HEAD);
