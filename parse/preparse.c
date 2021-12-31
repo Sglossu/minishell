@@ -64,13 +64,13 @@ char *get_name(char *input, int i)
 	name = NULL;
 	j = i + 1;
 
-	if (input[j] == '?')
+	if (input[j] == '?' || ft_isdigit(input[j]))
 	{
 		j++;
 	}
 	else
 	{
-		while (input[j] && ft_isalpha(input[j]))
+		while (input[j] && ft_isalnum(input[j]))
 		{
 			j++;
 		}
@@ -98,7 +98,7 @@ char *get_var_from_path(t_all *all, char *name)
 	return res;
 }
 
-char *join_parts(char *input, char *change, int i)
+char *join_parts(char *input, char *change, char *name, int i)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -106,17 +106,18 @@ char *join_parts(char *input, char *change, int i)
 	int		j;
 
 	j = i + 1;
-	if (input[j] == '?')
-	{
-		j++;
-	}
-	else
-	{
-		while (input[j] && ft_isalnum(input[j]))
-		{
-			j++;
-		}
-	}
+	// if (input[j] == '?')
+	// {
+	// 	j++;
+	// }
+	// else
+	// {
+	// 	while (input[j] && ft_isalnum(input[j]))
+	// 	{
+	// 		j++;
+	// 	}
+	// }
+	j += ft_strlen(name);
 	tmp = ft_substr(input, 0 , i);
 	if (!tmp)
 		return(error_return_null());
@@ -175,7 +176,7 @@ char *ft_dollar(char *input, t_all *all, int *i)
 	}
 	else
 		change = get_var_from_path(all, name);
-	res = join_parts(input, change, *i);
+	res = join_parts(input, change, name, *i);
 	len = ft_len(name, change);
 	*i += len;
 	if (name)
@@ -266,7 +267,7 @@ char *ready_string(t_list *tmp, t_all *all)
 		{
 			if (str[i] == '\'' || str[i] == '\"')
 				str = ft_quote(str, all, &i, str[i]);
-			if (str[i] == '$' && (ft_isalnum(str[i+1]) || str[i+1] == '?'))
+			if (str[i] == '$' && (ft_isalpha(str[i+1]) || str[i+1] == '?'))
 				str = ft_dollar(str, all, &i);
 			if (str[i] == '\\')
 				str = ft_ecran(str, &i);
