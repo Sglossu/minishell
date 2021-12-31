@@ -75,6 +75,7 @@ static	int	utils_cd(t_all *all, char *str)
 		{
 			g_status = errno;
 			ft_printf(2, "cd: %s: %s\n", str, strerror(errno));
+			return (g_status);
 		}
 	}
 	else

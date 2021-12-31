@@ -81,7 +81,7 @@ char	*str_without_one_plus(char *str)
 		dst[i] = str[i];
 		i++;
 	}
-	while (str[i] && str[i + 1])
+	while (str[i])
 	{
 		dst[i] = str[i + 1];
 		i++;
@@ -112,7 +112,7 @@ int	str_is_variable(char *str)
 		return (error_in_variable(str));
 	i = 0;
 	if (!ft_isalpha(tmp_str[i]) && tmp_str[i] != '_')
-		return (1);
+		return (error_in_variable(str));
 	i++;
 	while (tmp_str[i] && tmp_str[i] != '=')
 	{
