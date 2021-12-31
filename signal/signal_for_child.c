@@ -18,7 +18,7 @@ void	ft_signal_quit_child(int sig)
 
 	quit = ft_itoa(sig);
 	ft_putstr_fd("Quit: ", STDERR_FILENO);
-	ft_putendl_fd(quit, STDERR_FILENO);
+	ft_putstr_fd(quit, STDERR_FILENO);
 	free(quit);
 	quit = NULL;
 	g_status = 131;
@@ -27,7 +27,6 @@ void	ft_signal_quit_child(int sig)
 void	ft_signal_cltr_c_child(int sig)
 {
 	(void)sig;
-	write(STDERR_FILENO, "\n", 1);
 	g_status = 130;
 }
 

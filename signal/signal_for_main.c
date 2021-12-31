@@ -26,5 +26,5 @@ void	ft_signal_cltr_c_main(int sig)
 //	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	g_status = 130;
+	g_status = 1;
 }

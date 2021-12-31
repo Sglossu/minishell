@@ -85,7 +85,6 @@ int	ft_exit(t_list *arg)
 	if (!arg)
 	{
 		ft_putendl_fd("exit", STDERR_FILENO);
-		g_status = 0;
 		exit (g_status);
 	}
 	ft_putendl_fd("exit", STDERR_FILENO);
