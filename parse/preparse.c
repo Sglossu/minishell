@@ -96,7 +96,7 @@ char *join_parts(char *input, char *change, int i)
 	int		j;
 
 	j = i + 1;
-	while (input[j] && ft_isalpha(input[j]))
+	while (input[j] && ft_isalnum(input[j]))
 		j++;
 	tmp = ft_substr(input, 0 , i);
 	if (!tmp)
