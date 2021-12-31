@@ -71,39 +71,15 @@ char	*find_before_equals(char *str)
 	return (dst);
 }
 
-int	str_is_variable(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!ft_isalpha(str[i]) && str[i] != '_')
-		return (1);
-	i++;
-	while (str[i] && str[i] != '=')
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 void	print_params(char **buf, int count)
 {
-	int		i;
 	int		j;
 
 	j = 0;
 	while (j < count)
 	{
-		i = 0;
 		write(STDOUT_FILENO, "declare -x ", 11);
-		while (buf[j][i] != 0)
-		{
-			write(1, &buf[j][i], 1);
-			i++;
-		}
-		write(1, "\n", 1);
+		ft_putendl_fd(buf[j], STDOUT_FILENO);
 		j++;
 	}
 }

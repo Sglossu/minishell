@@ -94,6 +94,7 @@ char *join_parts(char *input, char *change, int i)
 	char	*tmp2;
 	char	*res;
 	int		j;
+	(void)len;
 
 	j = i + 1;
 	while (input[j] && ft_isalpha(input[j]))

@@ -23,28 +23,25 @@ static	char	*split_for_dup(char *str, char c)
 void	free_buf(char **buf)
 {
 	int	i;
-	int	j;
 
 	i = 0;
+	if (!buf)
+		return ;
 	while (buf[i])
 	{
-		j = 0;
-		while (buf[j])
-		{
-			free(buf[j]);
-			buf[j] = NULL;
-			j++;
-		}
 		free(buf[i]);
 		buf[i] = NULL;
 		i++;
 	}
+	free(buf);
+	buf = NULL;
 }
 
 static	char	**argv_not_exist(char ***argv)
 {
 	free_buf(*argv);
 	g_status = errno;
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 	return (NULL);
 }
 
@@ -56,10 +53,7 @@ char	**from_lst_to_buf(int argc, t_list *lst, char c)
 	i = 0;
 	argv = (char **)malloc(sizeof(char *) * (argc + 1));
 	if (!argv)
-	{
-		g_status = errno;
-		return (NULL);
-	}
+		return (argv_not_exist(&argv));
 	argv[argc] = NULL;
 	while (lst)
 	{
@@ -73,4 +67,19 @@ char	**from_lst_to_buf(int argc, t_list *lst, char c)
 		lst = lst->next;
 	}
 	return (argv);
+}
+
+void	remember_pwd(t_all *all)
+{
+	char	*pwd;
+
+	pwd = getcwd(NULL, 1024);
+	if (pwd)
+	{
+		free(all->oldpwd);
+		all->oldpwd = ft_strdup(pwd);
+		if (!all->oldpwd)
+			return (error_return_nothing());
+	}
+	free(pwd);
 }

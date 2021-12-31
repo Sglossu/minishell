@@ -29,7 +29,6 @@ SRCS		=	main.c \
 				$(DIR_PIPE)pipe_for_another.c \
 				\
 				$(DIR_DIRECT)functions_for_direct.c $(DIR_DIRECT)one_direct.c			$(DIR_DIRECT)main_function_for_one_direct.c \
-				$(DIR_DIRECT)execute_doub_redir.c \
 				\
 				$(DIR_PARSE)parser.c				$(DIR_PARSE)parser_utils.c			$(DIR_PARSE)lists.c \
 				$(DIR_PARSE)cmd_parse.c				$(DIR_PARSE)preparse.c	\
@@ -45,8 +44,8 @@ HEAD_LIB	=	./libft/libft.h
 LIB_PRINT	=	./printf/libftprintf.a
 HEAD_LIB_PRINT	=	./printf/ft_printf.h
 
-RDL_MAC		= 	-lreadline -L ~/.brew/opt/readline/lib
-#RDL_MAC		= -lreadline -L/usr/local/opt/readline/lib
+#RDL_MAC		= 	-lreadline -L ~/.brew/opt/readline/lib
+RDL_MAC		= -lreadline -L/usr/local/opt/readline/lib
 
 .PHONY		:	all clean fclean re
 

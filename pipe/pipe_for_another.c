@@ -58,7 +58,23 @@ static	int	pipes_for_all_com(int com, int **fd)
 	return (0);
 }
 
-int	pipe_for_another(t_all *all, int com) // com - количество пайпов
+static	void	ft_waitpid(t_all *all, int com)
+{
+	all->i = -1;
+	while (++all->i < com + 1)
+	{
+		waitpid(all->cmd[all->i]->pid, &all->cmd[all->i]->status, 0);
+		g_status = WEXITSTATUS(all->cmd[all->i]->status);
+		if (!g_status && WIFSIGNALED(all->cmd[all->i]->status))
+		{
+			if (all->cmd[all->i]->status == 2 || all->cmd[all->i]->status == 3)
+				ft_putendl_fd("", 2);
+			g_status = 128 + WTERMSIG(all->cmd[all->i]->status);
+		}
+	}
+}
+
+int	pipe_for_another(t_all *all, int com)
 {
 	int		**fd;
 	int		i;
@@ -77,18 +93,7 @@ int	pipe_for_another(t_all *all, int com) // com - количество пайп
 		ft_signal_main();
 		return (g_status);
 	}
-	all->i = -1;
-	while (++all->i < com + 1)
-	{
-		waitpid(all->cmd[all->i]->pid, &all->cmd[all->i]->status, 0);
-		g_status = WEXITSTATUS(all->cmd[all->i]->status);
-		if (!g_status && WIFSIGNALED(all->cmd[all->i]->status))
-		{
-			if (all->cmd[all->i]->status == 2 || all->cmd[all->i]->status == 3)
-				ft_putendl_fd("", 2);
-			g_status = 128 + WTERMSIG(all->cmd[all->i]->status);
-		}
-	}
+	ft_waitpid(all, com);
 	i = -1;
 	while (++i <= com)
 		free(fd[i]);
