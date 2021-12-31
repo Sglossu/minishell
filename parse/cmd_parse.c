@@ -66,15 +66,17 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 	return 0;
 }
 
-void	num_of_commands(t_all *all, t_list *HEAD)
+int		num_of_commands(t_all *all, t_list *HEAD)
 {
 	int		res;
 	t_list	*tmp;
 	int		pipes;
 	int		num;
+	int		flag;
 
 	res = 0;
 	num = 1;
+	flag = 0;
 	pipes = 1;
 	tmp = HEAD;
 	while (tmp)
@@ -88,17 +90,19 @@ void	num_of_commands(t_all *all, t_list *HEAD)
 		{
 			ft_printf(STDERR_FILENO, "minishell: %s: command not found\n", tmp->val);
 			g_status = 127;
+			flag = 1;
 		}
 		if (!ft_strcmp(tmp->val, "|") && tmp->flag == PIPE)
 		{
 			pipes = 1;
-			num = 1;
+			num = 0;
 		}
     free_path(all); // оставь
 		tmp = tmp->next;
 		num++;
 	}
 	all->number_command = res;
+	return flag;
 }
 
 // cat < 8 | cat < 1 | ls | wc

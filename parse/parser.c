@@ -53,19 +53,26 @@ int	parse(t_all *all, char *input)
 {
 	t_list		*HEAD;
 	int			res;
+	int			flag;
 
 	all->i = 0;
 	res = 0;
+	flag = 0;
 	HEAD = NULL;
 	if (preparse(all, &HEAD, input))
 		return 1;
 //	ft_lstprint(HEAD);
-	num_of_commands(all, HEAD);
-	if (!all->number_command && HEAD && isDir(HEAD->val))
-		all->number_command++;
-	init_cmd_struct(all);
-	if (fill_cmd_struct(all, HEAD))
+	flag = num_of_commands(all, HEAD);
+	if (flag == 0)
+	{
+		if (!all->number_command && HEAD && isDir(HEAD->val))
+			all->number_command++;
+		init_cmd_struct(all);
+		if (fill_cmd_struct(all, HEAD))
+			res = 0;
+		ft_lstclear(&HEAD, free);
+	}
+	else
 		res = 1;
-	ft_lstclear(&HEAD, free);
 	return res;
 }

@@ -132,7 +132,7 @@ int		isDir(char *str);
 char *ready_string(t_list *tmp, t_all *all, int *flag);
 
 // cmd
-void	num_of_commands(t_all *all, t_list *HEAD);
+int		num_of_commands(t_all *all, t_list *HEAD);
 int		init_cmd_struct(t_all *all);
 int		fill_cmd_struct(t_all *all, t_list *HEAD);
 char	*path_com(t_all *all, char *command);
