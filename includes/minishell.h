@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:17:25 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/14 18:17:31 by sglossu          ###   ########.fr       */
+/*   Updated: 2021/12/31 16:27:13 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,13 +126,16 @@ int		is_binary(char *val, t_all *all);
 int		is_buildin(char *val);
 
 // preparse
-int		isDir(char *str);
-char *ready_string(t_list *tmp, t_all *all, int *flag);
+int		is_dir(char *str);
+int		is_dollar(char *str);
+int		is_ecran(char *str);
+char	*ft_dollar(char *input, t_all *all, int *i);
+char	*ready_string(t_list *tmp, t_all *all, int *flag);
 
 // cmd
-int		num_of_commands(t_all *all, t_list *HEAD);
+int		num_of_commands(t_all *all, t_list *head);
 int		init_cmd_struct(t_all *all);
-int		fill_cmd_struct(t_all *all, t_list *HEAD);
+int		fill_cmd_struct(t_all *all, t_list *head);
 char	*path_com(t_all *all, char *command);
 int		dir_parse(t_cmd *cmd);
 

@@ -13,36 +13,33 @@
 #include "../includes/minishell.h"
 
 //  (мои друзья)  ''  ""  \   $  |  > < >> <<  (мои друзья)
-
 static int	flag_check(t_list *tmp)
 {
 	char	*str;
 
 	str = tmp->val;
 	if (!ft_strcmp(str, "|"))
-		return PIPE;
-	if (isDir(str))
-		return DIRECT;
-	return TEXT;
+		return (PIPE);
+	if (is_dir(str))
+		return (DIRECT);
+	return (TEXT);
 }
 
-static int	preparse(t_all *all, t_list **HEAD, char *input)
+static int	preparse(t_all *all, t_list **head, char *input)
 {
 	t_list	*tmp;
 	int		flag;
 
 	flag = 0;
-	// if (preparse_valid(input))
-	// 	return 1;
-	*HEAD = make_list_with_all_word(input);
-	tmp = *HEAD;
+	*head = make_list_with_all_word(input);
+	tmp = *head;
 	while (tmp)
 	{
 		tmp->flag = flag_check(tmp);
 		if (tmp->flag == TEXT)
 			tmp->val = ready_string(tmp, all, &flag);
 		if (ft_strlen(tmp->val) == 0 && (!flag))
-			ft_lstremove(HEAD, tmp);
+			ft_lstremove(head, tmp);
 		tmp = tmp->next;
 		flag = 0;
 	}
@@ -51,28 +48,27 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 
 int	parse(t_all *all, char *input)
 {
-	t_list		*HEAD;
+	t_list		*head;
 	int			res;
 	int			flag;
 
 	all->i = 0;
 	res = 0;
 	flag = 0;
-	HEAD = NULL;
-	if (preparse(all, &HEAD, input))
-		return 1;
-//	ft_lstprint(HEAD);
-	flag = num_of_commands(all, HEAD);
+	head = NULL;
+	if (preparse(all, &head, input))
+		return (1);
+	flag = num_of_commands(all, head);
 	if (flag == 0)
 	{
-		if (!all->number_command && HEAD && isDir(HEAD->val))
+		if (!all->number_command && head && is_dir(head->val))
 			all->number_command++;
 		init_cmd_struct(all);
-		if (fill_cmd_struct(all, HEAD))
+		if (fill_cmd_struct(all, head))
 			res = 0;
-		ft_lstclear(&HEAD, free);
+		ft_lstclear(&head, free);
 	}
 	else
 		res = 1;
-	return res;
+	return (res);
 }
