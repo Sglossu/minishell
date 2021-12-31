@@ -12,10 +12,6 @@
 
 #include "../includes/minishell.h"
 
-// SIGINT	Cntrl+C
-// SIGTERM	Cntrl+
-// SIGQUIT	Cntrl+backslash
-
 void	ft_signal_quit_child(int sig)
 {
 	char	*quit;

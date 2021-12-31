@@ -76,13 +76,6 @@ int	work_with_arg(char *str)
 		exit (255);
 	}
 	status_exit = ft_atoi_long(str);
-//	g_status = WEXITSTATUS(status_exit);
-//	if (!g_status && WIFSIGNALED(status_exit))
-//	{
-//		if (status_exit == 2 || status_exit == 3)
-//			ft_putendl_fd("", 2);
-//		g_status = 128 + WTERMSIG(status_exit);
-//	}
 	return (status_exit);
 }
 

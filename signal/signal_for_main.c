@@ -12,10 +12,6 @@
 
 #include "../includes/minishell.h"
 
-// SIGINT	Cntrl+C
-// SIGTERM	Cntrl+
-// SIGQUIT	Cntrl+backslash
-
 void	ft_signal_main(void)
 {
 	signal(SIGTERM, SIG_IGN);

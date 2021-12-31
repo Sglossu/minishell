@@ -47,7 +47,6 @@ void	child(t_all *all, int all_i)
 	arg = from_lst_to_buf \
 	(ft_lstsize(all->cmd[all_i]->arg), all->cmd[all_i]->arg, '\0');
 	env = from_lst_to_buf(ft_lstsize(all->env), all->env, '\0');
-//	ft_printf(2, "g_status in execve: %d\n", g_status);
 	if (execve(all->cmd[all_i]->path_command, arg, env) == -1)
 	{
 		g_status = errno;
@@ -88,7 +87,7 @@ int	main_work(t_all *all)
 {
 	ft_signal_in_child();
 	if (!all->cmd[0]->arg)
-		return (1); // нет команды, работаем дальше
+		return (1);
 	if (all->cmd[0]->type == BUILDIN)
 	{
 		if_buildins(all, all->cmd[0]->arg);

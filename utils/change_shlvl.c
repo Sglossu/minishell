@@ -12,11 +12,24 @@
 
 #include "../includes/minishell.h"
 
+static	void	shlvl_classic_number(int shlvl, char **str_new)
+{
+	char	*nb_str;
+
+	nb_str = ft_itoa(shlvl + 1);
+	if (!nb_str)
+		return (error_return_nothing());
+	else
+	{
+		*str_new = ft_strjoin("SHLVL=", nb_str);
+		free(nb_str);
+	}
+}
+
 char	*change_shlvl(char *str_old)
 {
 	char	*str_new;
 	int		shlvl;
-	char	*nb_str;
 
 	shlvl = ft_atoi(str_old + 6);
 	if (!ft_isdigit(str_old[6]) && str_old[6] != '-')
@@ -29,14 +42,7 @@ char	*change_shlvl(char *str_old)
 		str_new = ft_strdup("SHLVL=");
 	else
 	{
-		nb_str = ft_itoa(shlvl + 1);
-		if (!nb_str)
-			return (NULL);
-		else
-		{
-			str_new = ft_strjoin("SHLVL=", nb_str);
-			free(nb_str);
-		}
+		shlvl_classic_number(shlvl, &str_new);
 	}
 	if (!str_new)
 		return (NULL);

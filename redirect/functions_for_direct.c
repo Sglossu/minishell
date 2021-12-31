@@ -64,7 +64,6 @@ int	ft_redir(t_cmd *cmd, int fd_std)
 	{
 		ft_printf(STDERR_FILENO, "%s: %s\n", cmd->name_file, strerror(errno));
 		g_status = errno;
-//		ft_printf(2, "errno %d\n", errno);
 		exit (errno);
 	}
 	if_doub_redir(cmd);
