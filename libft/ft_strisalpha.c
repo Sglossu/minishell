@@ -20,8 +20,8 @@ int	ft_strisalpha(char *str)
 	while (str[i])
 	{
 		if (!ft_isalpha(str[i]))
-			return (1); // есть цифра
+			return (1);
 		i++;
 	}
-	return (0); // только буквы
+	return (0);
 }

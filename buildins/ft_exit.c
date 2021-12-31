@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	problems(char *str, int minus)
+static	int	problems(char *str, int minus)
 {
 	int	len;
 
@@ -36,7 +36,7 @@ int	problems(char *str, int minus)
 	return (0);
 }
 
-long long	ft_atoi_overflow(char *str)
+static	long long	ft_atoi_overflow(char *str)
 {
 	int			i;
 	long long	minus;
@@ -72,26 +72,18 @@ int	work_with_arg(char *str)
 	if (!ft_atoi_overflow(str) && (ft_strcmp(str, "0")
 			|| ft_strcmp(str, "-0") || ft_strcmp(str, "+0")))
 	{
-		// overflow
 		printf("exit: %s: numeric argument required\n", str);
 		exit (255);
 	}
 	status_exit = ft_atoi_long(str);
-
-	g_status = WEXITSTATUS(status_exit);
-	if (!g_status && WIFSIGNALED(status_exit))
-	{
-		if (status_exit == 2 ||status_exit == 3)
-			ft_putendl_fd("", 2);
-		g_status = 128 + WTERMSIG(status_exit);
-	}
-	return(g_status);
-
-//	if (status_exit > 0)
-//		return ((int)status_exit % 256);
-//	else if (status_exit % 256 != 0)
-//		return ((int)(status_exit % 256 + 256));
-//	return (0);
+//	g_status = WEXITSTATUS(status_exit);
+//	if (!g_status && WIFSIGNALED(status_exit))
+//	{
+//		if (status_exit == 2 || status_exit == 3)
+//			ft_putendl_fd("", 2);
+//		g_status = 128 + WTERMSIG(status_exit);
+//	}
+	return (status_exit);
 }
 
 int	ft_exit(t_list *arg)
@@ -104,7 +96,7 @@ int	ft_exit(t_list *arg)
 		exit (g_status);
 	}
 	ft_putendl_fd("exit", STDERR_FILENO);
-	if (ft_strisdigit(arg->val)) // return 1 - есть буква
+	if (ft_strisdigit(arg->val))
 	{
 		ft_printf(2, "exit: %s: numeric argument required\n", arg->val);
 		exit (255);
