@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:18:19 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/29 14:14:18 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/31 18:24:32 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ int	parse_path(t_all *all)
 {
 	t_list	*tmp;
 	char	*str;
-	int		i;
 
-	i = -1;
 	if (all->path)
 		free_path(all);
 	tmp = ft_lstfind(all->env, "PATH");
