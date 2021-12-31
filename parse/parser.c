@@ -29,7 +29,9 @@ static int	flag_check(t_list *tmp)
 static int	preparse(t_all *all, t_list **HEAD, char *input)
 {
 	t_list	*tmp;
-	
+	int		flag;
+
+	flag = 0;
 	// if (preparse_valid(input))
 	// 	return 1;
 	*HEAD = make_list_with_all_word(input);
@@ -38,10 +40,11 @@ static int	preparse(t_all *all, t_list **HEAD, char *input)
 	{
 		tmp->flag = flag_check(tmp);
 		if (tmp->flag == TEXT)
-			tmp->val = ready_string(tmp, all);
-		if (ft_strlen(tmp->val) == 0)
+			tmp->val = ready_string(tmp, all, &flag);
+		if (ft_strlen(tmp->val) == 0 && (!flag))
 			ft_lstremove(HEAD, tmp);
 		tmp = tmp->next;
+		flag = 0;
 	}
 	return (0);
 }

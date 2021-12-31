@@ -254,7 +254,7 @@ static char *ft_quote(char *str, t_all *all, int *i, char sym)
 	return(str);
 }
 
-char *ready_string(t_list *tmp, t_all *all)
+char *ready_string(t_list *tmp, t_all *all, int *flag)
 {
 	char	*str;
 	int		i;
@@ -266,7 +266,10 @@ char *ready_string(t_list *tmp, t_all *all)
 		while (str[i])
 		{
 			if (str[i] == '\'' || str[i] == '\"')
+			{
 				str = ft_quote(str, all, &i, str[i]);
+				*flag = 1;
+			}
 			if (str[i] == '$' && (ft_isalpha(str[i+1]) || str[i+1] == '?'))
 				str = ft_dollar(str, all, &i);
 			if (str[i] == '\\')
