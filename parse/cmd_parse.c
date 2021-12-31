@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/29 19:38:50 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/31 18:17:50 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	num_of_commands(t_all *all, t_list *HEAD)
 			res++;
 			pipes = 0;
 		}
-		else if (num == 1)
+		else if (num == 1 && (!is_dir(tmp->val)))
 		{
 			ft_printf(STDERR_FILENO,
 				"minishell: %s: command not found\n", tmp->val);
