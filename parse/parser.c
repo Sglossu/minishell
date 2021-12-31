@@ -28,7 +28,7 @@ static int	flag_check(t_list *tmp, t_all *all, int *pipe)
 		*pipe = 0;
 		return (DIRECT);
 	}
-	if (pipe)
+	if (*pipe)
 	{
 		if (is_buildin(tmp->val) || is_binary(tmp->val, all))
 		{
