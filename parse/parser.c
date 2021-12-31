@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/29 20:13:09 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/31 18:58:17 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,20 @@ static int	preparse(t_all *all, t_list **head, char *input)
 	{
 		tmp->flag = flag_check(tmp);
 		if (tmp->flag == TEXT)
+		{
 			tmp->val = ready_string(tmp, all, &flag);
+			if (!tmp->val)
+			{
+				g_status = errno;
+				return (0);
+			}
+		}
 		if (ft_strlen(tmp->val) == 0 && (!flag))
 			ft_lstremove(head, tmp);
 		tmp = tmp->next;
 		flag = 0;
 	}
-	return (0);
+	return (1);
 }
 
 int	parse(t_all *all, char *input)
@@ -56,7 +63,7 @@ int	parse(t_all *all, char *input)
 	res = 0;
 	flag = 0;
 	head = NULL;
-	if (preparse(all, &head, input))
+	if (!preparse(all, &head, input))
 		return (1);
 	flag = num_of_commands(all, head);
 	if (flag == 0)

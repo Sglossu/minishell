@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/31 18:15:21 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/31 18:59:45 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,15 @@ char	*ft_ecran(char *input, int *i)
 	return (res);
 }
 
-static char	*ft_quote(char *str, t_all *all, int *i, char sym)
+static char	*quote_main_part(char *str, t_all *all, int i, int j)
 {
-	char	*s;
 	char	*m;
-	char	*f;
+	char	sym;
 	int		x;
-	int		j;
 
-	j = *i;
+	sym = str[i];
+	m = ft_substr(str, i + 1, j - i - 1);
 	x = 0;
-	while (str[j++])
-		if (str[j] == sym)
-			break ;
-	s = ft_substr(str, 0, *i);
-	m = ft_substr(str, *i + 1, j - *i - 1);
 	if (sym == '\"' && is_dollar(m) && ft_strlen(m) > 1)
 	{
 		while (m[x])
@@ -67,7 +61,31 @@ static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 			x++;
 		}
 	}
+	return (m);
+}
+
+static char	*ft_quote(char *str, t_all *all, int *i, char sym)
+{
+	char	*s;
+	char	*m;
+	char	*f;
+	int		x;
+	int		j;
+
+	j = *i;
+	x = 0;
+	while (str[j++])
+		if (str[j] == sym)
+			break ;
+	s = ft_substr(str, 0, *i);
+	if (!s)
+		return (error_return_null());
+	m = quote_main_part(str, all, *i, j);
+	if (!m)
+		return (error_return_null());
 	f = strdup(str + j + 1);
+	if (!f)
+		return (error_return_null());
 	if (x == 0)
 		*i = j - 1;
 	free(str);
@@ -92,12 +110,22 @@ char	*ready_string(t_list *tmp, t_all *all, int *flag)
 			if (str[i] == '\'' || str[i] == '\"')
 			{
 				str = ft_quote(str, all, &i, str[i]);
+				if (!str)
+					return (error_return_null());
 				*flag = 1;
 			}
 			if (str[i] == '$' && (ft_isalpha(str[i + 1]) || str[i + 1] == '?'))
+			{
 				str = ft_dollar(str, all, &i);
+				if (!str)
+					return (error_return_null());
+			}
 			if (str[i] == '\\')
+			{
 				str = ft_ecran(str, &i);
+				if (!str)
+					return (error_return_null());
+			}
 			i++;
 		}
 	}
