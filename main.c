@@ -27,7 +27,6 @@ int	main(int argc, char **argv, char **envi)
 	init(all, envi);
 	while (1)
 	{
-//		ft_printf(2, "g_status: %d\n", g_status);
 		ft_signal_main();
 		input = readline(MINISHELL);
 		if (!input)
@@ -41,15 +40,17 @@ int	main(int argc, char **argv, char **envi)
 		if (!ft_strcmp(input, ""))
 			continue;
 		add_history(input);
-		parse(all, input);
-		if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
-			main_work(all);
-		else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)
-			one_direct(all);
-		else if (all->number_command > 1)
-			our_pipe(all);
+		if (!parse(all, input))
+		{
+			if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
+				main_work(all);
+			else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)
+				one_direct(all);
+			else if (all->number_command > 1)
+				our_pipe(all);
+			ft_free(all);
+		}
 		free(input);
-		ft_free(all);
 	}
 	return (g_status);
 }
