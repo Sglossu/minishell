@@ -67,8 +67,6 @@ typedef struct s_all {
 
 int	g_status;
 
-void	path_print(t_all *all); // потом удалить
-
 //buidins
 int		ft_pwd(t_all *all);
 int		ft_cd(t_all *all, t_list *arg);
@@ -143,8 +141,7 @@ int		dir_parse(t_cmd *cmd);
 
 // lists
 t_list	*make_list_with_all_word(char *input);
-t_list	*copy_part_of_list(t_all *all, t_list *head, int num_command);
-void	ft_lstprint(t_list *head);
+t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command);
 char	*ft_ecran(char *input, int *i);
 
 //free

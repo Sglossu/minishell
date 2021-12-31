@@ -14,7 +14,7 @@
 
 void	free_path(t_all *all)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (!all->path)
@@ -49,12 +49,10 @@ int	ft_free(t_all *all)
 	while (i < all->number_command)
 	{
 		free_cmd(all->cmd[i]);
-        free(all->cmd[i]);
+		free(all->cmd[i]);
 		i++;
 	}
 	free(all->cmd);
-	// free_path(all);
-	// all->cmd = NULL;
 	all->number_command = 0;
 	all->path = NULL;
 	all->i = 0;

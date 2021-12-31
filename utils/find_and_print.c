@@ -18,11 +18,11 @@ char	*find_after_equals(char *str)
 	int		i;
 	char	*str_find;
 
-	i = 0;
+	i = -1;
 	equals = false;
 	if (!str)
 		return (NULL);
-	while (str[i])
+	while (str[++i])
 	{
 		if (str[i] == '=')
 		{
@@ -30,7 +30,6 @@ char	*find_after_equals(char *str)
 			i++;
 			break ;
 		}
-		i++;
 	}
 	if (equals)
 	{
@@ -82,6 +81,7 @@ void	print_params(char **buf, int count)
 		ft_putendl_fd(buf[j], STDOUT_FILENO);
 		j++;
 	}
+	free_buf(buf);
 }
 
 void	print_lst(t_list *lst)

@@ -72,8 +72,6 @@ char	*direct_for_lstfind(t_cmd *cmd)
 
 int	one_direct(t_all *all)
 {
-//	main_function_for_one_direct(all);
-//	exit (0);
 	all->cmd[all->i]->pid = fork();
 	if (all->cmd[all->i]->pid == -1)
 	{
