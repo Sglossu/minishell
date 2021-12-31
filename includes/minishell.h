@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:17:25 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/31 16:27:13 by bshawn           ###   ########.fr       */
+/*   Updated: 2021/12/31 19:54:48 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define    TEXT		8
 # define    PIPE		9
 # define    DIRECT		10
+# define    COMMAND     11
+# define    WTF         12
 
 # define    BUILDIN		0
 # define    BINARY		1
