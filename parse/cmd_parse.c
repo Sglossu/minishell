@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2022/01/01 18:20:01 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 18:59:22 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ int	dir_parse(t_cmd *cmd)
 			dir_type = NONE;
 		if (dir_parse_help(tmp, cmd, dir_type))
 			return (error_return_int());
+		if (dir_type != NONE)
+			return (0);
 		tmp = tmp->next;
 	}
 	return (0);
