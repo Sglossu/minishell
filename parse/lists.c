@@ -92,8 +92,6 @@ t_list	*make_list_with_all_word(char *input)
 			else
 			{
 				make_part_world(input, &tmp, &i);
-				if (g_status)
-					break;
 			}
 		}
 		i++;

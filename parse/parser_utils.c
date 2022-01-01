@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:53 by sglossu           #+#    #+#             */
-/*   Updated: 2022/01/01 16:42:11 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 21:45:21 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	find_com(t_all *all, char *command)
 		}
 		i++;
 	}
-	if (!access(command, 0 | 1))
+	if (!access(command, 1))
 	{
 		return (1);
 	}

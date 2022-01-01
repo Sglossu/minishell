@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2022/01/01 20:08:41 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 21:55:15 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	num_of_commands(t_all *all, t_list *HEAD)
 	{
 		if (tmp->flag == COMMAND || tmp->flag == WTF)
 			res++;
+		// if (tmp->flag == WTF)
 		if (is_wtf(all, tmp))
 		{
 			ft_printf(STDERR_FILENO, "minishell: %s: command not found\n",
