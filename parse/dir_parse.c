@@ -16,9 +16,11 @@ static int	dir(t_cmd *cmd, t_list *tmp)
 {
 	cmd->f_direct = DIR;
 	if (tmp->next)
+	{
 		cmd->name_file = ft_strdup(tmp->next->val);
-	if (!cmd->name_file)
-		return (error_return_int());
+		if (!cmd->name_file)
+			return (error_return_int());
+	}
 	return (0);
 }
 
@@ -26,9 +28,11 @@ static int	doub_dir(t_cmd *cmd, t_list *tmp)
 {
 	cmd->f_direct = DOUB_DIR;
 	if (tmp->next)
+	{
 		cmd->name_file = ft_strdup(tmp->next->val);
-	if (!cmd->name_file)
-		return (error_return_int());
+		if (!cmd->name_file)
+			return (error_return_int());
+	}
 	return (0);
 }
 
@@ -36,9 +40,11 @@ static int redir(t_cmd *cmd, t_list *tmp)
 {
 	cmd->f_direct = REDIR;
 	if (tmp->next)
+	{
 		cmd->name_file = ft_strdup(tmp->next->val);
-	if (!cmd->name_file)
-		return (error_return_int());
+		if (!cmd->name_file)
+			return (error_return_int());
+	}
 	return (0);
 }
 
@@ -46,9 +52,11 @@ static int doub_redir(t_cmd *cmd, t_list *tmp)
 {
 	cmd->f_direct = DOUB_REDIR;
 	if (tmp->next)
+	{
 		cmd->name_file = ft_strdup(tmp->next->val);
-	if (!cmd->name_file)
-		return (error_return_int());
+		if (!cmd->name_file)
+			return (error_return_int());
+	}
 	return (0);
 }
 
