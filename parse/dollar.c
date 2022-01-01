@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 16:25:50 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 19:41:54 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 23:13:36 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,6 @@ char	*ft_dollar(char *input, t_all *all, int *i)
 	int		len;
 
 	name = get_name(input, *i);
-//	if (!name)
-//		return (NULL);
 	if (name && !ft_strcmp(name, "?"))
 	{
 		change = ft_itoa(g_status);
