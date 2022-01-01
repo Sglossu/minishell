@@ -67,6 +67,8 @@ static void	make_part_world(char *input, t_list **tmp, int *i)
 	j = *i;
 	j = logic_of_part_world(input, j);
 	str = ft_substr(input, *i, j - *i);
+	if (!str)
+		return (error_return_nothing());
 	if (ft_strlen(str) > 0)
 		ft_lstadd_back(tmp, ft_lstnew(str));
 	else
@@ -88,7 +90,11 @@ t_list	*make_list_with_all_word(char *input)
 			if (input[i] == '>' || input[i] == '<' || input[i] == '|')
 				make_part_direct_pipe(input, &tmp, &i);
 			else
+			{
 				make_part_world(input, &tmp, &i);
+				if (g_status)
+					break;
+			}
 		}
 		i++;
 	}

@@ -54,6 +54,8 @@ void	new_copy_env(t_all *all)
 	while (tmp)
 	{
 		tmp_str = str_arg_in_quote(tmp->val);
+		if (!tmp_str)
+			return ;
 		tmp_strdp = ft_strdup(tmp_str);
 		if (!tmp_strdp)
 			return (error_return_nothing());
