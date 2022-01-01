@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:17:25 by sglossu           #+#    #+#             */
-/*   Updated: 2022/01/01 19:24:06 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:08:12 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int		fill_cmd_struct_help(t_all *all, t_cmd *cmd, t_list *tmp);
 char	*path_com(t_all *all, char *command);
 int		dir_parse(t_cmd *cmd);
 int		dir_parse_help(t_list *tmp, t_cmd *cmd, int dir_type);
+int		is_wtf(t_all *all, t_list *tmp);
 
 // lists
 t_list	*make_list_with_all_word(char *input);

@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 17:21:55 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 19:15:21 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:07:47 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,17 @@ int	fill_cmd_struct_help(t_all *all, t_cmd *cmd, t_list *tmp)
 		free_path(all);
 	}
 	return (0);
+}
+
+int	is_wtf(t_all *all, t_list *tmp)
+{
+	int	res;
+
+	if (is_buildin(tmp->val) || is_binary(tmp->val, all))
+		tmp->flag = COMMAND;
+	if (tmp->flag == WTF)
+		res = 1;
+	else
+		res = 0;
+	return (res);
 }

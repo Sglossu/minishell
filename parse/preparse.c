@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 17:20:16 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:04:48 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,11 @@ char	*ft_ecran(char *input, int *i)
 static char	*quote_main_part(char *str, t_all *all, int i, int j)
 {
 	char	*m;
-	char	sym;
 	int		x;
 
-	sym = str[i];
 	m = ft_substr(str, i + 1, j - i - 1);
 	x = 0;
-	if (sym == '\"' && is_dollar(m) && ft_strlen(m) > 1)
+	if (str[i] == '\"' && is_dollar(m) && ft_strlen(m) > 1)
 	{
 		while (m[x])
 		{
@@ -51,7 +49,7 @@ static char	*quote_main_part(char *str, t_all *all, int i, int j)
 			x++;
 		}
 	}
-	if (sym == '\"' && is_ecran(m))
+	if (str[i] == '\"' && is_ecran(m))
 	{
 		x = 0;
 		while (m[x])
@@ -118,7 +116,7 @@ char	*ready_string(t_list *tmp, t_all *all, int *flag)
 			{
 				str = ft_dollar(str, all, &i);
 				if (!str)
-					return (error_return_null());
+					return (NULL);
 			}
 			if (str[i] == '\\')
 			{

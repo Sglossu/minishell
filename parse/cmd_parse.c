@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2022/01/01 19:23:45 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:08:41 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 	int		i;
 	t_list	*tmp;
 
-	i = 0;
+	i = -1;
 	free_path(all);
-	while (i < all->number_command)
+	while (++i < all->number_command)
 	{
 		free_path(all);
 		if (!all->cmd)
@@ -44,7 +44,6 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 		}
 		if (fill_cmd_struct_help(all, all->cmd[i], tmp))
 			return (error_return_int());
-		i++;
 	}
 	return (0);
 }
@@ -62,7 +61,7 @@ int	num_of_commands(t_all *all, t_list *HEAD)
 	{
 		if (tmp->flag == COMMAND || tmp->flag == WTF)
 			res++;
-		if (tmp->flag == WTF)
+		if (is_wtf(all, tmp))
 		{
 			ft_printf(STDERR_FILENO, "minishell: %s: command not found\n",
 				tmp->val);
