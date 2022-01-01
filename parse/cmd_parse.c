@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2022/01/01 23:14:08 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/02 00:56:40 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,32 +96,5 @@ int	init_cmd_struct(t_all *all)
 		i++;
 	}
 	all->cmd[i] = NULL;
-	return (0);
-}
-
-int	dir_parse(t_cmd *cmd)
-{
-	t_list		*tmp;
-	int			dir_type;
-
-	tmp = cmd->arg;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->val, ">"))
-			dir_type = DIR;
-		else if (!ft_strcmp(tmp->val, ">>"))
-			dir_type = DOUB_DIR;
-		else if (!ft_strcmp(tmp->val, "<"))
-			dir_type = REDIR;
-		else if (!ft_strcmp(tmp->val, "<<"))
-			dir_type = DOUB_REDIR;
-		else
-			dir_type = NONE;
-		if (dir_parse_help(tmp, cmd, dir_type))
-			return (error_return_int());
-		if (dir_type != NONE)
-			return (0);
-		tmp = tmp->next;
-	}
 	return (0);
 }
