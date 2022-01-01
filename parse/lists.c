@@ -116,6 +116,7 @@ t_list	*copy_part_of_list(t_all *all, t_list *HEAD, int num_command)
 	while (tmp && tmp->flag != PIPE)
 	{
 		ft_lstadd_back(&res, ft_lstnew(ft_strdup(tmp->val)));
+		ft_lstlast(res)->flag = tmp->flag;
 		tmp = tmp->next;
 	}
 	return (res);

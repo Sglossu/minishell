@@ -58,13 +58,13 @@ int	dir_parse(t_cmd *cmd)
 	tmp = cmd->arg;
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->val, ">"))
+		if (!ft_strcmp(tmp->val, ">") && tmp->flag == DIRECT)
 			return (dir(cmd, tmp));
-		else if (!ft_strcmp(tmp->val, ">>"))
+		else if (!ft_strcmp(tmp->val, ">>") && tmp->flag == DIRECT)
 			return (doub_dir(cmd, tmp));
-		else if (!ft_strcmp(tmp->val, "<"))
+		else if (!ft_strcmp(tmp->val, "<") && tmp->flag == DIRECT)
 			return (redir(cmd, tmp));
-		else if (!ft_strcmp(tmp->val, "<<"))
+		else if (!ft_strcmp(tmp->val, "<<") && tmp->flag == DIRECT)
 			return (doub_redir(cmd, tmp));
 		else
 		{
