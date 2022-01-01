@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:53 by sglossu           #+#    #+#             */
-/*   Updated: 2022/01/01 21:45:21 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 22:27:28 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	find_com(t_all *all, char *command)
 	i = 0;
 	while (all->path && all->path[i])
 	{
-		if (!access(all->path[i], 0 | 1))
+		if (!access(all->path[i], 1))
 		{
 			return (1);
 		}
