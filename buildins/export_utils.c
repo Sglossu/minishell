@@ -102,7 +102,9 @@ int	str_is_variable(char *str)
 	char	*tmp_str;
 
 	tmp_str = str_without_one_plus(str);
-	if ((!tmp_str && !g_status) || g_status)
+	if (!tmp_str && !g_status)
+		return (g_status);
+	if (g_status)
 		return (error_in_variable(str));
 	i = 0;
 	if (!ft_isalpha(tmp_str[i]) && tmp_str[i] != '_')

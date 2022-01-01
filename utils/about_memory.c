@@ -41,7 +41,6 @@ static	char	**argv_not_exist(char ***argv)
 {
 	free_buf(*argv);
 	g_status = errno;
-	ft_putendl_fd(strerror(errno), STDERR_FILENO);
 	return (NULL);
 }
 

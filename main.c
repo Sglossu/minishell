@@ -21,9 +21,9 @@ int	main(int argc, char **argv, char **envi)
 	(void)argv;
 	g_status = 0;
 	all = malloc(sizeof(t_all));
-	rl_outstream = stderr;
 	if (!all)
-		return (1);
+		return (error_return_int());
+	rl_outstream = stderr;
 	init(all, envi);
 	while (1)
 	{
@@ -41,6 +41,8 @@ int	main(int argc, char **argv, char **envi)
 		add_history(input);
 		if (!parse(all, input))
 		{
+			if (!all->cmd)
+				return (g_status);
 			if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
 				main_work(all);
 			else if (all->number_command == 1 && all->cmd[0]->f_direct != NONE)
