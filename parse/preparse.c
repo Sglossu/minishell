@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 20:44:59 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 23:04:27 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 	f = strdup(str + j + 1);
 	if (!f)
 		return (error_return_null());
-	*i = j - 1;
+	*i = j - 2;
 	free(str);
 	str = ft_strjoin(s , m);
 	if (!str)
