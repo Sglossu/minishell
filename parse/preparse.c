@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 23:04:27 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 23:09:49 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static char	*quote_main_part(char *str, t_all *all, int i, int j)
 	return (m);
 }
 
-static void free_three_line(char **s, char **m, char **f)
+static void	free_three_line(char **s, char **m, char **f)
 {
 	if (*s)
 		free(*s);
@@ -110,17 +110,17 @@ static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 		return (error_return_null());
 	*i = j - 2;
 	free(str);
-	str = ft_strjoin(s , m);
+	str = ft_strjoin(s, m);
 	if (!str)
 	{
 		free_three_line(&s, &m, &f);
-		return (error_return_null());	
+		return (error_return_null());
 	}
 	str = ft_strjoin_gnl(str, f);
 	if (!str)
 	{
 		free_three_line(&s, &m, &f);
-		return (error_return_null());	
+		return (error_return_null());
 	}
 	free_three_line(&s, &m, &f);
 	return (str);

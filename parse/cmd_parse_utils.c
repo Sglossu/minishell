@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 17:21:55 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 22:47:50 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 23:10:05 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,8 @@ int	fill_cmd_struct_help(t_all *all, t_cmd *cmd, t_list *tmp)
 
 int	is_wtf(t_all *all, t_list *tmp)
 {
-	struct stat buf;
-	int	res;
-	
+	struct stat	buf;
+	int			res;
 
 	if (tmp->flag == WTF)
 	{
