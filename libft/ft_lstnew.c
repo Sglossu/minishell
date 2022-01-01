@@ -18,7 +18,10 @@ t_list	*ft_lstnew(void *val)
 
 	new_elem = malloc(sizeof(t_list));
 	if (!new_elem)
+	{
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		return (NULL);
+	}
 	new_elem->val = val;
 	new_elem->next = NULL;
 	return (new_elem);

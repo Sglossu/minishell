@@ -14,8 +14,9 @@
 
 void	error_malloc(void)
 {
-	g_status = errno;
-	ft_printf(2, "malloc: %s\n", strerror(errno));
+	g_status = 12;
+	ft_printf(2, "malloc: %s\n", strerror(12));
+	exit (g_status);
 }
 
 void	add_if_not_shlvl(char **buf, int i, t_list **tmp)

@@ -20,6 +20,9 @@
 # include <ctype.h>
 # include <string.h>
 # include "stdbool.h"
+# include <sys/errno.h>
+# include "sys/wait.h"
+# include <errno.h>
 # include "gnl/get_next_line.h"
 
 typedef struct s_list
