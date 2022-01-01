@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 20:04:48 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:16:30 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*ready_string(t_list *tmp, t_all *all, int *flag)
 			{
 				str = ft_quote(str, all, &i, str[i]);
 				if (!str)
-					return (error_return_null());
+					return (NULL);
 				*flag = 1;
 			}
 			if (str[i] == '$' && (ft_isalpha(str[i + 1]) || str[i + 1] == '?'))
