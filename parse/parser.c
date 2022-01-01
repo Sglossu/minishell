@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 17:00:46 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 17:18:15 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ static int	flag_check(t_list *tmp, t_all *all, int *pipe)
 	return (TEXT);
 }
 
+static int	errno_return_zero(void)
+{
+	g_status = errno;
+	return (0);
+}
+
 static int	preparse(t_all *all, t_list **head, char *input)
 {
 	t_list	*tmp;
@@ -57,10 +63,7 @@ static int	preparse(t_all *all, t_list **head, char *input)
 		{
 			tmp->val = ready_string(tmp, all, &flag);
 			if (!tmp->val)
-			{
-				g_status = errno;
-				return (0);
-			}
+				return (errno_return_zero());
 		}
 		if (ft_strlen(tmp->val) == 0 && (!flag))
 			ft_lstremove(head, tmp);

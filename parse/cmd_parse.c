@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2022/01/01 16:51:15 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 18:20:01 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,52 +108,24 @@ int	init_cmd_struct(t_all *all)
 int	dir_parse(t_cmd *cmd)
 {
 	t_list		*tmp;
+	int			dir_type;
 
 	tmp = cmd->arg;
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->val, ">"))
-		{
-			cmd->f_direct = DIR;
-			if (tmp->next)
-				cmd->name_file = ft_strdup(tmp->next->val);
-			if (!cmd->name_file)
-				return (error_return_int());
-			return (0);
-		}
+			dir_type = DIR;
 		else if (!ft_strcmp(tmp->val, ">>"))
-		{
-			cmd->f_direct = DOUB_DIR;
-			if (tmp->next)
-				cmd->name_file = ft_strdup(tmp->next->val);
-			if (!cmd->name_file)
-				return (error_return_int());
-			return (0);
-		}
+			dir_type = DOUB_DIR;
 		else if (!ft_strcmp(tmp->val, "<"))
-		{
-			cmd->f_direct = REDIR;
-			if (tmp->next)
-				cmd->name_file = ft_strdup(tmp->next->val);
-			if (!cmd->name_file)
-				return (error_return_int());
-			return (0);
-		}
+			dir_type = REDIR;
 		else if (!ft_strcmp(tmp->val, "<<"))
-		{
-			cmd->f_direct = DOUB_REDIR;
-			if (tmp->next)
-				cmd->name_file = ft_strdup(tmp->next->val);
-			if (!cmd->name_file)
-				return (error_return_int());
-			return (0);
-		}
+			dir_type = DOUB_REDIR;
 		else
-		{
-			cmd->f_direct = NONE;
-			cmd->name_file = NULL;
-		}
+			dir_type = NONE;
+		if (dir_parse_help(tmp, cmd, dir_type))
+			return (error_return_int());
 		tmp = tmp->next;
 	}
-	return (1);
+	return (0);
 }
