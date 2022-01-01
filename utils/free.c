@@ -27,14 +27,14 @@ void	free_path(t_all *all)
 
 void	free_cmd(t_cmd *cmd)
 {
-	if (cmd->arg)
+	if (cmd && cmd->arg)
 		ft_lstclear(&cmd->arg, free);
-	if (cmd->path_command)
+	if (cmd && cmd->path_command)
 	{
 		free(cmd->path_command);
 		cmd->path_command = NULL;
 	}
-	if (cmd->name_file)
+	if (cmd && cmd->name_file)
 	{
 		free(cmd->name_file);
 		cmd->name_file = NULL;
@@ -53,6 +53,7 @@ int	ft_free(t_all *all)
 		i++;
 	}
 	free(all->cmd);
+	all->cmd = NULL;
 	all->number_command = 0;
 	all->path = NULL;
 	all->i = 0;
