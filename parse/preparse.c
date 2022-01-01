@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 20:16:30 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:34:17 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,19 @@ static char	*quote_main_part(char *str, t_all *all, int i, int j)
 	int		x;
 
 	m = ft_substr(str, i + 1, j - i - 1);
+	if (!m)
+		return (NULL);
 	x = 0;
 	if (str[i] == '\"' && is_dollar(m) && ft_strlen(m) > 1)
 	{
 		while (m[x])
 		{
 			if (m[x] == '$' && (ft_isalnum(m[x + 1]) || m[x + 1] == '?'))
+			{
 				m = ft_dollar(m, all, &x);
+				if (!m)
+					return (NULL);
+			}
 			x++;
 		}
 	}
@@ -106,6 +112,8 @@ char	*ready_string(t_list *tmp, t_all *all, int *flag)
 	int		i;
 
 	str = ft_strdup(tmp->val);
+	if (!str)
+		return (error_return_null());
 	i = 0;
 	if (str)
 	{
