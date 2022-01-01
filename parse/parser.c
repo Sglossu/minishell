@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2021/12/31 19:56:52 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 17:00:46 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,11 @@ static int	flag_check(t_list *tmp, t_all *all, int *pipe)
 	}
 	if (*pipe)
 	{
+		*pipe = 0;
 		if (is_buildin(tmp->val) || is_binary(tmp->val, all))
-		{
-			*pipe = 0;
 			return (COMMAND);
-		}
 		else
-		{
-			*pipe = 0;
 			return (WTF);
-		}
 	}
 	*pipe = 0;
 	return (TEXT);

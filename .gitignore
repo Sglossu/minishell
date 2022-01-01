@@ -2,7 +2,7 @@
 ###################
 *.exe
 *.o
-
+/build
 #testers
 *tester*
 /test

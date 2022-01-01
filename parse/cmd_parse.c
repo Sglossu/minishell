@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/31 20:03:34 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 16:51:15 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,46 +63,24 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 
 int	num_of_commands(t_all *all, t_list *HEAD)
 {
-	int		res;
 	t_list	*tmp;
-	// int		pipes;
-	int		num;
+	int		res;
 	int		flag;
 
 	res = 0;
-	num = 1;
 	flag = 0;
-	// pipes = 1;
 	tmp = HEAD;
 	while (tmp)
 	{
 		if (tmp->flag == COMMAND || tmp->flag == WTF)
 			res++;
-		if (num == 1 && tmp->flag == WTF)
+		if (tmp->flag == WTF)
 		{
-			ft_printf(STDERR_FILENO,"minishell: %s: command not found\n", tmp->val);
+			ft_printf(STDERR_FILENO, "minishell: %s: command not found\n",
+				tmp->val);
 			g_status = 127;
 		}
-		// if ((is_buildin(tmp->val) || is_binary(tmp->val, all)) && pipes)
-		// {
-		// 	res++;
-		// 	pipes = 0;
-		// }
-		// else if (num == 1 && (!is_dir(tmp->val)))
-		// {
-		// 	ft_printf(STDERR_FILENO,
-		// 		"minishell: %s: command not found\n", tmp->val);
-		// 	g_status = 127;
-		// 	flag = 1;
-		// }
-		if (!ft_strcmp(tmp->val, "|") && tmp->flag == PIPE)
-		{
-			// pipes = 1;
-			num = 0;
-		}
-		// free_path(all);
 		tmp = tmp->next;
-		num++;
 	}
 	all->number_command = res;
 	return (flag);
