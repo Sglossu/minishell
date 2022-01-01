@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 20:34:17 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:44:59 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,25 @@ static char	*quote_main_part(char *str, t_all *all, int i, int j)
 		while (m[x])
 		{
 			if (m[x] == '\\')
+			{
 				m = ft_ecran(m, &x);
+				if (!m)
+					return (NULL);
+			}
 			x++;
 		}
 	}
 	return (m);
+}
+
+static void free_three_line(char **s, char **m, char **f)
+{
+	if (*s)
+		free(*s);
+	if (*m)
+		free(*m);
+	if (*f)
+		free(*f);
 }
 
 static char	*ft_quote(char *str, t_all *all, int *i, char sym)
@@ -79,11 +93,9 @@ static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 	char	*s;
 	char	*m;
 	char	*f;
-	int		x;
 	int		j;
 
 	j = *i;
-	x = 0;
 	while (str[j++])
 		if (str[j] == sym)
 			break ;
@@ -96,13 +108,21 @@ static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 	f = strdup(str + j + 1);
 	if (!f)
 		return (error_return_null());
-	if (x == 0)
-		*i = j - 1;
+	*i = j - 1;
 	free(str);
-	str = ft_strjoin(ft_strjoin(s, m), f);
-	free(s);
-	free(m);
-	free(f);
+	str = ft_strjoin(s , m);
+	if (!str)
+	{
+		free_three_line(&s, &m, &f);
+		return (error_return_null());	
+	}
+	str = ft_strjoin_gnl(str, f);
+	if (!str)
+	{
+		free_three_line(&s, &m, &f);
+		return (error_return_null());	
+	}
+	free_three_line(&s, &m, &f);
 	return (str);
 }
 
