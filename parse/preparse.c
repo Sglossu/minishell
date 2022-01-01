@@ -20,10 +20,16 @@ char	*ft_ecran(char *input, int *i)
 
 	tmp = ft_substr(input, 0, *i);
 	if (!tmp)
-		return (error_return_null());
+	{
+		g_status = errno;
+		return (NULL);
+	}
 	tmp2 = ft_substr(input, *i + 1, ft_strlen(input) - *i);
 	if (!tmp2)
-		return (error_return_null());
+	{
+		g_status = errno;
+		return (NULL);
+	}
 	res = ft_strjoin(tmp, tmp2);
 	if (!res)
 		return (error_return_null());

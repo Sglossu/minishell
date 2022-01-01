@@ -41,6 +41,8 @@ char	*get_var_from_path(t_all *all, char *name)
 	t_list	*env_obj;
 	char	*res;
 
+	if (!name)
+		return (NULL);
 	env_obj = ft_lstfind(all->env, name);
 	if (env_obj)
 		res = find_after_equals(env_obj->val);
@@ -60,6 +62,8 @@ char	*join_parts(char *input, char *change, char *name, int i)
 	char	*res;
 	int		j;
 
+	if (!name)
+		return (NULL);
 	j = i + 1;
 	j += ft_strlen(name);
 	tmp = ft_substr(input, 0, i);
@@ -85,6 +89,8 @@ int	ft_len(char *name, char *change)
 	int	len_name;
 	int	len_change;
 
+	if (!name)
+		return (0);
 	len_name = (int)ft_strlen(name);
 	len_change = (int)ft_strlen(change);
 	res = 0;
@@ -112,7 +118,9 @@ char	*ft_dollar(char *input, t_all *all, int *i)
 	int		len;
 
 	name = get_name(input, *i);
-	if (!ft_strcmp(name, "?"))
+//	if (!name)
+//		return (NULL);
+	if (name && !ft_strcmp(name, "?"))
 	{
 		change = ft_itoa(g_status);
 		if (!change)

@@ -35,7 +35,7 @@ char	*find_after_equals(char *str)
 	{
 		str_find = ft_substr(str, i, ft_strlen(str) - i);
 		if (!str_find)
-			return (error_return_null());
+			return (NULL);
 		return (str_find);
 	}
 	return (NULL);
