@@ -6,11 +6,18 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:22 by sglossu           #+#    #+#             */
-/*   Updated: 2022/01/01 18:59:22 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/01 19:23:45 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static int	return_cmd(void)
+{
+	ft_putendl_fd(": syntax error near unexpected token `newline'",
+		STDERR_FILENO);
+	return (1);
+}
 
 int	fill_cmd_struct(t_all *all, t_list *HEAD)
 {
@@ -29,33 +36,12 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 			dir_parse(all->cmd[i]);
 			tmp = tmp->next;
 			if (!all->cmd[i]->name_file)
-			{
-				ft_putendl_fd(": syntax error near unexpected token `newline'",
-					STDERR_FILENO);
-				return (1);
-			}
+				return_cmd();
 			else
 				tmp = tmp->next;
 		}
-		if (tmp && is_buildin(tmp->val))
-		{
-			all->cmd[i]->path_command = NULL;
-			all->cmd[i]->type = BUILDIN;
-			all->cmd[i]->flag_redirect = false;
-			all->cmd[i]->status = 0;
-			dir_parse(all->cmd[i]);
-		}
-		else if (tmp && is_binary(tmp->val, all))
-		{
-			all->cmd[i]->type = BINARY;
-			all->cmd[i]->status = 0;
-			all->cmd[i]->flag_redirect = false;
-			all->cmd[i]->path_command = path_com(all, tmp->val);
-			if (!all->cmd[i]->path_command)
-				return (error_return_int());
-			dir_parse(all->cmd[i]);
-			free_path(all);
-		}
+		if (fill_cmd_struct_help(all, all->cmd[i], tmp))
+			return (error_return_int());
 		i++;
 	}
 	return (0);
