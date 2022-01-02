@@ -18,7 +18,7 @@ SRCS		=	main.c \
 				\
 				$(DIR_BUILD)ft_pwd.c				$(DIR_BUILD)ft_cd.c					$(DIR_BUILD)ft_echo.c \
 				$(DIR_BUILD)ft_env.c				$(DIR_BUILD)ft_unset.c				$(DIR_BUILD)ft_export.c \
-				$(DIR_BUILD)ft_exit.c 				$(DIR_BUILD)export_utils.c \
+				$(DIR_BUILD)ft_exit.c 				$(DIR_BUILD)export_utils.c			$(DIR_BUILD)ft_cd_utils.c \
 				\
 				$(DIR_UTILS)ft_sort_params.c		$(DIR_UTILS)about_memory.c			$(DIR_UTILS)find_and_print.c\
 				$(DIR_UTILS)free.c					$(DIR_UTILS)change_shlvl.c			$(DIR_UTILS)error.c \

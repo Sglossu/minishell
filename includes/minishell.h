@@ -79,6 +79,8 @@ void	new_copy_env(t_all *all);
 char	*str_arg_in_quote(char *str);
 int		ft_echo(t_list *arg);
 int		ft_exit(t_list *arg);
+char	*home(t_list **env);
+int		utils_cd(t_all *all, char *str);
 
 //utils
 char	**ft_sort_params(int argc, t_list *lst);

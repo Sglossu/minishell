@@ -16,6 +16,7 @@ int	loop_main(t_all *all, char *input)
 {
 	if (!parse(all, input))
 	{
+		free_path(all);
 		if (!all->cmd)
 			return (g_status);
 		if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
