@@ -88,6 +88,7 @@ static void	free_three_line(char **s, char **m, char **f)
 		free(*f);
 }
 
+
 static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 {
 	char	*s;
@@ -100,33 +101,22 @@ static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 		if (str[j] == sym)
 			break ;
 	s = ft_substr(str, 0, *i);
-	if (!s)
-		return (error_return_null());
-	m = quote_main_part(str, all, *i, j);
-	if (!m)
-		return (error_return_null());
-	f = strdup(str + j + 1);
-	if (!f)
+	if (s)
+		m = quote_main_part(str, all, *i, j);
+	if (s && m)
+		f = strdup(str + j + 1);
+	if (!s || !m || !f)
 		return (error_return_null());
 	*i = j - 2;
 	free(str);
 	str = ft_strjoin(s, m);
-	if (!str)
-	{
-		free_three_line(&s, &m, &f);
-		return (error_return_null());
-	}
-	str = ft_strjoin_gnl(str, f);
-	if (!str)
-	{
-		free_three_line(&s, &m, &f);
-		return (error_return_null());
-	}
+	if (str)
+		str = ft_strjoin_gnl(str, f);
 	free_three_line(&s, &m, &f);
+	if (!str)
+		return (error_return_null());
 	return (str);
 }
-
-
 
 char	*ready_string(t_list *tmp, t_all *all, int *flag, int i)
 {
