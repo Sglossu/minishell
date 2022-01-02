@@ -82,7 +82,8 @@ int	one_direct(t_all *all)
 	if (all->cmd[all->i]->pid == 0)
 	{
 		main_function_for_one_direct(all);
-		exit(0);
+		printf("g_status %d\n", g_status);
+		exit(g_status);
 	}
 	else
 	{

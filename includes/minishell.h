@@ -132,7 +132,7 @@ int		is_dir(char *str);
 int		is_dollar(char *str);
 int		is_ecran(char *str);
 char	*ft_dollar(char *input, t_all *all, int *i);
-char	*ready_string(t_list *tmp, t_all *all, int *flag);
+char	*ready_string(t_list *tmp, t_all *all, int *flag, int i);
 char	*loop_ready_string(t_all *all, char **str, int *flag, int i);
 
 // cmd

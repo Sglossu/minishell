@@ -63,6 +63,12 @@ int	execute_and_delete_redir(t_all *all)
 		all->cmd[all->i]->f_direct = NONE;
 		dir_parse(all->cmd[all->i]);
 	}
+	if (tmp->f_direct != NONE && !tmp->name_file)
+	{
+		ft_putendl_fd("syntax error near unexpected token `newline'", STDERR_FILENO);
+		g_status = 258;
+		return (g_status);
+	}
 	return (0);
 }
 
@@ -70,7 +76,7 @@ int	main_function_for_one_direct(t_all *all)
 {
 	how_much_doub_redir(all);
 	if (execute_and_delete_redir(all))
-		return (1);
+		return (g_status);
 	if (!all->cmd[all->i]->arg)
 		return (g_status);
 	if (all->number_command == 1)

@@ -126,39 +126,30 @@ static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 	return (str);
 }
 
-char	*ready_string(t_list *tmp, t_all *all, int *flag)
+
+
+char	*ready_string(t_list *tmp, t_all *all, int *flag, int i)
 {
 	char	*str;
-	int		i;
 
 	str = ft_strdup(tmp->val);
 	if (!str)
 		return (error_return_null());
-	i = 0;
 	if (str)
 	{
-		while (str[i])
+		while (str[++i])
 		{
-			if (str[i] == '\'' || str[i] == '\"')
+			if (str && (str[i] == '\'' || str[i] == '\"'))
 			{
 				str = ft_quote(str, all, &i, str[i]);
-				if (!str)
-					return (NULL);
 				*flag = 1;
 			}
-			if (str[i] == '$' && (ft_isalpha(str[i + 1]) || str[i + 1] == '?'))
-			{
+			if (str && str[i] == '$' && (ft_isalpha(str[i + 1]) || str[i + 1] == '?'))
 				str = ft_dollar(str, all, &i);
-				if (!str)
-					return (NULL);
-			}
-			if (str[i] == '\\')
-			{
+			if (str && str[i] == '\\')
 				str = ft_ecran(str, &i);
-				if (!str)
-					return (error_return_null());
-			}
-			i++;
+			if (!str)
+				return (NULL);
 		}
 	}
 	free(tmp->val);
