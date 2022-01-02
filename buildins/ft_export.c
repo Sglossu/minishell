@@ -93,7 +93,6 @@ int	ft_export(t_all *all, t_list *arg)
 {
 	char	**buf;
 	t_list	*tmp;
-	int		count;
 
 	g_status = 0;
 	flag_add_in_arg(arg);
@@ -103,11 +102,10 @@ int	ft_export(t_all *all, t_list *arg)
 	if (!tmp)
 	{
 		new_copy_env(all);
-		count = ft_lstsize(all->exp);
-		buf = ft_sort_params(count, all->exp);
+		buf = ft_sort_params(ft_lstsize(all->exp), all->exp);
 		if (!(buf))
 			return (error_return_int());
-		print_params(buf, count);
+		print_params(buf, ft_lstsize(all->exp));
 	}
 	while (tmp)
 	{

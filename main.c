@@ -12,11 +12,38 @@
 
 #include "includes/minishell.h"
 
+static	int	minus_znaki(t_all *all)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	i = 0;
+	if (!all->cmd)
+		return (0);
+	tmp = all->cmd[i];
+	while (tmp)
+	{
+		if ((!ft_strcmp(tmp->arg->val, ">") && !tmp->arg->next)
+			|| (!ft_strcmp(tmp->arg->val, "<") && !tmp->arg->next)
+			|| (!ft_strcmp(tmp->arg->val, ">>") && !tmp->arg->next)
+			|| (!ft_strcmp(tmp->arg->val, "<<") && !tmp->arg->next))
+		{
+			g_status = 2;
+			return (g_status);
+		}
+		i++;
+		tmp = all->cmd[i];
+	}
+	return (0);
+}
+
 int	loop_main(t_all *all, char *input)
 {
 	if (!parse(all, input))
 	{
 		free_path(all);
+		if(minus_znaki(all))
+			return (1);
 		if (!all->cmd)
 			return (g_status);
 		if (all->number_command == 1 && all->cmd[0]->f_direct == NONE)
@@ -53,7 +80,8 @@ int	main(int argc, char **argv, char **envi)
 		if (!ft_strcmp(input, ""))
 			continue ;
 		add_history(input);
-		loop_main(all, input);
+		if (loop_main(all, input))
+			continue;
 		free(input);
 	}
 	return (g_status);

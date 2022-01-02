@@ -43,8 +43,8 @@ static	int	**memory_for_fd(int com, int i)
 static	int	pipes_for_all_com(t_all *all, int com, int **fd)
 {
 	int	i;
-	(void)com;
 
+	(void)com;
 	i = -1;
 	while (++i < all->number_command - 1)
 	{

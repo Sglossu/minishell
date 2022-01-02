@@ -48,7 +48,7 @@ static	void	error_fork(void)
 
 static	void	fd_close(void)
 {
-	int i;
+	int	i;
 
 	i = 2;
 	while (++i < FD)

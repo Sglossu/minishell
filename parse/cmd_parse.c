@@ -14,9 +14,10 @@
 
 static int	return_cmd(void)
 {
-	ft_putendl_fd(": syntax error near unexpected token `newline'",
+	ft_putendl_fd("syntax error near unexpected token `newline'",
 		STDERR_FILENO);
-	return (1);
+	g_status = 2;
+	return (g_status);
 }
 
 int	fill_cmd_struct(t_all *all, t_list *HEAD)
@@ -33,7 +34,7 @@ int	fill_cmd_struct(t_all *all, t_list *HEAD)
 			return (g_status);
 		all->cmd[i]->arg = copy_part_of_list(all, HEAD, i);
 		tmp = all->cmd[i]->arg;
-		if (is_dir(tmp->val))
+		if (tmp && is_dir(tmp->val))
 		{
 			dir_parse(all->cmd[i]);
 			tmp = tmp->next;

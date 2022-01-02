@@ -45,7 +45,7 @@ int	execute_and_delete_redir_return(t_cmd *tmp)
 	{
 		ft_putendl_fd("syntax error near unexpected token `newline'",
 			STDERR_FILENO);
-		g_status = 258;
+		g_status = 2;
 		return (g_status);
 	}
 	return (0);
