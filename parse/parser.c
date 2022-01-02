@@ -61,7 +61,7 @@ static int	preparse(t_all *all, t_list **head, char *input)
 		tmp->flag = flag_check(tmp, all, &pipe);
 		if (tmp->flag == TEXT || tmp->flag == COMMAND || tmp->flag == WTF)
 		{
-			tmp->val = ready_string(tmp, all, &flag);
+			tmp->val = ready_string(tmp, all, &flag, -1);
 			if (!tmp->val)
 				return (errno_return_zero());
 		}
