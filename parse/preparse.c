@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/02 14:32:23 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/02 14:34:27 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ char	*ready_string(t_list *tmp, t_all *all, int *flag, int i)
 				str = ft_quote(str, all, &i, str[i]);
 				*flag = 1;
 			}
-			else if (str && str[i] == '$' && (ft_isalpha(str[i + 1]) || str[i + 1] == '?'))
+			else if (str && str[i] == '$' && (ft_isalpha(str[i + 1])
+					|| str[i + 1] == '?'))
 				str = ft_dollar(str, all, &i);
 			else if (str && str[i] == '\\')
 				str = ft_ecran(str, &i);

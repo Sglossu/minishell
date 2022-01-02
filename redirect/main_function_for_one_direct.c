@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_function_for_one_direct.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sglossu <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 19:44:53 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/27 19:44:56 by sglossu          ###   ########.fr       */
+/*   Updated: 2022/01/02 14:39:04 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@ void	if_doub_redir(t_cmd *cmd)
 	}
 }
 
+int	execute_and_delete_redir_return(t_cmd *tmp)
+{
+	if (tmp->f_direct != NONE && !tmp->name_file)
+	{
+		ft_putendl_fd("syntax error near unexpected token `newline'",
+			STDERR_FILENO);
+		g_status = 258;
+		return (g_status);
+	}
+	return (0);
+}
+
 int	execute_and_delete_redir(t_all *all)
 {
 	t_cmd	*tmp;
@@ -63,13 +75,7 @@ int	execute_and_delete_redir(t_all *all)
 		all->cmd[all->i]->f_direct = NONE;
 		dir_parse(all->cmd[all->i]);
 	}
-	if (tmp->f_direct != NONE && !tmp->name_file)
-	{
-		ft_putendl_fd("syntax error near unexpected token `newline'", STDERR_FILENO);
-		g_status = 258;
-		return (g_status);
-	}
-	return (0);
+	return (execute_and_delete_redir_return(tmp));
 }
 
 int	main_function_for_one_direct(t_all *all)
