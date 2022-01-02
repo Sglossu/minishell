@@ -6,13 +6,13 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:31:56 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/02 15:24:34 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/02 15:26:28 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int loop_main(t_all *all, char *input)
+int	loop_main(t_all *all, char *input)
 {
 	if (!parse(all, input))
 	{
