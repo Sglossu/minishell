@@ -36,7 +36,7 @@ static int	doub_dir(t_cmd *cmd, t_list *tmp)
 	return (0);
 }
 
-static int redir(t_cmd *cmd, t_list *tmp)
+static int	redir(t_cmd *cmd, t_list *tmp)
 {
 	cmd->f_direct = REDIR;
 	if (tmp->next)
@@ -48,7 +48,7 @@ static int redir(t_cmd *cmd, t_list *tmp)
 	return (0);
 }
 
-static int doub_redir(t_cmd *cmd, t_list *tmp)
+static int	doub_redir(t_cmd *cmd, t_list *tmp)
 {
 	cmd->f_direct = DOUB_REDIR;
 	if (tmp->next)
@@ -63,6 +63,7 @@ static int doub_redir(t_cmd *cmd, t_list *tmp)
 int	dir_parse(t_cmd *cmd)
 {
 	t_list	*tmp;
+
 	tmp = cmd->arg;
 	while (tmp)
 	{
