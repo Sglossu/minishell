@@ -41,6 +41,20 @@ void	free_cmd(t_cmd *cmd)
 	}
 }
 
+void	free_fd(t_all *all, int **fd)
+{
+	int	i;
+	(void)all;
+
+	i = 0;
+	while (fd[i])
+	{
+		free(fd[i]);
+		i++;
+	}
+	free(fd);
+}
+
 int	ft_free(t_all *all)
 {
 	int	i;

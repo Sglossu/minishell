@@ -29,6 +29,7 @@ typedef struct s_list
 {
 	char			*val;
 	int				flag;
+	bool			flag_add;
 	struct s_list	*next;
 }				t_list;
 

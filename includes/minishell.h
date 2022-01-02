@@ -43,6 +43,7 @@
 
 # define    BUILDIN		0
 # define    BINARY		1
+# define    FD			1024
 
 typedef struct s_cmd {
 	t_list		*arg;
@@ -88,7 +89,7 @@ char	**from_lst_to_buf(int argc, t_list *lst, char c);
 char	*find_after_equals(char *str);
 char	*find_before_equals(char *str);
 void	print_params(char **buf, int count);
-int		str_is_variable(char *str);
+int		str_is_variable(char *str, t_list *tmp);
 char	*change_shlvl(char *str_old);
 void	error_return_nothing(void);
 char	*error_return_null(void);
@@ -156,6 +157,7 @@ char	*ft_ecran(char *input, int *i);
 int		ft_free(t_all *all);
 void	free_path(t_all *all);
 void	free_cmd(t_cmd *cmd);
+void	free_fd(t_all *all, int **fd);
 
 //signal
 void	ft_signal_in_child(void);

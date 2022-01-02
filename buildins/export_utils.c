@@ -66,7 +66,7 @@ void	new_copy_env(t_all *all)
 	}
 }
 
-char	*str_without_one_plus(char *str)
+char	*str_without_one_plus(char *str, t_list *tmp)
 {
 	int		i;
 	char	*dst;
@@ -78,7 +78,10 @@ char	*str_without_one_plus(char *str)
 	while (str[i])
 	{
 		if (str[i] == '+' && str[i + 1] == '=' )
+		{
+			tmp->flag_add = true;
 			break ;
+		}
 		dst[i] = str[i];
 		i++;
 	}
@@ -98,12 +101,12 @@ int	error_in_variable(char *str)
 	return (g_status);
 }
 
-int	str_is_variable(char *str)
+int	str_is_variable(char *str, t_list *tmp)
 {
 	int		i;
 	char	*tmp_str;
 
-	tmp_str = str_without_one_plus(str);
+	tmp_str = str_without_one_plus(str, tmp);
 	if (!tmp_str && !g_status)
 		return (g_status);
 	i = 0;

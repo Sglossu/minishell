@@ -40,18 +40,20 @@ static	int	**memory_for_fd(int com, int i)
 	return (fd);
 }
 
-static	int	pipes_for_all_com(int com, int **fd)
+static	int	pipes_for_all_com(t_all *all, int com, int **fd)
 {
 	int	i;
+	(void)com;
 
 	i = -1;
-	while (++i < com)
+	while (++i < all->number_command - 1)
 	{
 		if (pipe(fd[i]) == -1)
 		{
 			ft_putendl_fd(strerror(errno), STDERR_FILENO);
 			ft_signal_main();
 			g_status = errno;
+			free_fd(all, fd);
 			return (g_status);
 		}
 	}
@@ -82,10 +84,10 @@ int	pipe_for_another(t_all *all, int com)
 	fd = memory_for_fd(com, -1);
 	if (!fd)
 		return (g_status);
-	if (pipes_for_all_com(com, fd))
+	if (pipes_for_all_com(all, com, fd))
 		return (g_status);
 	i = -1;
-	if (fork_and_close(all, com, fd, 0))
+	if (fork_and_close(all, com, fd, -1))
 	{
 		while (++i <= com)
 			free(fd[i]);

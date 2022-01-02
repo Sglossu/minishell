@@ -26,7 +26,31 @@ static	void	withoit_equals(t_all *all, char *str)
 	ft_lstadd_back(&all->env, ft_lstnew(tmp_str));
 }
 
-void	if_arg_exist(t_all *all, char *str)
+static	char	*concatenation_arg(t_list *tmp_was, char **str, t_all *all)
+{
+	char	*str_tmp;
+	char	*str_aft_eq;
+
+	str_aft_eq = find_after_equals(*str);
+	if (!str_aft_eq)
+		return (NULL);
+	str_tmp = ft_strjoin(tmp_was->val, str_aft_eq);
+	free(str_aft_eq);
+	if (!str_tmp)
+		return (NULL);
+	ft_lstremove(&all->env, tmp_was);
+	free(*str);
+	*str = ft_strdup(str_tmp);
+	if (!*str)
+	{
+		free(str_tmp);
+		return (NULL);
+	}
+	free(str_tmp);
+	return (*str);
+}
+
+void	if_arg_exist(t_all *all, char *str, t_list *old_tmp)
 {
 	t_list	*tmp;
 	char	*tmp_str;
@@ -44,11 +68,25 @@ void	if_arg_exist(t_all *all, char *str)
 		tmp_str[i] = find_b_e[i];
 	tmp_str[i] = '\0';
 	tmp = ft_lstfind(all->env, tmp_str);
-	if (tmp)
+	if (tmp && !old_tmp->flag_add)
 		ft_lstremove(&all->env, tmp);
+	else if (tmp && old_tmp->flag_add)
+		concatenation_arg(tmp, &str, all);
 	ft_lstadd_back(&all->env, ft_lstnew(ft_strdup(str)));
 	free(tmp_str);
 	free(find_b_e);
+}
+
+static	void	flag_add_in_arg(t_list *arg)
+{
+	t_list	*tmp;
+
+	tmp = arg;
+	while (tmp)
+	{
+		tmp->flag_add = false;
+		tmp = tmp->next;
+	}
 }
 
 int	ft_export(t_all *all, t_list *arg)
@@ -58,6 +96,7 @@ int	ft_export(t_all *all, t_list *arg)
 	int		count;
 
 	g_status = 0;
+	flag_add_in_arg(arg);
 	if (arg)
 		arg = arg->next;
 	tmp = arg;
@@ -72,9 +111,9 @@ int	ft_export(t_all *all, t_list *arg)
 	}
 	while (tmp)
 	{
-		if (str_is_variable(tmp->val))
+		if (str_is_variable(tmp->val, tmp))
 			return (g_status);
-		if_arg_exist(all, tmp->val);
+		if_arg_exist(all, tmp->val, tmp);
 		tmp = tmp->next;
 	}
 	return (g_status);

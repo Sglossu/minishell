@@ -46,10 +46,19 @@ static	void	error_fork(void)
 	g_status = errno;
 }
 
+static	void	fd_close(void)
+{
+	int i;
+
+	i = 2;
+	while (++i < FD)
+		close(i);
+}
+
 int	fork_and_close(t_all *all, int com, int **fd, int i)
 {
 	g_status = 0;
-	while (i < com + 1)
+	while (++i < com + 1)
 	{
 		all->cmd[i]->pid = fork();
 		if (all->cmd[i]->pid < 0)
@@ -63,10 +72,9 @@ int	fork_and_close(t_all *all, int com, int **fd, int i)
 			child_for_pipe(all, i, fd);
 			exit (g_status);
 		}
-		i++;
 	}
 	i = -1;
-	while (++i < com)
+	while (++i < all->number_command - 1)
 	{
 		close(fd[i][0]);
 		close(fd[i][1]);
@@ -77,6 +85,7 @@ int	fork_and_close(t_all *all, int com, int **fd, int i)
 
 int	our_pipe(t_all *all)
 {
+	fd_close();
 	ft_signal_run_pipes();
 	if (all->number_command == 2)
 	{
