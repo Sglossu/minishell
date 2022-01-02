@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/02 14:34:27 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/02 14:59:15 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,6 @@ static char	*quote_main_part(char *str, t_all *all, int i, int j)
 			if (m[x] == '$' && (ft_isalnum(m[x + 1]) || m[x + 1] == '?'))
 			{
 				m = ft_dollar(m, all, &x);
-				if (!m)
-					return (NULL);
-			}
-			x++;
-		}
-	}
-	if (str[i] == '\"' && is_ecran(m))
-	{
-		x = 0;
-		while (m[x])
-		{
-			if (m[x] == '\\')
-			{
-				m = ft_ecran(m, &x);
 				if (!m)
 					return (NULL);
 			}

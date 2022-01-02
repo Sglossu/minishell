@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:16:07 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/31 19:12:13 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/02 14:59:37 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_signal_cltr_c_main(int sig)
 {
 	(void)sig;
 	write(2, "\n", 1);
-//	rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 	g_status = 1;

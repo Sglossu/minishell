@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:18:49 by sglossu           #+#    #+#             */
-/*   Updated: 2021/12/29 12:57:14 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/02 14:58:48 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	one_direct(t_all *all)
 	if (all->cmd[all->i]->pid == 0)
 	{
 		main_function_for_one_direct(all);
-		printf("g_status %d\n", g_status);
 		exit(g_status);
 	}
 	else
