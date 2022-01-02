@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:12:54 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 23:49:49 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/02 14:32:23 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static void	free_three_line(char **s, char **m, char **f)
 		free(*f);
 }
 
-
 static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 {
 	char	*s;
@@ -97,7 +96,7 @@ static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 	int		j;
 
 	j = *i;
-	while (str[j++])
+	while (str[++j])
 		if (str[j] == sym)
 			break ;
 	s = ft_substr(str, 0, *i);
@@ -107,8 +106,8 @@ static char	*ft_quote(char *str, t_all *all, int *i, char sym)
 		f = strdup(str + j + 1);
 	if (!s || !m || !f)
 		return (error_return_null());
-	*i = j - 2;
 	free(str);
+	*i = j - 2;
 	str = ft_strjoin(s, m);
 	if (str)
 		str = ft_strjoin_gnl(str, f);
@@ -134,9 +133,9 @@ char	*ready_string(t_list *tmp, t_all *all, int *flag, int i)
 				str = ft_quote(str, all, &i, str[i]);
 				*flag = 1;
 			}
-			if (str && str[i] == '$' && (ft_isalpha(str[i + 1]) || str[i + 1] == '?'))
+			else if (str && str[i] == '$' && (ft_isalpha(str[i + 1]) || str[i + 1] == '?'))
 				str = ft_dollar(str, all, &i);
-			if (str && str[i] == '\\')
+			else if (str && str[i] == '\\')
 				str = ft_ecran(str, &i);
 			if (!str)
 				return (NULL);
