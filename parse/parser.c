@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/02 00:04:56 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/03 00:27:23 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int	flag_check(t_list *tmp, t_all *all, int *pipe)
 	str = tmp->val;
 	if (!ft_strcmp(str, "|"))
 	{
+		if (*pipe == 1)
+			return(0);
 		*pipe = 1;
 		return (PIPE);
 	}
@@ -46,6 +48,13 @@ static int	errno_return_zero(void)
 	return (0);
 }
 
+int	error_token(void)
+{
+	g_status = 2;
+	ft_putendl_fd("minishell: syntax error near unexpected token `|'", STDERR_FILENO);
+	return (0);
+}
+
 static int	preparse(t_all *all, t_list **head, char *input)
 {
 	t_list	*tmp;
@@ -59,6 +68,8 @@ static int	preparse(t_all *all, t_list **head, char *input)
 	while (tmp)
 	{
 		tmp->flag = flag_check(tmp, all, &pipe);
+		if (!tmp->flag)
+			return (error_token());
 		if (tmp->flag == TEXT || tmp->flag == COMMAND || tmp->flag == WTF)
 		{
 			tmp->val = ready_string(tmp, all, &flag, -1);
@@ -73,6 +84,19 @@ static int	preparse(t_all *all, t_list **head, char *input)
 	return (1);
 }
 
+void	doub_pipe(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] && str[i] == '|' && str[i + 1] == '|')
+			str[i + 1] = ' ';
+		i++;
+	}
+}
+
 int	parse(t_all *all, char *input)
 {
 	t_list		*head;
@@ -83,6 +107,7 @@ int	parse(t_all *all, char *input)
 	res = 0;
 	flag = 0;
 	head = NULL;
+	doub_pipe(input);
 	if (!preparse(all, &head, input))
 		return (1);
 	flag = num_of_commands(all, head);
