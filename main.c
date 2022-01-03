@@ -54,6 +54,7 @@ int	loop_main(t_all *all, char *input)
 			our_pipe(all);
 		ft_free(all);
 	}
+	ft_signal_main();
 	return (0);
 }
 
@@ -72,7 +73,6 @@ int	main(int argc, char **argv, char **envi)
 	init(all, envi);
 	while (1)
 	{
-		ft_signal_main();
 		input = readline(MINISHELL);
 		if (!input)
 			exit(g_status);

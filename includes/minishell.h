@@ -118,7 +118,7 @@ char	*direct_for_lstfind(t_cmd *cmd);
 int		execute_and_delete_redir(t_all *all);
 void	how_much_doub_redir(t_all *all);
 void	if_doub_redir(t_cmd *cmd);
-void	fd_close(int i);
+void	fd_close(int i, int **fd);
 
 //main
 int		main_work(t_all *all);

@@ -71,7 +71,7 @@ static	int	binary(t_all *all)
 	}
 	else
 	{
-		waitpid(all->cmd[all->i]->pid, &all->cmd[all->i]->status, 0);;
+		waitpid(all->cmd[all->i]->pid, &all->cmd[all->i]->status, 0);
 		g_status = WEXITSTATUS(all->cmd[all->i]->status);
 		if (!g_status && WIFSIGNALED(all->cmd[all->i]->status))
 		{

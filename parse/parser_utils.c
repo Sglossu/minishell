@@ -46,19 +46,16 @@ int	find_com(t_all *all, char *command)
 	{
 		x = 0;
 		while (all->path[i][x++])
-			if (all->path[i][x] && all->path[i][x] == '/' && all->path[i][x + 1] == '/')
+			if (all->path[i][x] && all->path[i][x] == '/' &&
+				all->path[i][x + 1] == '/')
 				flag = 0;
 		if (!access(all->path[i], 1) && flag)
-		{
 			return (1);
-		}
 		i++;
 		flag = 1;
 	}
 	if (!access(command, 1))
-	{
 		return (1);
-	}
 	return (0);
 }
 

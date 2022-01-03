@@ -14,13 +14,12 @@
 
 static	int	second_pipe(t_all *all, int fd[2])
 {
-	all->i = 1;
 	all->cmd[1]->pid = fork();
 	if (all->cmd[1]->pid == -1)
 	{
 		ft_printf(2, "fork failed: %s\n", strerror(errno));
 		g_status = errno;
-		return (1);
+		return (g_status);
 	}
 	if (all->cmd[1]->pid == 0)
 	{
@@ -77,7 +76,6 @@ static	void	ft_waitpid(t_all *all)
 	while (++all->i < 2)
 	{
 		waitpid(all->cmd[all->i]->pid, &all->cmd[all->i]->status, 0);
-//		ft_printf(2, "status: %d\n", all->cmd[all->i]->status);
 		g_status = WEXITSTATUS(all->cmd[all->i]->status);
 		if (!g_status && WIFSIGNALED(all->cmd[all->i]->status))
 		{
@@ -92,8 +90,6 @@ int	pipe_for_two(t_all *all)
 {
 	int		fd[2];
 
-//	ft_printf(2, "0_status 127 %d\n", all->cmd[0]->flag_127);
-//	ft_printf(2, "1_status 127 %d\n", all->cmd[1]->flag_127);
 	if (pipe(fd) == -1)
 	{
 		g_status = errno;
@@ -101,6 +97,7 @@ int	pipe_for_two(t_all *all)
 	}
 	if (first_pipe(all, fd))
 		return (1);
+	all->i++;
 	if (second_pipe(all, fd))
 		return (1);
 	close(fd[0]);

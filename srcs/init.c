@@ -76,4 +76,5 @@ void	init(t_all *all, char **envi)
 	all->path = NULL;
 	init_pwd(all);
 	all->i = 0;
+	ft_signal_main();
 }

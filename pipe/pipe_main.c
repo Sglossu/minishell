@@ -47,13 +47,16 @@ static	void	error_fork(void)
 	g_status = errno;
 }
 
-void	fd_close(int number_op_fd)
+void	fd_close(int number_op_fd, int **fd)
 {
 	int	i;
 
-	i = 2;
+	i = -1;
 	while (++i < number_op_fd)
-		close(i);
+	{
+		close(fd[i][0]);
+		close(fd[i][1]);
+	}
 }
 
 int	fork_and_close(t_all *all, int com, int **fd, int i)
@@ -76,12 +79,7 @@ int	fork_and_close(t_all *all, int com, int **fd, int i)
 			exit (g_status);
 		}
 	}
-	i = -1;
-	while (++i < all->number_command - 1)
-	{
-		close(fd[i][0]);
-		close(fd[i][1]);
-	}
+	fd_close(all->number_command - 1, fd);
 	ft_signal_main();
 	return (g_status);
 }

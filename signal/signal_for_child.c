@@ -21,7 +21,6 @@ void	ft_signal_quit_child(int sig)
 	ft_putstr_fd(quit, STDERR_FILENO);
 	free(quit);
 	quit = NULL;
-//	g_status = 131;
 }
 
 void	ft_signal_cltr_c_child(int sig)

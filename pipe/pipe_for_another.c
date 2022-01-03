@@ -50,7 +50,7 @@ static	int	pipes_for_all_com(t_all *all, int com, int **fd)
 	{
 		if (pipe(fd[i]) == -1)
 		{
-			fd_close(i - 1);
+			fd_close(i - 1, fd);
 			ft_putendl_fd(strerror(errno), STDERR_FILENO);
 			ft_signal_main();
 			g_status = errno;
