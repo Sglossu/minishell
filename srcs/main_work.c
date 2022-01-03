@@ -72,7 +72,9 @@ static	int	binary(t_all *all)
 	else
 	{
 		waitpid(all->cmd[all->i]->pid, &all->cmd[all->i]->status, 0);
+		ft_printf(2, "status: %d\n", all->cmd[all->i]->status);
 		g_status = WEXITSTATUS(all->cmd[all->i]->status);
+		ft_printf(2, "g_status: %d\n", g_status);
 		if (!g_status && WIFSIGNALED(all->cmd[all->i]->status))
 		{
 			if (all->cmd[all->i]->status == 2 || all->cmd[all->i]->status == 3)

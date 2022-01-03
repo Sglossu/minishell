@@ -25,6 +25,8 @@ static	int	second_pipe(t_all *all, int fd[2])
 	if (all->cmd[1]->pid == 0)
 	{
 		ft_signal_in_child();
+		if (all->cmd[1]->flag_127)
+			exit(127);
 		if (dup2(fd[0], STDIN_FILENO) == -1)
 		{
 			g_status = errno;
@@ -52,6 +54,8 @@ static	int	first_pipe(t_all *all, int fd[2])
 	if (all->cmd[0]->pid == 0)
 	{
 		ft_signal_in_child();
+		if (all->cmd[0]->flag_127)
+			exit(127);
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 		{
 			g_status = errno;
@@ -73,6 +77,7 @@ static	void	ft_waitpid(t_all *all)
 	while (++all->i < 2)
 	{
 		waitpid(all->cmd[all->i]->pid, &all->cmd[all->i]->status, 0);
+//		ft_printf(2, "status: %d\n", all->cmd[all->i]->status);
 		g_status = WEXITSTATUS(all->cmd[all->i]->status);
 		if (!g_status && WIFSIGNALED(all->cmd[all->i]->status))
 		{
@@ -87,6 +92,8 @@ int	pipe_for_two(t_all *all)
 {
 	int		fd[2];
 
+//	ft_printf(2, "0_status 127 %d\n", all->cmd[0]->flag_127);
+//	ft_printf(2, "1_status 127 %d\n", all->cmd[1]->flag_127);
 	if (pipe(fd) == -1)
 	{
 		g_status = errno;

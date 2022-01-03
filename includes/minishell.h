@@ -54,6 +54,7 @@ typedef struct s_cmd {
 	int			f_direct;
 	int			status;
 	bool		flag_redirect;
+	bool		flag_127;
 }				t_cmd;
 
 typedef struct s_all {

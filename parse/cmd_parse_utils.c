@@ -20,6 +20,7 @@ int	fill_cmd_struct_help(t_all *all, t_cmd *cmd, t_list *tmp)
 		cmd->type = BUILDIN;
 		cmd->flag_redirect = false;
 		cmd->status = 0;
+		cmd->flag_127 = false;
 		dir_parse(cmd);
 	}
 	else if (tmp && is_binary(tmp->val, all))
@@ -28,11 +29,14 @@ int	fill_cmd_struct_help(t_all *all, t_cmd *cmd, t_list *tmp)
 		cmd->status = 0;
 		cmd->flag_redirect = false;
 		cmd->path_command = path_com(all, tmp->val);
+		cmd->flag_127 = false;
 		if (!cmd->path_command)
 			return (error_return_int());
 		dir_parse(cmd);
 		free_path(all);
 	}
+	else
+		cmd->flag_127 = true;
 	return (0);
 }
 
