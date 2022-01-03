@@ -90,6 +90,24 @@ void	doub_pipe(char *str)
 	}
 }
 
+int	is_dir_after_pipe(t_list *head)
+{
+	t_list *tmp;
+	int		rez;
+
+	tmp = head;
+	rez = 0;
+	while (tmp->next)
+	{
+		if (!ft_strcmp(tmp->val, "|") &&
+				(!ft_strcmp(tmp->next->val, ">") || !ft_strcmp(tmp->next->val, "<")
+				|| !ft_strcmp(tmp->next->val, "<<") || !ft_strcmp(tmp->next->val, ">>")))
+			rez++;
+		tmp = tmp->next;
+	}
+	return (rez);
+}
+
 int	parse(t_all *all, char *input)
 {
 	t_list		*head;
@@ -106,8 +124,8 @@ int	parse(t_all *all, char *input)
 	flag = num_of_commands(all, head);
 	if (flag == 0)
 	{
-		if (!all->number_command && head && is_dir(head->val))
-			all->number_command++;
+		if (head && is_dir_after_pipe(head))
+			all->number_command += is_dir_after_pipe(head);
 		init_cmd_struct(all);
 		if (fill_cmd_struct(all, head))
 			res = 0;
