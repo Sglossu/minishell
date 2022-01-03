@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:15:53 by sglossu           #+#    #+#             */
-/*   Updated: 2022/01/03 00:38:37 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/03 14:22:31 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,23 @@ void	path_pl_command(t_all *all, char *command)
 int	find_com(t_all *all, char *command)
 {
 	int	i;
+	int	x;
+	int	flag;
 
 	i = 0;
+	flag = 1;
 	while (all->path && all->path[i])
 	{
-		if (!access(all->path[i], 1))
+		x = 0;
+		while (all->path[i][x++])
+			if (all->path[i][x] && all->path[i][x] == '/' && all->path[i][x + 1] == '/')
+				flag = 0;
+		if (!access(all->path[i], 1) && flag)
 		{
 			return (1);
 		}
 		i++;
+		flag = 1;
 	}
 	if (!access(command, 1))
 	{
