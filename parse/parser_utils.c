@@ -39,6 +39,9 @@ int	find_com(t_all *all, char *command)
 
 	i = 0;
 	flag = 1;
+	if (!ft_strcmp(command, ".") || !ft_strcmp(command, "\\")
+		|| !ft_strcmp(command, "/"))
+		return (0);
 	while (all->path && all->path[i])
 	{
 		x = 0;
