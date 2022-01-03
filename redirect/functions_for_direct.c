@@ -97,7 +97,7 @@ int	ft_doubleredir(t_cmd *cmd, int fd_std, int fd_0)
 	ft_putstr_fd(line, fd_0);
 	while (i)
 	{
-		write(STDERR_FILENOr, "> ", 2);
+		write(STDERR_FILENO, "> ", 2);
 		i = get_next_line(fd_std, &line);
 		if (!ft_strcmp(line, cmd->name_file))
 			break ;
