@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/03 00:27:23 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/03 01:21:05 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	flag_check(t_list *tmp, t_all *all, int *pipe)
 	if (*pipe)
 	{
 		*pipe = 0;
-		if (is_buildin(tmp->val) || is_binary(tmp->val, all))
+		if ((is_buildin(tmp->val) || is_binary(tmp->val, all)))
 			return (COMMAND);
 		else
 			return (WTF);
@@ -45,13 +45,6 @@ static int	flag_check(t_list *tmp, t_all *all, int *pipe)
 static int	errno_return_zero(void)
 {
 	g_status = errno;
-	return (0);
-}
-
-int	error_token(void)
-{
-	g_status = 2;
-	ft_putendl_fd("minishell: syntax error near unexpected token `|'", STDERR_FILENO);
 	return (0);
 }
 

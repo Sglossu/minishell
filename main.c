@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:31:56 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/02 15:26:28 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/03 01:22:53 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	loop_main(t_all *all, char *input)
 	if (!parse(all, input))
 	{
 		free_path(all);
-		if(minus_znaki(all))
+		if (minus_znaki(all))
 			return (1);
 		if (!all->cmd)
 			return (g_status);
@@ -81,7 +81,7 @@ int	main(int argc, char **argv, char **envi)
 			continue ;
 		add_history(input);
 		if (loop_main(all, input))
-			continue;
+			continue ;
 		free(input);
 	}
 	return (g_status);

@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 16:24:09 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/01 23:50:07 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/03 01:21:53 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,13 @@ int	is_ecran(char *str)
 			return (1);
 		i++;
 	}
+	return (0);
+}
+
+int	error_token(void)
+{
+	g_status = 2;
+	ft_putendl_fd("minishell: syntax error near unexpected token `|'",
+		STDERR_FILENO);
 	return (0);
 }

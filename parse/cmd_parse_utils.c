@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 17:21:55 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/02 00:55:32 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/03 00:45:47 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	is_wtf(t_all *all, t_list *tmp)
 
 	if (tmp->flag == WTF)
 	{
-		if (is_buildin(tmp->val) || is_binary(tmp->val, all))
+		if ((is_buildin(tmp->val) || is_binary(tmp->val, all)))
 		{
 			stat(tmp->val, &buf);
 			if (!(S_ISDIR(buf.st_mode)))
