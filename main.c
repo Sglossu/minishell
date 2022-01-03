@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:31:56 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/03 01:22:53 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/04 00:32:16 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	main(int argc, char **argv, char **envi)
 	init(all, envi);
 	while (1)
 	{
-		ft_signal_main();
 		input = readline(MINISHELL);
 		if (!input)
 			exit(g_status);

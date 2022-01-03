@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 18:17:25 by sglossu           #+#    #+#             */
-/*   Updated: 2022/01/03 01:21:35 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/04 00:31:45 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int		parse_path(t_all *all);
 int		is_binary(char *val, t_all *all);
 int		is_buildin(char *val);
 int		error_token(void);
+int		is_dir_after_pipe(t_list *head);
 
 // preparse
 int		is_dir(char *str);

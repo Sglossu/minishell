@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/03 23:53:21 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/04 00:31:13 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,24 +98,6 @@ void	doub_pipe(char *str)
 		if (flag == 0 && str[i] == sym)
 			flag = 1;
 	}
-}
-
-int	is_dir_after_pipe(t_list *head)
-{
-	t_list *tmp;
-	int		rez;
-
-	tmp = head;
-	rez = 0;
-	while (tmp->next)
-	{
-		if (!ft_strcmp(tmp->val, "|") &&
-				(!ft_strcmp(tmp->next->val, ">") || !ft_strcmp(tmp->next->val, "<")
-				|| !ft_strcmp(tmp->next->val, "<<") || !ft_strcmp(tmp->next->val, ">>")))
-			rez++;
-		tmp = tmp->next;
-	}
-	return (rez);
 }
 
 int	parse(t_all *all, char *input)

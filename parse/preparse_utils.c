@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 16:24:09 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/03 01:21:53 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/04 00:31:29 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,26 @@ int	error_token(void)
 	ft_putendl_fd("minishell: syntax error near unexpected token `|'",
 		STDERR_FILENO);
 	return (0);
+}
+
+int	is_dir_after_pipe(t_list *head)
+{
+	t_list	*tmp;
+	int		rez;
+
+	tmp = head;
+	rez = 0;
+	if (tmp && (!ft_strcmp(tmp->val, ">") || !ft_strcmp(tmp->val, "<")
+			|| !ft_strcmp(tmp->val, "<<") || !ft_strcmp(tmp->val, ">>")))
+		rez++;
+	while (tmp && tmp->next)
+	{
+		if (!ft_strcmp(tmp->val, "|") && (!ft_strcmp(tmp->next->val, ">")
+				|| !ft_strcmp(tmp->next->val, "<")
+				|| !ft_strcmp(tmp->next->val, "<<")
+				|| !ft_strcmp(tmp->next->val, ">>")))
+			rez++;
+		tmp = tmp->next;
+	}
+	return (rez);
 }
