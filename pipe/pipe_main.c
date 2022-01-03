@@ -69,6 +69,8 @@ int	fork_and_close(t_all *all, int com, int **fd, int i)
 		if (all->cmd[i]->pid == 0)
 		{
 			ft_signal_in_child();
+			if (all->cmd[i]->flag_127)
+				exit(127);
 			child_for_pipe(all, i, fd);
 			exit (g_status);
 		}

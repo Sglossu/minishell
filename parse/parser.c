@@ -21,7 +21,7 @@ static int	flag_check(t_list *tmp, t_all *all, int *pipe)
 	if (!ft_strcmp(str, "|"))
 	{
 		if (*pipe == 1)
-			return(0);
+			return (0);
 		*pipe = 1;
 		return (PIPE);
 	}
