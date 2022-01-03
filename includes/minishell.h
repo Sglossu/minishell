@@ -43,7 +43,6 @@
 
 # define    BUILDIN		0
 # define    BINARY		1
-# define    FD			1024
 
 typedef struct s_cmd {
 	t_list		*arg;
