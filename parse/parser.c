@@ -6,7 +6,7 @@
 /*   By: bshawn <bshawn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:24:20 by bshawn            #+#    #+#             */
-/*   Updated: 2022/01/03 01:21:05 by bshawn           ###   ########.fr       */
+/*   Updated: 2022/01/03 23:53:21 by bshawn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,24 @@ static int	preparse(t_all *all, t_list **head, char *input)
 
 void	doub_pipe(char *str)
 {
-	int	i;
+	int		i;
+	int		flag;
+	char	sym;
 
 	i = 0;
+	flag = 1;
 	while (str[i])
 	{
-		if (str[i] && str[i] == '|' && str[i + 1] == '|')
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			sym = str[i];
+			flag = 0;
+		}
+		if (str[i] && str[i] == '|' && str[i + 1] == '|' && flag)
 			str[i + 1] = ' ';
 		i++;
+		if (flag == 0 && str[i] == sym)
+			flag = 1;
 	}
 }
 
