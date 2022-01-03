@@ -16,7 +16,7 @@ static	int	**memory_for_fd(int com, int i)
 {
 	int	**fd;
 
-	fd = malloc(sizeof(int *) * com * 3);
+	fd = malloc(sizeof(int *) * (com + 1));
 	if (!fd)
 	{
 		g_status = errno;
@@ -27,7 +27,7 @@ static	int	**memory_for_fd(int com, int i)
 	fd[com] = NULL;
 	while (++i < com)
 	{
-		fd[i] = (int *)malloc(sizeof (int));
+		fd[i] = (int *)malloc(sizeof (int) * 3);
 		if (!fd[i])
 		{
 			g_status = errno;
@@ -50,6 +50,7 @@ static	int	pipes_for_all_com(t_all *all, int com, int **fd)
 	{
 		if (pipe(fd[i]) == -1)
 		{
+			fd_close(i - 1);
 			ft_putendl_fd(strerror(errno), STDERR_FILENO);
 			ft_signal_main();
 			g_status = errno;

@@ -26,15 +26,16 @@ void	child_for_pipe(t_all *all, int num_com, int **fd)
 		dup2(fd[num_com - 1][0], STDIN_FILENO);
 		dup2(fd[num_com][1], STDOUT_FILENO);
 	}
-	all->i = num_com;
-	if (all->cmd[num_com]->f_direct != NONE)
-		main_function_for_one_direct(all);
 	while (i < all->number_command - 1)
 	{
+		ft_printf(2, "1fd: %d, 2fd: %d\n", fd[i][0], fd[i][1]);
 		close(fd[i][0]);
 		close(fd[i][1]);
 		i++;
 	}
+	all->i = num_com;
+	if (all->cmd[num_com]->f_direct != NONE)
+		main_function_for_one_direct(all);
 	if (all->cmd[num_com]->arg && if_buildins(all, all->cmd[num_com]->arg))
 		child(all, num_com);
 	exit(g_status);
@@ -46,12 +47,12 @@ static	void	error_fork(void)
 	g_status = errno;
 }
 
-static	void	fd_close(void)
+void	fd_close(int number_op_fd)
 {
 	int	i;
 
 	i = 2;
-	while (++i < FD)
+	while (++i < number_op_fd)
 		close(i);
 }
 
@@ -87,7 +88,6 @@ int	fork_and_close(t_all *all, int com, int **fd, int i)
 
 int	our_pipe(t_all *all)
 {
-	fd_close();
 	ft_signal_run_pipes();
 	if (all->number_command == 2)
 	{
