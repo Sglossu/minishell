@@ -28,7 +28,6 @@ void	child_for_pipe(t_all *all, int num_com, int **fd)
 	}
 	while (i < all->number_command - 1)
 	{
-		ft_printf(2, "1fd: %d, 2fd: %d\n", fd[i][0], fd[i][1]);
 		close(fd[i][0]);
 		close(fd[i][1]);
 		i++;

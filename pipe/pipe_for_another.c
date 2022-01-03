@@ -53,7 +53,7 @@ static	int	pipes_for_all_com(t_all *all, int com, int **fd)
 			fd_close(i - 1, fd);
 			ft_putendl_fd(strerror(errno), STDERR_FILENO);
 			ft_signal_main();
-			g_status = errno;
+			g_status = 1;
 			free_fd(all, fd);
 			return (g_status);
 		}
